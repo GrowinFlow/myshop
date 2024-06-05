@@ -1,12 +1,12 @@
 import React from 'react'
-import { FaShopware } from 'react-icons/fa'
+import { FaShopware, FaM, FaY, FaS, FaH, FaP  } from 'react-icons/fa6'
 
 
 function Logo(props) {
   return (
     <>
     <span className={`text-${props.color} dark:text-${props.darkColor} flex items-center font-bold text-${props.size}`}>
-        SH<FaShopware />P
+    <FaM/><FaY/>-<FaS/><FaH/><FaShopware className='animate-spin'/> <FaP/>
 
     </span>
     </>

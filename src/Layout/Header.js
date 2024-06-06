@@ -16,8 +16,8 @@ function Header() {
 
   return (
     <>
-      <nav className="bg-glassl dark:bg-glassd shadow-lg shadow-[rgba(0,0,0,0.5)] dark:shadow-[rgba(255,255,255,0.4)] dark:shadow-md dark:border-gray-700 fixed w-full z-20 top-0 start-0 border-b border-gray-200 backdrop-blur-sm">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <nav className="bg-glassl dark:bg-glassd shadow-xl dark:shadow-2xl dark:border-gray-700 fixed w-full z-20 top-0 start-0 border-b border-gray-200 backdrop-blur-sm">
+        <div className="container flex flex-wrap items-center justify-between mx-auto p-2">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
           </a>

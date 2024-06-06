@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'glassl':"rgba(255,255,255,0.1)",
-        'glassd':"rgba(0,0,0,0.4)"
+        'glassl':"rgba(255,255,255,0.4)",
+        'glassd':"rgba(40,25,0,0.4)"
        },
     },
   }, 

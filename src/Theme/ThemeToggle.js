@@ -29,7 +29,7 @@ const ThemeToggle = () => {
     };
 
     return (
-        <button id="theme-toggle" onClick={toggleTheme} className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        <button id="theme-toggle" onClick={toggleTheme} className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200  dark:hover:bg-gray-700 dark:focus:ring-gray-600 hover:shadow-lg shadow-[rgba(0,0,0,0.5)]] dark:shadow-[rgba(255,255,255,0.4)] text-black dark:text-white dark:hover:shadow-md">
             <span
                 id="theme-toggle-dark-icon"
                 className={!isDarkMode ? '' : 'hidden'}

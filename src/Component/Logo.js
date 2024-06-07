@@ -7,7 +7,7 @@ function Logo(props) {
   return (
     <>
     <Link to="/">
-    <span className={`text-${props.color} dark:text-${props.darkColor} flex items-center font-bold text-${props.size}`}>
+    <span className={`text-${props.color || "text-black dark:text-white"} dark:text-${props.darkColor} flex items-center font-bold text-${props.size} ${props.style}`}>
     <FaM/><FaY/>-<FaS/><FaH/><FaShopware className='animate-spin themeSpeText'/> <FaP/>
 
     </span>

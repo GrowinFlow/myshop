@@ -15,7 +15,7 @@ import Header from './Layout/Header'
 function App() {
   return (
     <>
-<div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
+<div className='bg h-full transition-colors duration-200 ease-linear delay-75'>
 
     <Router>
     <Header />

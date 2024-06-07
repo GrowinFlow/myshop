@@ -16,9 +16,11 @@ function Header() {
 
   return (
     <>
-      <nav className="fixed w-full z-20 top-0 start-0 px-4">
+      <nav className="fixed w-full z-20 top-0 start-0">
+        <div className='container px-4 mx-auto'>
+
   
-        <div className="container themeHeader border-2 border-t-transparent dark:border-t-transparent border-gray-800 dark:border-gray-200 backdrop-blur-sm flex flex-wrap items-center justify-between mx-auto p-2">
+        <div className=" themeHeader border-2 border-t-transparent dark:border-t-transparent border-gray-800 dark:border-gray-200 backdrop-blur-sm flex flex-wrap items-center justify-between p-2 color-ani">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
           </a>
@@ -46,6 +48,7 @@ function Header() {
               <NavItems label="Contact" link="/contact" closeMenu={closeMenu} />
             </ul>
           </div>
+        </div>
         </div>
       </nav>
       <br /><br /><br />

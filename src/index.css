@@ -9,8 +9,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@layer{
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  .themeGlassBg{
+    @apply bg-glassl dark:bg-glassd;
+   }
+  .themeIconBg{
+    @apply hover:dark:bg-glassl hover:bg-glassd ring-2 focus:ring-2 focus:ring-gray-200  dark:focus:ring-gray-800 ;
+   }
+  .themeText{
+    @apply text-gray-800 dark:text-gray-200;
+   }
+  .themeSpeText{
+    @apply text-orange-700 dark:text-orange-400;
+   }
+
+  .themeCard{
+    @apply bg-glassl dark:bg-glassd border-2 border-gray-800 dark:border-gray-200 rounded-lg;
+   }
+  .themeHeader{
+    @apply bg-glassl dark:bg-glassd border-2 border-gray-800 dark:border-gray-200 rounded-bl-lg rounded-br-lg;
+   }
+
 }

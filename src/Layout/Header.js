@@ -16,8 +16,9 @@ function Header() {
 
   return (
     <>
-      <nav className="bg-glassl dark:bg-glassd shadow-xl dark:shadow-2xl dark:border-gray-700 fixed w-full z-20 top-0 start-0 border-b border-gray-200 backdrop-blur-sm">
-        <div className="container flex flex-wrap items-center justify-between mx-auto p-2">
+      <nav className="fixed w-full z-20 top-0 start-0 px-4">
+  
+        <div className="container themeHeader border-2 border-t-transparent dark:border-t-transparent border-gray-800 dark:border-gray-200 backdrop-blur-sm flex flex-wrap items-center justify-between mx-auto p-2">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
           </a>
@@ -26,7 +27,7 @@ function Header() {
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 hover:shadow-lg shadow-[rgba(0,0,0,0.5)] dark:shadow-[rgba(255,255,255,0.4)] dark:hover:shadow-md"
+              className="inline-flex items-center p-2 md:hidden  w-8 h-8 justify-center text-sm rounded-lg hover:bg-gray-100 focus:outline-none  hover:dark:bg-glassl hover:bg-glassd focus:ring-2 focus:ring-gray-200  dark:focus:ring-gray-800  hover:shadow-lg themeShadow text-black dark:text-white dark:hover:shadow-md"
               aria-controls="navbar-sticky"
               aria-expanded={menuOpen}
               onClick={toggleMenu}

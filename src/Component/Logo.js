@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaShopware, FaM, FaY, FaS, FaH, FaP  } from 'react-icons/fa6'
+import { FaM, FaY, FaS, FaH, FaP, FaO, FaCartFlatbed  } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
 
@@ -8,7 +8,7 @@ function Logo(props) {
     <>
     <Link to="/">
     <span className={`text-${props.color || "text-black dark:text-white"} dark:text-${props.darkColor} flex items-center font-bold text-${props.size} ${props.style}`}>
-    <FaM/><FaY/>-<FaS/><FaH/><FaShopware className='animate-spin themeSpeText'/> <FaP/>
+  <FaS/><FaCartFlatbed className='animate-bounce themeSpeText'/><FaO/><FaP/>
 
     </span>
     </Link>

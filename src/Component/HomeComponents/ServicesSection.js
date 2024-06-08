@@ -19,6 +19,7 @@ Safe Payments
 <FaTruckFast className='text-sm md:text-lg text-teal-700 dark:text-teal-400' />
 Nationwide Delivery
 </li>
+
 <li className='flex justify-center items-center gap-2'>
 <FaRotate className='text-sm md:text-lg text-blue-700 dark:text-blue-400' />
 Free & Easy Returns
@@ -31,10 +32,7 @@ Best Price Guaranteed
 <FaLock className='text-sm md:text-lg text-gray-700 dark:text-gray-400' />
 100% Authentic Products
 </li>
-<li className='flex justify-center items-center gap-2'>
-<FaCircleCheck className='text-sm md:text-lg themeSpeText' />
- Verified
-</li>
+
   
 </ul>
     </GlassCard>

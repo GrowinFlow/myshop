@@ -30,7 +30,7 @@ const Timer = ({ days, hours }) => {
 
   return (
     <div className="flex items-center justify-between gap-2">
-      <b className='text-2xl'>Black Friday</b>
+      <b className='text-2xl hidden sm:flex'>Black Friday</b>
       
       <div className="timer flex items-center gap-2 ">
         <p><small>Ending in :</small></p>

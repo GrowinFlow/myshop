@@ -7,6 +7,7 @@ import Contact from './Pages/Contact'
 import Product from './Pages/Product'
 import Header from './Layout/Header'
 import SmoothScroll from './Component/Common/SmothScrolling'
+import Footer from './Layout/Footer'
 
 
 
@@ -16,12 +17,12 @@ function App() {
   return (
     <>
     
+    <Router>
     <SmoothScroll>
  
 
 <div className='bg h-full transition-colors duration-200 ease-linear delay-75'>
 
-    <Router>
     <Header />
 
     <Routes>
@@ -32,20 +33,12 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/contact' element={<Contact />} />
     </Routes>
-   </Router>
-   <div className="w-full ">
-      <div className="container mx-auto px-4 lg:px-8">
-
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
- 
-      </div>
-    </div>
      
+    <Footer/>
 </div>
 
     </SmoothScroll>
+   </Router>
     
     </>
   );

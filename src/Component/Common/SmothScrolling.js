@@ -1,46 +1,42 @@
-import React from "react";
-import { TweenLite, Power4 } from "gsap";
+// SmoothScroll.js
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default class SmoothScroll extends React.Component {
-  state = {
-    height: window.innerHeight
-  };
+gsap.registerPlugin(ScrollTrigger);
 
-  ro = new ResizeObserver(elements => {
-    for (let elem of elements) {
-      const crx = elem.contentRect;
-      console.log(crx);
-      this.setState({
-        height: crx.height
+const SmoothScroll = ({ children }) => {
+  const wrapperRef = useRef(null);
+  const contentRef = useRef(null);
+  const smootherRef = useRef(null);
+
+  useEffect(() => {
+    // Load ScrollSmoother from the global window object
+    const { ScrollSmoother } = window;
+    if (ScrollSmoother) {
+      smootherRef.current = ScrollSmoother.create({
+        wrapper: wrapperRef.current,
+        content: contentRef.current,
+        smooth: 2, // Adjust this value for scroll speed
+        effects: true,
       });
     }
-  });
 
-  componentDidMount() {
-    window.addEventListener("scroll", this.onScroll);
-    this.ro.observe(this.viewport);
-  }
+    return () => {
+      // Clean up the ScrollSmoother instance on unmount
+      if (smootherRef.current) {
+        smootherRef.current.kill();
+      }
+    };
+  }, []);
 
-  onScroll = () => {
-    TweenLite.to(this.viewport, 1, {
-      y: -window.pageYOffset,
-      ease: Power4.easeOut
-    });
-  };
+  return (
+    <div ref={wrapperRef} id="wrapper">
+      <div ref={contentRef} id="content">
+        {children}
+      </div>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <>
-        <div className="viewport" ref={ref => (this.viewport = ref)}>
-          {this.props.children}
-        </div>
-        <div
-          ref={ref => (this.fake = ref)}
-          style={{
-            height: this.state.height
-          }}
-        />
-      </>
-    );
-  }
-}
+export default SmoothScroll;

@@ -21,7 +21,7 @@ function Header() {
         <div className='container px-4 mx-auto'>
 
   
-        <div className=" themeHeader border-2 border-t-transparent dark:border-t-transparent border-gray-800 dark:border-gray-200 backdrop-blur-sm flex flex-wrap items-center justify-between p-2 color-ani">
+        <div className=" themeHeader backdrop-blur-sm flex flex-wrap items-center justify-between p-2 color-ani">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
           </a>
@@ -43,7 +43,7 @@ function Header() {
             </button>
           </div>
           <div className={`items-center justify-between ${menuOpen ? 'block' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,0,0,0.5)] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:dark:bg-transparent dark:border-gray-700">
+            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,0,0,0.5)] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:dark:bg-transparent dark:border-gray-700 gap-2">
               <NavItems label="Home" link="/" closeMenu={closeMenu} />
               <NavItems label="Shop" link="/shop" closeMenu={closeMenu} />
               <NavItems label="Cart" link="/cart" closeMenu={closeMenu} />

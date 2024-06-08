@@ -1,6 +1,8 @@
 import React from 'react'
 import HeroSection from '../Component/HomeComponents/HeroSection'
 import ServicesSection from '../Component/HomeComponents/ServicesSection'
+import Feature from '../Component/HomeComponents/Feature'
+
 
 function Home() {
   return (
@@ -9,6 +11,7 @@ function Home() {
 
      <HeroSection/>
      <ServicesSection/>
+     <Feature />
 
     </div>
     </>

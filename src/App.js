@@ -17,6 +17,7 @@ function App() {
     <>
     
     <SmoothScroll>
+ 
 
 <div className='bg h-full transition-colors duration-200 ease-linear delay-75'>
 
@@ -43,7 +44,9 @@ function App() {
     </div>
      
 </div>
+
     </SmoothScroll>
+    
     </>
   );
 }

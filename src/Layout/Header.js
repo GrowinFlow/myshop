@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Logo from '../Component/Logo';
 import ThemeToggle from '../Theme/ThemeToggle';
 import NavItems from './PreComponents/NavItems';
-import CartIcon from '../Component/PreComonent/CartIcon';
+import CartIcon from '../Component/PreComonents/CartIcon';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

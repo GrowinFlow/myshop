@@ -18,10 +18,10 @@ function Header() {
   return (
     <>
       <nav className="fixed w-full z-20 top-0 start-0">
-        <div className='container px-4 mx-auto'>
+        <div className='container px-4 mx-auto mt-0 pt-0'>
 
-  
-        <div className=" themeHeader backdrop-blur-sm flex flex-wrap items-center justify-between p-2 color-ani">
+  <div className="themeHeader backdrop-blur-sm color-ani px-4 pb-4">
+        <div className=" flex flex-wrap items-center justify-between p-2 color-ani themeGlassBg rounded-b-xl">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
           </a>
@@ -51,6 +51,7 @@ function Header() {
             </ul>
           </div>
         </div>
+  </div>
         </div>
       </nav>
       <br /><br /><br />

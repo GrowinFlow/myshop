@@ -8,7 +8,7 @@ function ServicesSection() {
     <>
     <GlassCard>
 
-<ul className='flex justify-center lg:justify-between items-center text-xs md:text-sm flex-wrap gap-3'>
+<ul className='themeGlassBg rounded-xl p-4 flex justify-center lg:justify-between items-center text-xs md:text-sm flex-wrap gap-3'>
 
     
 <li className='flex justify-center items-center gap-2'>

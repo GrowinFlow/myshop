@@ -122,8 +122,8 @@ function SliderGallery() {
         onClick={prevSlide}
         data-carousel-prev
       >
-        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full themeGlassBg backdrop-blur-sm group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-2 dark:group-focus:ring-white group-focus:ring-gray-800/70 group-focus:outline-none">
-        <FaAngleLeft className='themeText'/>
+       <span className="inline-flex items-center justify-center w-8 h-8 themeIconBg rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-2 dark:group-focus:ring-white group-focus:ring-gray-800/70 group-focus:outline-none">
+       <FaAngleLeft className='themeText'/>
           <span className="sr-only">Previous</span>
         </span>
       </button>

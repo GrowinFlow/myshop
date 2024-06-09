@@ -12,12 +12,10 @@ function ProductBox(props) {
       <div className='itemBox h-44 rounded-xl overflow-hidden group shadow-xl dark:shadow-2xl'>
         <div className='imgBox h-32 rounded-t-lg overflow-hidden bg-cover bg-center z-20'>
             <img src={img || props.img} alt="img" className='object-fit group-hover:scale-125 trans-ani'/>
-
-            
         </div>
 
 
-        <div className="z-10 h-12 rounded-b-xl themeGlassBg p-4 backdrop-blur-sm shadow-xl dark:shadow-2xl themetext color-ani flex items-center justify-between">
+        <div className="z-10 h-12 rounded-b-xl themeGlassBg p-4 shadow-xl dark:shadow-2xl themetext color-ani flex items-center justify-between">
             <p className="title text-sm md:text-md">{props.title || "I'm product"}</p>
             <span className="price text-[10px] md:text-xs"> <b className='themeSpeText'>$</b>{props.price || "price"} </span>
 

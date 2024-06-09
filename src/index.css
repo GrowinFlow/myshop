@@ -11,6 +11,8 @@ body {
 }
 .bg{
   background: linear-gradient(119deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+
+  background-image: url('./assets/images/bgImg.jpg');
   background-image: url(https://img.freepik.com/free-psd/shopping-vertical-background_23-2150409469.jpg?t=st=1717767258~exp=1717770858~hmac=6cdb459c05f7d14961ad09cb7baa3c94e26958e8dea4eca08a0fb4f8e3c66252&w=360);
   /* background-image: url(https://img.freepik.com/free-psd/shopping-vertical-background_23-2150409471.jpg?w=360&t=st=1717766680~exp=1717767280~hmac=40c926cfb11c99f9accbfa348e2126f2e093486df048c5893eeb5b7522aaf6c7); */
   background-attachment: fixed;

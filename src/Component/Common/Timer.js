@@ -30,15 +30,18 @@ const Timer = ({ days, hours }) => {
 
   return (
     <div className="flex items-center justify-between gap-2">
-      <b className='text-2xl hidden sm:flex'>Black Friday</b>
+      <b className='text-2xl flex'>Black Friday</b>
       
       <div className="timer flex items-center gap-2 ">
-        <p><small>Ending in :</small></p>
+        <p className='hidden sm:flex'><small>Ending in :</small></p>
 
-      <GlassCard styleClass="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center">{remainingDays} </GlassCard>:
-      <GlassCard styleClass="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center">{String(remainingHours).padStart(2, '0')}</GlassCard>:
-      <GlassCard styleClass="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center">{String(remainingMinutes).padStart(2, '0')}</GlassCard>:
-      <GlassCard styleClass="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center">{String(remainingSeconds).padStart(2, '0')}</GlassCard>
+      <div className="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center rounded-xl themeGlassBg p-4 shadow-xl dark:shadow-2xl color-ani  ">{remainingDays} </div>:
+
+      <div className="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center rounded-xl themeGlassBg p-4 shadow-xl dark:shadow-2xl color-ani  ">{String(remainingHours).padStart(2, '0')}</div>:
+
+ <div className="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center rounded-xl themeGlassBg p-4 shadow-xl dark:shadow-2xl color-ani  ">{String(remainingMinutes).padStart(2, '0')}</div>:
+
+ <div className="text-orange-700 dark:text-orange-400 h-10 w-10 flex items-center justify-center rounded-xl themeGlassBg p-4 shadow-xl dark:shadow-2xl color-ani  ">{String(remainingSeconds).padStart(2, '0')}</div>
       </div>
     </div>
   );

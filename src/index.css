@@ -55,7 +55,10 @@ body {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-.GlasCard{
+.GlasCard,
+.mySwiper,
+.SwiperSlide
+{
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;

@@ -31,7 +31,7 @@ function Header() {
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"
-              className="inline-flex items-center p-2 md:hidden  w-8 h-8 justify-center text-sm rounded-lg hover:bg-gray-100 focus:outline-none  hover:dark:bg-glassl hover:bg-glassd focus:ring-2 dark:focus:ring-gray-200  focus:ring-gray-800 hover:shadow-lg themeShadow text-black dark:text-white dark:hover:shadow-md"
+              className="inline-flex items-center p-2 md:hidden  w-8 h-8 justify-center text-sm rounded-lg hover:bg focus:outline-none  focus:ring-2 dark:focus:ring-gray-200  focus:ring-gray-800 hover:shadow-lg themeShadow text-black dark:text-white dark:hover:shadow-md"
               aria-controls="navbar-sticky"
               aria-expanded={menuOpen}
               onClick={toggleMenu}
@@ -54,7 +54,7 @@ function Header() {
   </div>
         </div>
       </nav>
-      <br /><br /><br />
+      <br /><br /><br /><br />
     </>
   );
 }

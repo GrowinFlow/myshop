@@ -64,7 +64,7 @@ function Testimonial() {
       >
         {
           testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index} className='rounded-xl themeGlassBg p-4 backdrop-blur-md'>
+            <SwiperSlide key={index} className=' SwiperSlide rounded-xl themeGlassBg p-4 backdrop-blur-md'>
               <div className='themeGlassBg h-full w-full rounded-xl themeText p-2'>
                 <div className="dp flex justify-center items-center flex-col">
                   <div className="w-16 md:w-20 h-16 md:h-20 rounded-full shadow-lg overflow-hidden text-sm animate-fade">

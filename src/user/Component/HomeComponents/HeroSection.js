@@ -1,8 +1,8 @@
 import React from 'react'
 import SliderGallery from './SliderGallery'
-import Logo from '../Logo'
-import GlassCard from '../Common/GlassCard'
-import Button from '../Common/Button'
+import Logo from '../../../Common/Components/Logo'
+import GlassCard from '../../../Common/Components/GlassCard'
+import Button from '../../../Common/Components/Button'
 import { Link } from 'react-router-dom'
 
 

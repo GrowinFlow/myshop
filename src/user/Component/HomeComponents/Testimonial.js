@@ -1,5 +1,5 @@
-import './../../assets/styles/swiper.css'
-import GlassCard from '../Common/GlassCard';
+import '../../../assets/styles/swiper.css'
+import GlassCard from '../../../Common/Components/GlassCard';
 import { FaStar, FaStarHalfStroke } from 'react-icons/fa6';
 
 // Import Swiper React components
@@ -47,7 +47,7 @@ function Testimonial() {
   return (
     <div className="h-56">
       <Swiper
-        direction={'vertical'}
+        direction={'horizontal'}
         slidesPerView={1}
         spaceBetween={30}
         mousewheel={true}

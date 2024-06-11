@@ -1,6 +1,6 @@
 import React from 'react'
-import { FaCircleCheck, FaLock, FaRotate, FaShieldHalved, FaTag, FaTruckFast } from 'react-icons/fa6'
-import GlassCard from '../Common/GlassCard'
+import { FaLock, FaRotate, FaShieldHalved, FaTag, FaTruckFast } from 'react-icons/fa6'
+import GlassCard from '../../../Common/Components/GlassCard'
 
 
 function ServicesSection() {

@@ -1,4 +1,4 @@
-import Logo from '../Component/Logo';
+import Logo from '../Components/Logo';
 
 function Footer() {
 

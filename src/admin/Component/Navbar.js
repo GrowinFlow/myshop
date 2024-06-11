@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
-import Logo from '../Component/Logo';
-import ThemeToggle from '../Theme/ThemeToggle';
+import Logo from '../../Common/Components/Logo';
+import ThemeToggle from '../../lib/Theme/ThemeToggle';
 import NavItems from './PreComponents/NavItems';
-import CartIcon from '../Component/PreComonents/CartIcon';
+import CartIcon from '../../user/Component/PreComonents/CartIcon';
+import { Router, Routes, Route, Link } from 'react-router-dom';
 
-function Header() {
+
+
+import Cart from './user/Pages/Cart'
+import Product from './user/Pages/Product'
+import Home from '../Pages/Home';
+import Dashbord from '../Pages/Dashbord';
+
+
+
+
+
+
+
+
+
+
+
+function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -17,14 +35,16 @@ function Header() {
 
   return (
     <>
+
+<Router>
       <nav className="fixed w-full z-20 top-0 start-0">
         <div className='container px-4 mx-auto mt-0 pt-0'>
 
   <div className="themeHeader backdrop-blur-sm color-ani px-4 pb-4">
         <div className=" flex flex-wrap items-center justify-between p-2 color-ani themeGlassBg rounded-b-xl">
-          <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <Link to={"/"} className="flex items-center space-x-3 rtl:space-x-reverse">
             <Logo color="gray-700" darkColor="white" size="xxl" />
-          </a>
+          </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <CartIcon/>
             <ThemeToggle />
@@ -44,10 +64,10 @@ function Header() {
           </div>
           <div className={`items-center justify-between ${menuOpen ? 'block' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,0,0,0.5)] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:dark:bg-transparent dark:border-gray-700 gap-2">
-              <NavItems label="Home" link="/" closeMenu={closeMenu} />
+              <NavItems label="Dashbord" link="/" closeMenu={closeMenu} />
+              <NavItems label="Home" link="/home" closeMenu={closeMenu} />
               <NavItems label="Shop" link="/shop" closeMenu={closeMenu} />
               <NavItems label="Cart" link="/cart" closeMenu={closeMenu} />
-              <NavItems label="Contact" link="/contact" closeMenu={closeMenu} />
             </ul>
           </div>
         </div>
@@ -55,8 +75,20 @@ function Header() {
         </div>
       </nav>
       <br /><br /><br /><br />
+
+      <Routes>
+        <Route path='/' element={<Dashbord />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/shop' element={<Shop />} />
+        <Route path='/shop/product/:id' element={<Product />} />
+        <Route path='/cart' element={<Cart />} />
+    </Routes>
+    
+   </Router>
+    
+  
     </>
   );
 }
 
-export default Header;
+export default Navbar;

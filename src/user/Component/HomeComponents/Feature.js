@@ -1,7 +1,7 @@
 import React from 'react'
-import GlassCard from '../Common/GlassCard'
-import Timer from '../Common/Timer'
-import ProductBox from '../Common/ProductBox'
+import GlassCard from '../../../Common/Components/GlassCard'
+import Timer from '../../../Common/Components/Timer'
+import ProductBox from '../../../Common/Components/ProductBox'
 
 
 function Feature() {

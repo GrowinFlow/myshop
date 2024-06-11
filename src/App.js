@@ -1,13 +1,16 @@
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Home from './Pages/Home'
-import Shop from './Pages/Shop'
-import Cart from './Pages/Cart'
-import Contact from './Pages/Contact'
-import Product from './Pages/Product'
-import Header from './Layout/Header'
-import SmoothScroll from './Component/Common/SmothScrolling'
-import Footer from './Layout/Footer'
+import Dashbord from './admin/Pages/Dashbord'
+import Home from './user/Pages/Home'
+import Shop from './user/Pages/Shop'
+import Cart from './user/Pages/Cart'
+import Contact from './user/Pages/Contact'
+import Product from './user/Pages/Product'
+import Header from './Common/Layout/Header'
+import SmoothScroll from './Common/Components/SmothScrolling'
+import Footer from './Common/Layout/Footer'
+import LoginPage from './Common/Auth/LoginPage'
+
 
 
 
@@ -19,14 +22,15 @@ function App() {
     
     <Router>
     <SmoothScroll>
- 
 
-<div className='bg h-full transition-colors duration-200 ease-linear delay-75'>
+<div className='bg h-full transition-colors duration-200 ease-linear delay-75 '>
 
     <Header />
+ <LoginPage/>
 
     <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Dashbord />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/shop/product/:id' element={<Product />} />
 

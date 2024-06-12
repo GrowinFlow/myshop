@@ -14,7 +14,7 @@ function Main({ children }) {
   };
 
   return (
-    <div>
+    <div className='min-h-[80vh]'>
       <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
       <main>
         {children}

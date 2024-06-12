@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(userData)); 
         setIsError(false);
         setIsLoading(false);
-        return <Navigate to="/" replace />;
+        return true;
       } else {
         setIsError(true);
       }
@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
+    return false;
   };
 
   const logout = () => {

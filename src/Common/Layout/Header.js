@@ -7,6 +7,7 @@ import { AuthContext } from '../../lib/context/LoginContext';
 
 import { getNavItems } from '../Routes/PrivateRoutes'; // Ensure this path is correct
 import NavBar from './PreComponents/NavBar';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,7 +33,14 @@ function Header() {
               <Logo color="gray-700" darkColor="white" size="xxl" />
             </span>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-              <FaCartShopping />
+            {user && user.roles === 'user' && (
+              <Link
+                to="/cart"
+                className="inline-flex items-center p-2 md:hidden w-8 h-8 justify-center text-sm rounded-lg hover:bg focus:outline-none focus:ring-2 dark:focus:ring-gray-200 focus:ring-gray-800 hover:shadow-lg themeShadow text-black dark:text-white dark:hover:shadow-md"
+              >
+                <FaCartShopping className='themeText'/>
+              </Link>
+            )}
               <ThemeToggle />
               <button
                 data-collapse-toggle="navbar-sticky"

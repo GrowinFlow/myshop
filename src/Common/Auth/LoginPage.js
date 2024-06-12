@@ -3,15 +3,22 @@ import { FaUser, FaLock, FaPaperPlane } from 'react-icons/fa';
 import GlassCard from '../Components/GlassCard';
 import Button from '../Components/Button';
 import { AuthContext } from '../../lib/context/LoginContext';
+import { Navigate } from 'react-router-dom';
 
 function LoginPage() {
   const { login, isError, isLoading } = useContext(AuthContext);
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({ usernameOrEmail: '', password: '' });
+  const [redirect, setRedirect] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials(prevState => ({ ...prevState, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(usernameOrEmail, password);
+    await login(credentials.usernameOrEmail, credentials.password);
+    setRedirect(true);
   };
 
   return (
@@ -27,8 +34,8 @@ function LoginPage() {
               <input
                 type="text"
                 name="usernameOrEmail"
-                value={usernameOrEmail}
-                onChange={(e) => setUsernameOrEmail(e.target.value)}
+                value={credentials.usernameOrEmail}
+                onChange={handleChange}
                 placeholder="Enter Your Username or Email . . ."
                 required
               />
@@ -38,8 +45,8 @@ function LoginPage() {
               <input
                 type="password"
                 name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={credentials.password}
+                onChange={handleChange}
                 placeholder="Enter Your Password . . ."
                 required
               />
@@ -56,6 +63,7 @@ function LoginPage() {
           </form>
         </div>
       </GlassCard>
+      {redirect && <Navigate to="/" replace />}
     </div>
   );
 }

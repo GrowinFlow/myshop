@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 
 function Main({ children }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
 
   return (
     <>
-    <div className='min-h-[80vh]'>
-      <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
-      <main>
+    <div className='h-full bg'>
+      <main className=' relative top-20 lg:top-24 '>
         {children}
       </main>
-      <Footer />
     </div>
     </>
   );

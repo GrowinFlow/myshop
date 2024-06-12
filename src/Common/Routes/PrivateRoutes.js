@@ -11,22 +11,25 @@ const Shop = lazy(() => import('../../user/Pages/Shop'));
 const Product = lazy(() => import('../../user/Pages/Product'));
 const Cart = lazy(() => import('../../user/Pages/Cart'));
 const Contact = lazy(() => import('../../user/Pages/Contact'));
-const Dashbord = lazy(() => import('../../admin/Pages/Dashbord'));
+const Dashboard = lazy(() => import('../../admin/Pages/Dashboard'));
 const ManageOrders = lazy(() => import('../../admin/Pages/ManageOrders'));
 const ManageProducts = lazy(() => import('../../admin/Pages/ManageProducts'));
 const ManageUsers = lazy(() => import('../../admin/Pages/ManageUsers'));
 const AdminShop = lazy(() => import('../../admin/Pages/AdminShop'));
 
+// Define the routes based on user roles
 function PrivateRoutes() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  // Redirect to login if user is not authenticated
   useEffect(() => {
     if (!user) {
       navigate('/login');
     }
   }, [user, navigate]);
 
+  // Define routes for 'user' role
   const userRoutes = [
     { label: 'Home', path: '/', element: <Main page={<Home />} /> },
     { label: 'Shop', path: '/shop', element: <Main page={<Shop />} /> },
@@ -35,14 +38,16 @@ function PrivateRoutes() {
     { label: 'Contact', path: '/contact', element: <Main page={<Contact />} /> }
   ];
 
+  // Define routes for 'admin' role
   const adminRoutes = [
-    { label: 'Dashboard', path: '/', element: <Main page={<Dashbord />} /> },
+    { label: 'Dashboard', path: '/', element: <Main page={<Dashboard />} /> },
     { label: 'Manage Orders', path: '/manage-orders', element: <Main page={<ManageOrders />} /> },
     { label: 'Manage Products', path: '/manage-products', element: <Main page={<ManageProducts />} /> },
     { label: 'Manage Users', path: '/manage-users', element: <Main page={<ManageUsers />} /> },
     { label: 'Admin Shop', path: '/admin-shop', element: <Main page={<AdminShop />} /> }
   ];
 
+  // Select routes based on user role
   const routes = user && user.roles === 'user' ? userRoutes : user && user.roles === 'admin' ? adminRoutes : [];
 
   return (
@@ -57,7 +62,7 @@ function PrivateRoutes() {
   );
 }
 
-// Function to get the nav items
+// Export a function to get the navigation items based on the user's role
 export function getNavItems(user) {
   const userRoutes = [
     { label: 'Home', path: '/' },

@@ -14,6 +14,7 @@ function Main({ children }) {
   };
 
   return (
+    <>
     <div className='min-h-[80vh]'>
       <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
       <main>
@@ -21,6 +22,7 @@ function Main({ children }) {
       </main>
       <Footer />
     </div>
+    </>
   );
 }
 

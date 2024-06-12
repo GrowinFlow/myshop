@@ -4,6 +4,7 @@ import GlassCard from '../Components/GlassCard';
 import Button from '../Components/Button';
 import { AuthContext } from '../../lib/context/LoginContext';
 import { Navigate } from 'react-router-dom';
+import img from "../../assets/images/loginImg.png"
 
 function LoginPage() {
   const { login, isError, isLoading } = useContext(AuthContext);
@@ -22,15 +23,19 @@ function LoginPage() {
   };
 
   return (
-    <div className='container mx-auto px-4 py-8 flex flex-col justify-center items-center'>
+    <div className='container mx-auto px-4  flex flex-col justify-center items-center'>
       <GlassCard styleClass="container mx-auto px-4 py-6 flex flex-col justify-center items-center">
 
-        <div className="heading mb-4 p-4 text-2xl font-bold flex justify-center items-center">
+        <div className="heading themeGlassBg w-full rounded-xl mb-4 p-4 text-2xl font-bold flex justify-center items-center">
           <h1>Login</h1>
         </div>
         
-        <div className="form p-4 text-2xl font-bold flex justify-center items-center">
-          <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center gap-4">
+        <div className="form p-4 text-2xl font-bold grid grid-cols-1 md:grid-cols-5 items-center">
+        <div className="img col-span-2">
+          <img src={img} alt="loginImg" />
+        </div>
+        
+          <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center gap-4 col-span-3">
            
 
             <div class="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full ">

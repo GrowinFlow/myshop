@@ -21,12 +21,12 @@ function App() {
 
   return (
     <>
-    <div className="bg">
+    <div className="bg font-mono">
 
     <Router>
       <AuthProvider>
       <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
-      
+
         <Main>
           <Routes>
             <Route path="/login" element={<LoginPage />} />

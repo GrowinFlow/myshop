@@ -4,6 +4,7 @@ import { FaCartShopping } from 'react-icons/fa6';
 import ThemeToggle from '../../lib/Theme/ThemeToggle';
 import Logo from '../../Common/Components/Logo';
 import { AuthContext } from '../../lib/context/LoginContext';
+import CartIcon from '../../user/Component/PreComonents/CartIcon'
 
 import { getNavItems } from '../Routes/PrivateRoutes'; // Ensure this path is correct
 import NavBar from './PreComponents/NavBar';
@@ -34,12 +35,7 @@ function Header() {
             </span>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             {user && user.roles === 'user' && (
-              <Link
-                to="/cart"
-                className="inline-flex items-center p-2 md:hidden w-8 h-8 justify-center text-sm rounded-lg hover:bg focus:outline-none focus:ring-2 dark:focus:ring-gray-200 focus:ring-gray-800 hover:shadow-lg themeShadow text-black dark:text-white dark:hover:shadow-md"
-              >
-                <FaCartShopping className='themeText'/>
-              </Link>
+              <CartIcon/>
             )}
               <ThemeToggle />
               <button

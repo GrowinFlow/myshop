@@ -1,15 +1,16 @@
 import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 
-export const DataContext = createContext();
+export const GetDataContext = createContext();
 
 function ApiCallComponent() {
-    const [product, setProduct] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(null);
 
-    const API = "https://raw.githubusercontent.com/GrowinFlow/json/main/data.json";
-  
+    const PRODUCT_API = "https://4004.vercel.app/api/backend/products";
+    const USERS_API = "https://4004.vercel.app/api/backend/USERS";
 
     const fetchApi = async (url, setData) => {
         setIsLoading(true);
@@ -25,21 +26,23 @@ function ApiCallComponent() {
     };
 
     useEffect(() => {
-        fetchApi(API, setProduct);
-    }, [product]);
+        fetchApi(PRODUCT_API, setProducts);
+        fetchApi(USERS_API, setUsers);
+    }, []); // Empty dependency array, runs only once on mount
 
     return {
-        product, setProduct,
+        products,
+        users,
         isLoading,
         isError,
     };
 }
 
-export const DataProvider = ({ children }) => {
+export const GetDataProvider = ({ children }) => {
     const data = ApiCallComponent();
     return (
-        <DataContext.Provider value={{ ...data }}>
+        <GetDataContext.Provider value={{ ...data }}>
             {children}
-        </DataContext.Provider>
+        </GetDataContext.Provider>
     );
 };

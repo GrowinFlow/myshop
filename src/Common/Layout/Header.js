@@ -29,12 +29,12 @@ function Header() {
     <nav className="fixed w-full z-20 top-0 start-0">
       <div className='container px-4 mx-auto mt-0 pt-0'>
         <div className="themeHeader backdrop-blur-sm color-ani px-4 pb-4">
-          <div className="flex flex-wrap items-center justify-between p-2 color-ani themeGlassBg rounded-b-xl">
+          <div className="flex flex-nowrap items-center justify-between p-2 color-ani themeGlassBg rounded-b-xl">
             <span className="flex items-center space-x-3 rtl:space-x-reverse">
               <Logo color="gray-700" darkColor="white" size="xxl" />
             </span>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            {user && user.roles === 'user' && (
+            {user && user.roles === 'client' && (
               <CartIcon/>
             )}
               <ThemeToggle />

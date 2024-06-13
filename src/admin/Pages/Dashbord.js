@@ -1,25 +1,26 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import MainStats from '../Component/DashboardComponents/MainStats'
 import SecStats from '../Component/DashboardComponents/SecStats'
 import GlassCard from '../../Common/Components/GlassCard'
-
+import { AuthContext } from '../../lib/context/LoginContext'
+import WelcomeCard from '../Component/PreComonents/WelcomeCard'
 
 function Dashbord() {
+
+  const { user } = useContext(AuthContext)
+
+  const [useName, setUserName] = useState(user.username)
   return (
     <>
-   <div className="container mx-auto min-h-[75vh] px-4 h-auto flex flex-col  gap-4">
-<GlassCard>
-  <div className="themeGlassBg rounded-xl p-2 text-xl font-bold">
-    Welcome  <span className='themeSpeText'>{"User"}!</span>
-  </div>
-</GlassCard>
-<MainStats />
-<SecStats />
-    </div>
-    
-    
-    
-    
+      <div className="container mx-auto min-h-[75vh] px-4 h-auto flex flex-col  gap-4">
+
+
+        <WelcomeCard text="Welcome &nbsp;" data={useName + "!"} />
+
+        <MainStats />
+        <SecStats />
+
+      </div>
     </>
   )
 }

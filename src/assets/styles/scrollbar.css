@@ -1,0 +1,15 @@
+
+  *::-webkit-scrollbar {
+    background-image: url('./../images/bgImg.jpg');
+    width:7px; /* Width of the scrollbar */
+    border-radius: 8px; /* Rounded corners for the scrollbar */
+  }
+  
+  *::-webkit-scrollbar-track {
+    background-image: url('./../images/bgImg.jpg'); }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #46494e; /* Thumb color */
+    border-radius: 8px; /* Rounded corners for the scrollbar thumb */
+  }
+  

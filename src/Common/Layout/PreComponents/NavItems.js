@@ -10,7 +10,7 @@ const NavItems = React.memo(({ label, link, closeMenu }) => {
     <li>
       <Link
         to={link}
-        className={`block py-2 px-3 rounded ${
+        className={`block py-2 px-3 md:px-1 rounded ${
           isActive
             ? 'text-orange-700 dark:text-orange-400 bg-glassl dark:bg-glassd shadow-xl dark:shadow-2xl'
             : 'dark:text-white hover:bg-glassl dark:hover:bg-black dark:hover:text-white'

@@ -7,7 +7,7 @@ function ManageUsers() {
   return (
     <>
 
-      <div className="container mx-auto min-h-[75vh] px-4 h-auto flex flex-col  gap-4">
+      <div className="container mx-auto h-[100vh] px-4 flex flex-col  gap-4">
         <WelcomeCard data="Add Clients/ Managers/ Admins" />
         <UsersControlCard />
       </div>

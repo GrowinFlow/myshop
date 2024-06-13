@@ -13,3 +13,25 @@
     border-radius: 8px; /* Rounded corners for the scrollbar thumb */
   }
   
+
+
+  .toast .border-b {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+}
+.toast .border-b .b{
+    width: 100%;
+    animation: border-back 5s linear;
+}
+
+@keyframes border-back {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 1px;
+    }
+}
+

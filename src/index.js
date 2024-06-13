@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './lib/context/LoginContext';
 import { GetDataProvider } from './lib/context/GetDataContext';
+import { SetDataProvider } from './lib/context/SetDataContext';
 
 
 
@@ -16,8 +17,11 @@ root.render(
 
     <AuthProvider>
     <GetDataProvider>
+      <SetDataProvider>
+
 
     <App />
+      </SetDataProvider>
     </GetDataProvider>
     
     </AuthProvider>

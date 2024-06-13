@@ -61,7 +61,7 @@ const Avatar = ({ avatar, username, avatarColor }) => {
 
   return (
     <div
-      className={`img-box min-h-20 rounded-xl flex items-center justify-center`}
+      className={`img-box h-20 rounded-xl flex items-center justify-center overflow-hidden`}
       style={{ background: avatarColor }}
     >
       {avatar && avatar.includes('https://') ? (

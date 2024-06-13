@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import UserCard from '../PreComonents/UserCard';
-import { GetDataContext } from '../../../lib/context/GetDataContext';
+import { SetDataContext } from '../../../lib/context/SetDataContext';
 
 function UsersPrevCards() {
-  const { users } = useContext(GetDataContext);
+  const { users } = useContext(SetDataContext);
   const [currentFilter, setCurrentFilter] = useState('All'); // Default filter state
 
   const filterUsersByRole = (role) => {
@@ -19,7 +19,7 @@ function UsersPrevCards() {
   });
 
   return (
-    <div className="flex flex-col gap-2 h-[95vh]">
+    <div className="flex flex-col gap-2 overflow-y-auto h-[125vh]">
       <div className="themeGlassBg rounded-xl p-4 themeText">
         <div className="flex gap-2 flex-wrap justify-start items-center themeText ">
           <button

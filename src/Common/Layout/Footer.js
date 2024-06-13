@@ -12,7 +12,13 @@ function Footer() {
 
   return (
     <>
+ <br /><br />
+ <br /><br />
+ <br /><br />
+ <br /><br />
+ <br /><br />
       <br />
+<br /> <br /><br />
       <nav className="">
         <div className='container px-4 mx-auto mt-20'>
           <div className="themeFooter backdrop-blur-sm flex flex-wrap items-center justify-center px-4 pt-4 color-ani themeText">

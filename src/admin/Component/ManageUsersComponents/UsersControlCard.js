@@ -8,12 +8,12 @@ function UsersControlCard() {
     <>
     
     <GlassCard>
-  <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div className=" grid grid-cols-1 md:grid-cols-2 gap-4  h-auto">
     
 
 
     {/* form  */}
-<div className="form">
+<div className="form ">
     <UsersDetailsForm/>
 </div>
 
@@ -32,7 +32,6 @@ function UsersControlCard() {
 
   </div>
 </GlassCard>
-
     </>
   )
 }

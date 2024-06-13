@@ -1,9 +1,17 @@
-import React, { useContext} from 'react';
+import React, { useContext, useState} from 'react';
 import Avatar from '../../../Common/Components/Avatar';
 import { FaPen, FaLock } from 'react-icons/fa6';
 import { FaTrash } from 'react-icons/fa';
+import { SetDataContext } from '../../../lib/context/SetDataContext';
+
+
 
 function UserCard({users}) {
+  const {setUserIdToEdit, userIdToEdit} = useContext(SetDataContext)
+  
+  const setId = (x) => {
+    setUserIdToEdit(x)
+  }
 
   return (
     <>
@@ -24,18 +32,23 @@ function UserCard({users}) {
         <div className="details-box min-h-20 w-full rounded-xl flex flex-col items-center justify-center themeText text-sm">
           
           <div className="action-D-E flex items-center justify-between gap-2 w-full py-1">
-            <span className='flex items-center text-blue-700 dark:text-blue-400 cursor-pointer' key={user._id} title='Edit'>
+            <button 
+            className='flex items-center text-blue-700 dark:text-blue-400 cursor-pointer' 
+            title='Edit' 
+            onClick={()=>setId(user._id)}>
             <FaPen />
-            </span>
+            </button>
             <span className='themeSpeText'>#{user.roles}</span>
            
-            <span className='flex items-center cursor-pointer text-red-700 dark:text-red-500' key={user._id} title='Delete'>
+            <button 
+            className='flex items-center cursor-pointer text-red-700 dark:text-red-500' 
+            title='Delete' >
               <FaTrash/>
-            </span>
+            </button>
           </div>
           
           <div className="name-password flex items-center justify-between gap-2 w-full border-b border-gray-800 dark:border-gray-100">
-            <span className='flex items-center capitalize'>
+            <span className='flex items-center capitalize text-ellipsis overflow-hidden'>
               {user.profile.firstName}&nbsp;{user.profile.lastName}
             </span>
            

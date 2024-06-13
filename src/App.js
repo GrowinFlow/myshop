@@ -6,7 +6,6 @@ import PrivateRoutes from './Common/Routes/PrivateRoutes';
 import LoginPage from './Common/Auth/LoginPage';
 import Main from './Common/Layout/Main';
 import Header from './Common/Layout/Header';
-import Footer from './Common/Layout/Footer';
 
 function App() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -34,7 +33,6 @@ function App() {
           </Routes>
         </Main>
 
-      <Footer />
       </AuthProvider>
     </Router>
     </div>

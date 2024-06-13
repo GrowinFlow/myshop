@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Footer from '../../Common/Layout/Footer'
 function Contact() {
   return (
-    <div>Contact</div>
+    <div>Contact
+
+        <Footer/>
+    </div>
   )
 }
 

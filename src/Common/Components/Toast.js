@@ -21,7 +21,7 @@ const Toast = ({ show, type, message, onClose }) => {
   }
 
   return (
-    <div className={`toast fixed top-0 right-0 m-6 z-50 rounded-lg overflow-hidden text-white ${bgColor}`}>
+    <div className={`toast fixed top-0 right-0 m-6 z-[900000000] rounded-lg overflow-hidden text-white ${bgColor}`}>
       <div className=" flex items-center justify-between p-4 ">
         <div className="flex items-center">
           {icon}

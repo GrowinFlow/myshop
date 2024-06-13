@@ -19,7 +19,7 @@ function UsersPrevCards() {
   });
 
   return (
-    <div className="flex flex-col gap-2 overflow-y-auto h-[125vh]">
+    <div className="flex flex-col gap-2 overflow-y-auto h-[735px]">
       <div className="themeGlassBg rounded-xl p-4 themeText">
         <div className="flex gap-2 flex-wrap justify-start items-center themeText ">
           <button

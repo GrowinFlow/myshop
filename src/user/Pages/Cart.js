@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Footer from '../../Common/Layout/Footer'
 function Cart() {
   return (
-    <div>Cart</div>
+    <div>Cart
+
+        <Footer/>
+    </div>
   )
 }
 

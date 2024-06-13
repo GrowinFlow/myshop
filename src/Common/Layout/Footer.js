@@ -12,15 +12,8 @@ function Footer() {
 
   return (
     <>
- <br /><br />
- <br /><br />
- <br /><br />
- <br /><br />
- <br /><br />
-      <br />
-<br /> <br /><br />
-      <nav className="">
-        <div className='container px-4 mx-auto mt-20'>
+      <footer className="">
+        <div className='container mx-auto mt-2'>
           <div className="themeFooter backdrop-blur-sm flex flex-wrap items-center justify-center px-4 pt-4 color-ani themeText">
             <div className="w-full flex flex-wrap items-center justify-evenly p-2 color-ani themeGlassBg rounded-t-xl">
               <div className="logo flex justify-center items-center">
@@ -35,7 +28,7 @@ function Footer() {
             </div>
           </div>
         </div>
-      </nav>
+      </footer>
     </>
   );
 }

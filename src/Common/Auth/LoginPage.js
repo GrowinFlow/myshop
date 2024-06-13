@@ -6,6 +6,8 @@ import { AuthContext } from '../../lib/context/LoginContext';
 import { Navigate } from 'react-router-dom';
 import img from "../../assets/images/loginImg.png"
 
+import Footer from '../../Common/Layout/Footer'
+
 function LoginPage() {
   const { login, isError, isLoading } = useContext(AuthContext);
   const [credentials, setCredentials] = useState({ usernameOrEmail: '', password: '' });
@@ -82,6 +84,8 @@ function LoginPage() {
         </div>
       </GlassCard>
       {redirect && <Navigate to="/" replace />}
+
+        <Footer/>
     </div>
   );
 }

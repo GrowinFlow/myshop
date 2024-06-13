@@ -4,7 +4,7 @@ import ServicesSection from '../Component/HomeComponents/ServicesSection'
 import Feature from '../Component/HomeComponents/Feature'
 import NewsLetter from '../Component/HomeComponents/NewsLetter'
 import Testimonial from '../Component/HomeComponents/Testimonial'
-
+import Footer from '../../Common/Layout/Footer'
 
 function Home() {
   return (
@@ -17,6 +17,7 @@ function Home() {
      <NewsLetter />
      <Testimonial />
 
+        <Footer/>
 
     </div>
     </>

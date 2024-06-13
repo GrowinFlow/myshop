@@ -4,7 +4,7 @@ import SecStats from '../Component/DashboardComponents/SecStats'
 import GlassCard from '../../Common/Components/GlassCard'
 import { AuthContext } from '../../lib/context/LoginContext'
 import WelcomeCard from '../Component/PreComonents/WelcomeCard'
-
+import Footer from '../../Common/Layout/Footer'
 function Dashbord() {
 
   const { user } = useContext(AuthContext)
@@ -20,6 +20,7 @@ function Dashbord() {
         <MainStats />
         <SecStats />
 
+        <Footer/>
       </div>
     </>
   )

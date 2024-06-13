@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-
+import Footer from '../../Common/Layout/Footer'
 
 
 function Product() {
@@ -14,7 +14,7 @@ function Product() {
         <Link to={`/shop/`} className='m-4 p-1 rounded-lg bg-slate-200 ring-4 ring-gray-200 focus:ring-gray-300'>Back on shop . .</Link>
 </div>
     
-    
+            <Footer/>
         </div>
   )
 }

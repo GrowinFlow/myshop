@@ -36,7 +36,7 @@ function UserCard({users}) {
             className='flex items-center text-blue-700 dark:text-blue-400 cursor-pointer' 
             title='Edit' 
             onClick={()=>setId(user._id)}>
-            <FaPen />
+            <FaPen className='hover:text-black'/>
             </button>
             <span className='themeSpeText'>#{user.roles}</span>
            

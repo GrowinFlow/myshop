@@ -366,3 +366,283 @@ function UsersDetailsForm() {
 }
 
 export default UsersDetailsForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useContext } from 'react';
+// import { FaUser, FaUserTie, FaZhihu, FaLock, FaEnvelope, FaImage, FaRegCalendar, FaCity, FaMap, FaCode, FaUsersRays } from 'react-icons/fa6';
+// import { FaHome ,FaGlobeAfrica, } from 'react-icons/fa';
+// import { AuthContext } from '../../lib/context/LoginContext'; // Adjust the path accordingly
+// import Button from '../Components/Button'; // Adjust the path accordingly
+
+// const RegisterForm = () => {
+//   const { registerUser } = useContext(AuthContext); // Using AuthContext to get registerUser function
+//   const [userData, setUserData] = useState({
+//     profile: {
+//       firstName: '',
+//       lastName: '',
+//       avatar: '',
+//       dateOfBirth: '',
+//       address: '',
+//       city: '',
+//       state: '',
+//       country: '',
+//       zipCode: '',
+//     },
+//     username: '',
+//     password: '',
+//     email: '',
+//     roles: 'client', // Default role
+//   });
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     if (name.startsWith('profile.')) {
+//       const field = name.split('.')[1];
+//       setUserData((prevData) => ({
+//         ...prevData,
+//         profile: {
+//           ...prevData.profile,
+//           [field]: value,
+//         }
+//       }));
+//     } else {
+//       setUserData((prevData) => ({
+//         ...prevData,
+//         [name]: value,
+//       }));
+//     }
+//   };
+
+//   const handleAddOrUpdateUser = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await registerUser(userData);
+//       console.log('User Registered Successfully:', response);
+//       // You can redirect to login or another page here after successful registration
+//     } catch (error) {
+//       console.error('Registration Error:', error);
+//       // Handle error state or display error message to user
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleAddOrUpdateUser} className='flex flex-col items-center gap-4 themeGlassBg rounded-xl p-4 themeText overflow-y-auto'>
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaUser />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.firstName"
+//             value={userData.profile.firstName}
+//             onChange={handleInputChange}
+//             placeholder="First Name ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaUserTie />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.lastName"
+//             value={userData.profile.lastName}
+//             onChange={handleInputChange}
+//             placeholder="Last Name ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//       </div>
+
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaZhihu />
+//           </div>
+//           <input
+//             type="text"
+//             name="username"
+//             value={userData.username}
+//             onChange={handleInputChange}
+//             placeholder="User Name ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//             required />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaLock />
+//           </div>
+//           <input
+//             type="password"
+//             name="password"
+//             value={userData.password}
+//             onChange={handleInputChange}
+//             placeholder="Password ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//             required />
+//         </div>
+//       </div>
+
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaEnvelope />
+//           </div>
+//           <input
+//             type="email"
+//             name="email"
+//             value={userData.email}
+//             onChange={handleInputChange}
+//             placeholder="Email ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//             required />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaImage />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.avatar"
+//             value={userData.profile.avatar}
+//             onChange={handleInputChange}
+//             placeholder="Avatar URL ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//       </div>
+
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaRegCalendar />
+//           </div>
+//           <input
+//             type="date"
+//             name="profile.dateOfBirth"
+//             value={userData.profile.dateOfBirth}
+//             onChange={handleInputChange}
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaHome />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.address"
+//             value={userData.profile.address}
+//             onChange={handleInputChange}
+//             placeholder="Address ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//       </div>
+
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaCity />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.city"
+//             value={userData.profile.city}
+//             onChange={handleInputChange}
+//             placeholder="City ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaMap />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.state"
+//             value={userData.profile.state}
+//             onChange={handleInputChange}
+//             placeholder="State ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//       </div>
+
+//       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaGlobeAfrica />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.country"
+//             value={userData.profile.country}
+//             onChange={handleInputChange}
+//             placeholder="Country ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//             <FaCode />
+//           </div>
+//           <input
+//             type="text"
+//             name="profile.zipCode"
+//             value={userData.profile.zipCode}
+//             onChange={handleInputChange}
+//             placeholder="Zip Code ..."
+//             className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//           />
+//         </div>
+//       </div>
+
+//       <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
+//         <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
+//           <FaUsersRays />
+//         </div>
+//         <select
+//           name="roles"
+//           value={userData.roles}
+//           onChange={handleInputChange}
+//           className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+//         >
+//           <option value="client">Client</option>
+//           <option value="manager">Manager</option>
+//           <option value="admin">Admin</option>
+//         </select>
+//       </div>
+
+//       <div className='w-full flex justify-center items-center'>
+//         <Button type="submit" styleClass="px-6 py-2 rounded-lg font-bold w-full flex justify-center items-center h-12" text="Register" />
+//       </div>
+//     </form>
+//   );
+// };
+
+// export default RegisterForm;

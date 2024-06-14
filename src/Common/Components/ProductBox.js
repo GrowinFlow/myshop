@@ -9,9 +9,9 @@ function ProductBox(props) {
   return (
     <>
 <Link to={props.link}>
-      <div className='itemBox h-44 rounded-xl overflow-hidden group shadow-xl dark:shadow-2xl'>
+      <div className='itemBox rounded-xl overflow-hidden group shadow-xl dark:shadow-2xl'>
         <div className='imgBox h-32 rounded-t-lg overflow-hidden bg-cover bg-center z-20'>
-            <img src={img || props.img} alt="img" className='object-fit group-hover:scale-125 trans-ani'/>
+            <img src={img || props.img} alt="img" className='w-full object-fit h-full group-hover:scale-125 trans-ani'/>
         </div>
 
 

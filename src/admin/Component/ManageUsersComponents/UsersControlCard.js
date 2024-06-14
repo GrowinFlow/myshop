@@ -8,7 +8,7 @@ function UsersControlCard() {
     <>
     
     <GlassCard>
-  <div className=" grid grid-cols-1 md:grid-cols-2 gap-4  h-[735px] overflow-hidden">
+  <div className=" grid grid-cols-1 md:grid-cols-2 gap-4  min-h-[735px] overflow-x-hidden overflow-y-auto">
     
 
 

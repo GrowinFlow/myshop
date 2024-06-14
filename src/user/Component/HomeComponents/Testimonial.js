@@ -74,7 +74,7 @@ function Testimonial() {
                     <span>@{testimonial.name}</span>
                   </div>
                 </div>
-                <div className="content text-sm md:text-md overflow-hidden text-ellipsis h-auto">
+                <div className="content text-[10px] md:text-md overflow-hidden text-ellipsis h-auto">
                   <p>
                     {testimonial.review}
                   </p>

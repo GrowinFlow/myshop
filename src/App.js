@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-    <div className="bg font-mono">
+    <div className="bg font-serif md:font-mono">
 
     <Router>
       <AuthProvider>

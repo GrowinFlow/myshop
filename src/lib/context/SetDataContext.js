@@ -5,23 +5,31 @@ export const SetDataContext = createContext();
 
 const API_BASE_URL = "https://4004.vercel.app/api/backend";
 const PRODUCT_API = `${API_BASE_URL}/products`;
-const USERS_API = `${API_BASE_URL}/users`; // Corrected endpoint
+const USERS_API = `${API_BASE_URL}/users`;
+const LOGIN_API = `${API_BASE_URL}/login`; // Endpoint for user login
 
 function ApiCallComponent() {
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
-    const [userIdToEdit, setUserIdToEdit] = useState("")
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(null);
+    const [token, setToken] = useState(null); // State to store JWT token
 
     // Axios instance with default headers
     const axiosInstance = axios.create({
         baseURL: API_BASE_URL,
         headers: {
             "Content-Type": "application/json",
-            // Add any other headers as needed
+            Authorization: token ? `Bearer ${token}` : "", // Set Authorization header with token
         },
     });
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
 
     const fetchApi = async (url, setData) => {
         setIsLoading(true);
@@ -34,6 +42,27 @@ function ApiCallComponent() {
             setIsError(error);
             setIsLoading(false);
         }
+    };
+
+    const loginUser = async (credentials) => {
+        try {
+            setIsLoading(true);
+            const res = await axiosInstance.post(LOGIN_API, credentials);
+            setToken(res.data.token);
+            localStorage.setItem("token", res.data.token); // Store token in localStorage
+            setIsLoading(false);
+            return res.data; // Return user and token data
+        } catch (error) {
+            console.error(error);
+            setIsError(error);
+            setIsLoading(false);
+            throw error; // Propagate error to handle in UI
+        }
+    };
+
+    const logoutUser = () => {
+        setToken(null);
+        localStorage.removeItem("token"); // Remove token from localStorage
     };
 
     const addProduct = async (newProduct) => {
@@ -116,13 +145,17 @@ function ApiCallComponent() {
         deleteProduct,
         updateUser,
         deleteUser,
-        userIdToEdit,
-        setUserIdToEdit
+    
+        token,
+        loginUser,
+        logoutUser,
     };
 }
 
 export const SetDataProvider = ({ children }) => {
     const data = ApiCallComponent();
+
+    // Context provider value includes all the state and functions from ApiCallComponent
     return (
         <SetDataContext.Provider value={{ ...data }}>
             {children}

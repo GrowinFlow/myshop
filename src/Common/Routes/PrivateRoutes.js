@@ -39,17 +39,17 @@ function PrivateRoutes() {
 
   const adminRoutes = [
     { label: 'Dashboard', path: '/', element: <Dashbord /> },
-    { label: 'Users', path: '/manage-users', element: <ManageUsers /> },
-    { label: 'Shop', path: '/admin-shop', element: <AdminShop /> },
-    { label: 'Products', path: '/manage-products', element: <ManageProducts /> },
-    { label: 'Orders', path: '/manage-orders', element: <ManageOrders /> },
+    { label: 'Users', path: '/users', element: <ManageUsers /> },
+    { label: 'Shop', path: '/shop', element: <AdminShop /> },
+    { label: 'Products', path: '/products', element: <ManageProducts /> },
+    { label: 'Orders', path: '/orders', element: <ManageOrders /> },
   ];
 
   const managerRoutes = [
       { label: 'Dashboard', path: '/', element: <Dashbord /> },
-      { label: 'Shop', path: '/admin-shop', element: <AdminShop /> },
-      { label: 'Products', path: '/manage-products', element: <ManageProducts /> },
-      { label: 'Orders', path: '/manage-orders', element: <ManageOrders /> },
+      { label: 'Shop', path: '/shop', element: <AdminShop /> },
+      { label: 'Products', path: '/products', element: <ManageProducts /> },
+      { label: 'Orders', path: '/orders', element: <ManageOrders /> },
   ];
 
   let routes = [];
@@ -93,17 +93,17 @@ export function getNavItems(user) {
 
   const adminRoutes = [
     { label: 'Dashboard', path: '/' },
-    { label: 'Users', path: '/manage-users' },
-    { label: 'Shop', path: '/admin-shop' },
-    { label: 'Products', path: '/manage-products' },
-    { label: 'Orders', path: '/manage-orders' },
+    { label: 'Users', path: '/users' },
+    { label: 'Shop', path: '/shop' },
+    { label: 'Products', path: '/products' },
+    { label: 'Orders', path: '/orders' },
   ];
 
   const managerRoutes = [
     { label: 'Dashboard', path: '/' },
-    { label: 'Shop', path: '/admin-shop' },
-    { label: 'Products', path: '/manage-products' },
-    { label: 'Orders', path: '/manage-orders' },
+    { label: 'Shop', path: '/shop' },
+    { label: 'Products', path: '/products' },
+    { label: 'Orders', path: '/orders' },
   ];
 
   return user && user.roles === 'client' ? clientRoutes : user && user.roles === 'admin' ? adminRoutes : user && user.roles === 'manager' ? managerRoutes : [];

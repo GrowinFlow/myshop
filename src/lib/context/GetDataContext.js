@@ -10,7 +10,7 @@ function ApiCallComponent() {
     const [isError, setIsError] = useState(null);
 
     const PRODUCT_API = "https://4004.vercel.app/api/backend/products";
-    const USERS_API = "https://4004.vercel.app/api/backend/USERS";
+    const USERS_API = "https://4004.vercel.app/api/backend/user";
 
     const fetchApi = async (url, setData) => {
         setIsLoading(true);

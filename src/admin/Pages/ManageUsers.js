@@ -8,8 +8,8 @@ function ManageUsers() {
   return (
     <>
 
-      <div className="container mx-auto h-[100vh] px-4 flex flex-col  gap-4">
-        <WelcomeCard data="Add Clients/ Managers/ Admins" />
+      <div className="container mx-auto h-[100vh] px-4 flex flex-col  gap-4 ">
+        <WelcomeCard data=" Clients/ Managers/ Admins" />
         <UsersControlCard />
         <Footer/>
       </div>

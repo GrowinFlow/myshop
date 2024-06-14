@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fa6';
 
 
-const Avatar = ({ avatar, username, avatarColor }) => {
+const Avatar = ({ avatar, username, avatarColor, styleClass }) => {
   const getFirstLetter = (username) => {
     if (avatar) {
       return avatar
@@ -61,7 +61,7 @@ const Avatar = ({ avatar, username, avatarColor }) => {
 
   return (
     <div
-      className={`img-box h-20 rounded-xl flex items-center justify-center overflow-hidden`}
+      className={`img-box rounded-xl flex items-center justify-center overflow-hidden ${styleClass || "h-20 rounded-xl flex items-center justify-center overflow-hidden"}`}
       style={{ background: avatarColor }}
     >
       {avatar && avatar.includes('https://') ? (

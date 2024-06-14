@@ -1,17 +1,53 @@
 import React, { useContext, useState} from 'react';
 import Avatar from '../../../Common/Components/Avatar';
-import { FaPen, FaLock } from 'react-icons/fa6';
+import { FaPen, FaLock, FaEye } from 'react-icons/fa6';
 import { FaTrash } from 'react-icons/fa';
 import { SetDataContext } from '../../../lib/context/SetDataContext';
+import ConfirmToast from '../../../Common/Components/ConfirmToast';
+import SingleUserPrev from '../ManageUsersComponents/SingleUserPrev';
 
 
 
 function UserCard({users}) {
-  const {setUserIdToEdit, userIdToEdit} = useContext(SetDataContext)
-  
+  const { setUserIdToEdit, deleteUser } = useContext(SetDataContext);
+  const [showConfirmToast, setShowConfirmToast] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [showUserPreview, setShowUserPreview] = useState(false);
+
   const setId = (x) => {
-    setUserIdToEdit(x)
-  }
+    setUserIdToEdit(x);
+  };
+
+  const handleViewUser = (userId) => {
+    setSelectedUserId(userId);
+    setShowUserPreview(true);
+  };
+
+  const handleCloseUserPreview = () => {
+    setShowUserPreview(false);
+    setSelectedUserId(null);
+  };
+
+
+  const handleDeleteClick = (userId) => {
+    setSelectedUserId(userId);
+    setShowConfirmToast(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteUser(selectedUserId);
+    setShowConfirmToast(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmToast(false);
+    setSelectedUserId(null);
+  };
+
+  const handleCloseToast = () => {
+    setShowConfirmToast(false);
+    setSelectedUserId(null);
+  };
 
   return (
     <>
@@ -33,18 +69,26 @@ function UserCard({users}) {
           
           <div className="action-D-E flex items-center justify-between gap-2 w-full py-1">
             <button 
-            className='flex items-center text-blue-700 dark:text-blue-400 cursor-pointer' 
+            className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer' 
             title='Edit' 
             onClick={()=>setId(user._id)}>
             <FaPen className='hover:text-black'/>
             </button>
             <span className='themeSpeText'>#{user.roles}</span>
-           
+
+           <span className='flex gap-2 items-center'>
             <button 
-            className='flex items-center cursor-pointer text-red-700 dark:text-red-500' 
-            title='Delete' >
+            className='flex items-center cursor-pointer text-red-700 dark:text-red-600' 
+            title='Delete' 
+            onClick={() => handleDeleteClick(user._id)}>
               <FaTrash/>
             </button>
+            <button 
+            className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300' 
+            onClick={() => handleViewUser(user._id)}>
+              <FaEye/>
+            </button>
+           </span>
           </div>
           
           <div className="name-password flex items-center justify-between gap-2 w-full border-b border-gray-800 dark:border-gray-100">
@@ -66,6 +110,23 @@ function UserCard({users}) {
       </div>
     </div>
     ))}
+    {showConfirmToast && (
+      <div className="fixed bottom-4 right-4">
+        <ConfirmToast
+          title="Delete User"
+          message="Are you sure you want to delete this user?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+          onClose={handleCloseToast}
+        />
+      </div>
+    )}
+     {showUserPreview && selectedUserId && (
+        <SingleUserPrev 
+          userData={selectedUserId} 
+          onClose={handleCloseUserPreview} 
+        />
+      )}
     </>
   );
 }

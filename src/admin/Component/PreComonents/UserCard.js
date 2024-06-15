@@ -49,7 +49,7 @@ function UserCard({ users }) {
 
   const handleEditClick = (userId) => {
     setSelectedUserId(userId)
-    setUserIdToEdit(selectedUserId)
+    setUserIdToEdit(userId)
   };
   
   return (
@@ -77,7 +77,7 @@ function UserCard({ users }) {
                 <button 
                   className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer' 
                   title='Edit' 
-                  onClick={() => handleEditClick(user)}
+                  onClick={() => handleEditClick(user._id)}
                 >
                   <FaPen className='hover:text-black' />
                 </button>

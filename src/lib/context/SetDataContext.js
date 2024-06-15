@@ -3,7 +3,8 @@ import { createContext, useState, useEffect } from "react";
 
 export const SetDataContext = createContext();
 
-const API_BASE_URL = "https://4004.vercel.app/api/backend";
+const API_BASE_URL = "http://4004.vercel.app/api/backend";
+// const API_BASE_URL = "http://localhost:3001/api/backend";
 const USERS_API = `${API_BASE_URL}/users`;
 const REGISTER_USER_API = `${API_BASE_URL}/users/register`;
 
@@ -12,8 +13,8 @@ function ApiCallComponent() {
     const [isLoading, setIsLoading] = useState(false);
 
 
-    const [products, setProducts] = useState([]);
-    const [ userIdToEdit, setUserIdToEdit] = useState([]);
+    const [products, setProducts] = useState(null);
+    const [ userIdToEdit, setUserIdToEdit] = useState(null);
 
     const [isError, setIsError] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token") || null);
@@ -51,22 +52,58 @@ function ApiCallComponent() {
 
     const updateUserIfNeeded = async (userId, updatedUserData) => {
         if (userRole === "admin") {
-            setIsLoading(true);
+            setIsLoading(true); // Show loading state during the update process
+            
+            // Log the updatedUserData to inspect the payload
+            console.log("Attempting to update user with ID:", userId);
+            console.log("Payload:", updatedUserData);
+    
             try {
-                const res = await axiosInstance.patch(`${USERS_API}/${userId}`, updatedUserData);
-                setUsers(users.map((user) => (user._id === userId ? res.data : user)));
-                setIsLoading(false);
-                
+                // Get token from local storage or context
+                const token = localStorage.getItem('token'); // Adjust this based on how you store tokens
+    
+                // Set up headers with the authorization token
+                const headers = {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json' // Ensure content type is JSON
+                };
+    
+                // Make API call to update user data
+                const res = await axiosInstance.patch(`${USERS_API}/${userId}`, updatedUserData, { headers });
+    
+                // Check if response contains updated user data
+                if (res && res.data) {
+                    console.log("User updated successfully:", res.data);
+                    // Replace the updated user in the users array with the response data
+                    setUsers(prevUsers => prevUsers.map(user => user._id === userId ? res.data : user));
+                } else {
+                    console.error("No data returned from the update request");
+                }
             } catch (error) {
                 console.error("Update User Error:", error);
-                setIsError(error);
-                setIsLoading(false);
+    
+                // Detailed logging for troubleshooting
+                if (error.response) {
+                    console.error("Response data:", error.response.data);
+                    console.error("Response status:", error.response.status);
+                    console.error("Response headers:", error.response.headers);
+                } else if (error.request) {
+                    console.error("Request data:", error.request);
+                } else {
+                    console.error("Error message:", error.message);
+                }
+    
+                setIsError(error); // Set error state if there's an issue with the update
+            } finally {
+                setIsLoading(false); // Hide loading state once the update process is done
             }
         } else {
             console.error("Permission denied: User cannot update other users.");
         }
     };
-
+    
+    
+    
     const deleteUserIfNeeded = async (userId) => {
         if (userRole === "admin") {
             setIsLoading(true);
@@ -83,14 +120,18 @@ function ApiCallComponent() {
             console.error("Permission denied: Only admins can delete users.");
         }
     };
-
     const registerUser = async (userData) => {
         try {
             setIsLoading(true);
             const res = await axiosInstance.post(REGISTER_USER_API, userData);
             setIsLoading(false);
             console.log("User registration successful:", res.data);
-            // Optionally, you can update state or perform additional actions upon successful registration
+            
+            // Update local state with the newly registered user
+            setUsers(prevUsers => [...prevUsers, res.data]);
+            
+            // Optionally, you can perform additional actions upon successful registration
+            
         } catch (error) {
             console.error("User registration error:", error);
             setIsError(error);

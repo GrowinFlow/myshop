@@ -75,7 +75,7 @@ function UsersPrevCards() {
             {/* Display users based on the filteredUsers array */}
             <div className="themeGlassBg rounded-xl p-4 themeText flex flex-col gap-2 overflow-y-auto h-[723px]">
             {isLoading ? (
-                    <p>Loading...</p>
+                    <p><span className="loading"></span></p>
                 ) : isError ? (
                     <p>Error loading users. Please check your authentication.</p>
                 ) : (

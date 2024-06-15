@@ -4,6 +4,8 @@ import { FaHome, FaGlobeAfrica } from 'react-icons/fa';
 import Button from "./../../../Common/Components/Button";
 import { SetDataContext } from '../../../lib/context/SetDataContext';
 import Toast from '../../../Common/Components/Toast';
+
+
 function UsersDetailsForm() {
   const { registerUser, updateUserIfNeeded, userIdToEdit, setUserIdToEdit, users, error } = useContext(SetDataContext);
 
@@ -27,53 +29,6 @@ function UsersDetailsForm() {
   });
 
   const [toast, setToast] = useState({ show: false, type: '', message: '' });
-
-  useEffect(() => {
-    if (userIdToEdit) {
-      const userToEdit = users.find(user => user._id === userIdToEdit);
-      if (userToEdit) {
-        const { username, password, email, profile, roles } = userToEdit;
-        setUserData({
-          username: username || '',
-          password: password || '',
-          email: email || '',
-          profile: {
-            firstName: profile?.firstName || '',
-            lastName: profile?.lastName || '',
-            avatar: profile?.avatar || '',
-            dateOfBirth: formatDateToInput(profile?.dateOfBirth) || '',
-            address: profile?.address || '',
-            city: profile?.city || '',
-            state: profile?.state || '',
-            country: profile?.country || '',
-            zipCode: profile?.zipCode || '',
-          },
-          roles: roles || 'client'
-        });
-        setActionType('Update');
-      }
-    } else {
-      setActionType('Add');
-      setUserData({
-        username: '',
-        password: '',
-        email: '',
-        profile: {
-          firstName: '',
-          lastName: '',
-          avatar: '',
-          dateOfBirth: '',
-          address: '',
-          city: '',
-          state: '',
-          country: '',
-          zipCode: '',
-        },
-        roles: 'client'
-      });
-    }
-  }, [userIdToEdit, users]);
-
   const formatDateToInput = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -82,45 +37,98 @@ function UsersDetailsForm() {
     const day = date.getUTCDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name.startsWith('profile.')) {
-      const profileField = name.split('.')[1];
-      setUserData(prevUserData => ({
-        ...prevUserData,
+console.log(userIdToEdit )
+useEffect(() => {
+  if (userIdToEdit) {
+    const userToEdit = users.find(user => user._id === userIdToEdit);
+    if (userToEdit) {
+      const { username, password, email, profile, roles } = userToEdit;
+      setUserData({
+        username: username || '',
+        password: password || '',
+        email: email || '',
         profile: {
-          ...prevUserData.profile,
-          [profileField]: value
-        }
-      }));
-    } else {
-      setUserData(prevUserData => ({
-        ...prevUserData,
-        [name]: value
-      }));
+          firstName: profile?.firstName || '',
+          lastName: profile?.lastName || '',
+          avatar: profile?.avatar || '',
+          dateOfBirth: formatDateToInput(profile?.dateOfBirth) || '',
+          address: profile?.address || '',
+          city: profile?.city || '',
+          state: profile?.state || '',
+          country: profile?.country || '',
+          zipCode: profile?.zipCode || '',
+        },
+        roles: roles || 'client'
+      });
+      setActionType('Update');
     }
-  };
+  } else {
+    setActionType('Add');
+    setUserData({
+      username: '',
+      password: '',
+      email: '',
+      profile: {
+        firstName: '',
+        lastName: '',
+        avatar: '',
+        dateOfBirth: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+        zipCode: '',
+      },
+      roles: 'client'
+    });
+  }
+}, [userIdToEdit, users]);
 
-  const handleAddOrUpdateUser = async (e) => {
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name.startsWith('profile.')) {
+    const profileField = name.split('.')[1];
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      profile: {
+        ...prevUserData.profile,
+        [profileField]: value
+      }
+    }));
+  } else {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      [name]: value
+    }));
+  }
+};
+
+const handleAddOrUpdateUser = async (e) => {
     e.preventDefault();
     try {
-      if (userIdToEdit) {
-        await updateUserIfNeeded(userIdToEdit, userData);
-        setToast({ show: true, type: 'success', message: 'User updated successfully!' });
-      } else {
-        await registerUser(userData);
-        setToast({ show: true, type: 'success', message: 'User added successfully!' });
-      }
-      setTimeout(() => {
-        setToast({ ...toast, show: false });
-      }, 5000);
-      setUserIdToEdit(null);
+        if (userIdToEdit) {
+            await updateUserIfNeeded(userIdToEdit, userData);
+            setToast({ show: true, type: 'success', message: 'User updated successfully!' });
+        } else {
+            const isDuplicate = users.some(user => user.username === userData.username || user.email === userData.email);
+            if (isDuplicate) {
+                setToast({ show: true, type: 'error', message: 'Username or email already exists!' });
+                return;
+            }
+            await registerUser(userData);
+            setToast({ show: true, type: 'success', message: 'User added successfully!' });
+        }
+        setTimeout(() => {
+            setToast({ ...toast, show: false });
+        }, 5000);
+        setUserIdToEdit(null);
     } catch (error) {
-      setToast({ show: true, type: 'error', message: 'Error updating user. Please try again.' });
+        console.error("Error in handleAddOrUpdateUser:", error);
+        setToast({ show: true, type: 'error', message: 'Error updating user. Please try again.' });
     }
-  };
+};
+
 
   const handleCloseToast = () => {
     setToast({ ...toast, show: false });
@@ -205,7 +213,7 @@ function UsersDetailsForm() {
                 value={userData.email}
                 onChange={handleInputChange}
                 placeholder="Email ..."
-                className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+                className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
                 required />
             </div>
             <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
@@ -372,14 +380,28 @@ export default UsersDetailsForm;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React, { useState, useContext } from 'react';
 // import { FaUser, FaUserTie, FaZhihu, FaLock, FaEnvelope, FaImage, FaRegCalendar, FaCity, FaMap, FaCode, FaUsersRays } from 'react-icons/fa6';
 // import { FaHome ,FaGlobeAfrica, } from 'react-icons/fa';
-// import { AuthContext } from '../../lib/context/LoginContext'; // Adjust the path accordingly
-// import Button from '../Components/Button'; // Adjust the path accordingly
+
+// import Button from "./../../../Common/Components/Button";
+// import { SetDataContext } from '../../../lib/context/SetDataContext';
 
 // const RegisterForm = () => {
-//   const { registerUser } = useContext(AuthContext); // Using AuthContext to get registerUser function
+//   const { registerUser } = useContext(SetDataContext); // Using AuthContext to get registerUser function
 //   const [userData, setUserData] = useState({
 //     profile: {
 //       firstName: '',

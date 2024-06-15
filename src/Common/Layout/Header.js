@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { FaCartShopping } from 'react-icons/fa6';
 import ThemeToggle from '../../lib/Theme/ThemeToggle';
 import Logo from '../../Common/Components/Logo';
-import { AuthContext } from '../../lib/context/LoginContext';
+import { AuthContext } from '../../lib/context/Auth';
 import CartIcon from '../../user/Component/PreComonents/CartIcon'
 
 import { getNavItems } from '../Routes/PrivateRoutes'; // Ensure this path is correct

@@ -4,11 +4,10 @@ import { FaHome, FaGlobeAfrica } from 'react-icons/fa';
 import Button from "./../../../Common/Components/Button";
 import { SetDataContext } from '../../../lib/context/SetDataContext';
 import Toast from '../../../Common/Components/Toast';
-
 function UsersDetailsForm() {
-  const { addUser, updateUser, userIdToEdit, setUserIdToEdit, users } = useContext(SetDataContext);
+  const { registerUser, updateUserIfNeeded, userIdToEdit, setUserIdToEdit, users, error } = useContext(SetDataContext);
 
-  const [txt, setTxt] = useState("Add");
+  const [actionType, setActionType] = useState('Add');
   const [userData, setUserData] = useState({
     username: '',
     password: '',
@@ -51,10 +50,10 @@ function UsersDetailsForm() {
           },
           roles: roles || 'client'
         });
-        setTxt("Update");
+        setActionType('Update');
       }
     } else {
-      // Reset form fields when userIdToEdit is null (i.e., adding a new user)
+      setActionType('Add');
       setUserData({
         username: '',
         password: '',
@@ -108,28 +107,11 @@ function UsersDetailsForm() {
     e.preventDefault();
     try {
       if (userIdToEdit) {
-        await updateUser(userIdToEdit, userData);
+        await updateUserIfNeeded(userIdToEdit, userData);
         setToast({ show: true, type: 'success', message: 'User updated successfully!' });
       } else {
-        await addUser(userData);
+        await registerUser(userData);
         setToast({ show: true, type: 'success', message: 'User added successfully!' });
-        setUserData({
-          username: '',
-          password: '',
-          email: '',
-          profile: {
-            firstName: '',
-            lastName: '',
-            avatar: '',
-            dateOfBirth: '',
-            address: '',
-            city: '',
-            state: '',
-            country: '',
-            zipCode: '',
-          },
-          roles: 'client'
-        });
       }
       setTimeout(() => {
         setToast({ ...toast, show: false });
@@ -148,7 +130,7 @@ function UsersDetailsForm() {
     <>
       <div className="flex flex-col gap-2 ">
         <div className="themeGlassBg rounded-xl p-6 themeText">
-          <span className='text-xl font-bold'>{txt} user:</span>
+          <span className='text-xl font-bold'>{actionType} user:</span>
         </div>
 
         <form onSubmit={handleAddOrUpdateUser} className='flex flex-col items-center gap-4 themeGlassBg rounded-xl p-4 themeText overflow-y-auto '>
@@ -348,7 +330,7 @@ function UsersDetailsForm() {
           </div>
 
           <div className='w-full flex justify-center items-center'>
-            <Button type="submit" styleClass="px-6 py-2 rounded-lg font-bold w-full flex justify-center items-center h-12" text={txt} />
+            <Button type="submit" styleClass="px-6 py-2 rounded-lg font-bold w-full flex justify-center items-center h-12" text={actionType} />
           </div>
         </form>
       </div>
@@ -435,7 +417,7 @@ export default UsersDetailsForm;
 //     }
 //   };
 
-//   const handleAddOrUpdateUser = async (e) => {
+//   const handleAddOrupdateUserIfNeeded = async (e) => {
 //     e.preventDefault();
 //     try {
 //       const response = await registerUser(userData);
@@ -448,7 +430,7 @@ export default UsersDetailsForm;
 //   };
 
 //   return (
-//     <form onSubmit={handleAddOrUpdateUser} className='flex flex-col items-center gap-4 themeGlassBg rounded-xl p-4 themeText overflow-y-auto'>
+//     <form onSubmit={handleAddOrupdateUserIfNeeded} className='flex flex-col items-center gap-4 themeGlassBg rounded-xl p-4 themeText overflow-y-auto'>
 //       <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
 //         <div className="relative flex gap-2 bg rounded-xl items-center h-16 p-2 w-full">
 //           <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">

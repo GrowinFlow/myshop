@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AuthProvider } from './lib/context/LoginContext';
+import { AuthProvider } from './lib/context/Auth';
 import { GetDataProvider } from './lib/context/GetDataContext';
 import { SetDataProvider } from './lib/context/SetDataContext';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 
@@ -14,17 +14,18 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     
+    <Router>
 
     <AuthProvider>
     <GetDataProvider>
       <SetDataProvider>
 
-
     <App />
+
       </SetDataProvider>
     </GetDataProvider>
-    
     </AuthProvider>
+    </Router>
     
   </React.StrictMode>
 );

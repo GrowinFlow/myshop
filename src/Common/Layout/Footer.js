@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Button from '../Components/Button';
 import Logo from '../Components/Logo';
-import { AuthContext } from '../../lib/context/LoginContext';
+import { AuthContext } from '../../lib/context/Auth';
 
 function Footer() {
   const { logout, user } = useContext(AuthContext);

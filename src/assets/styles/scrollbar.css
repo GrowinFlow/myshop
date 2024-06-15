@@ -6,10 +6,11 @@
   }
   
   *::-webkit-scrollbar-track {
+    border-radius: 10px;
     background-image: url('./../images/bgImg.jpg'); }
   
   *::-webkit-scrollbar-thumb {
-    background-color: #46494e; /* Thumb color */
+    background-color: #2e2e2e; /* Thumb color */
     border-radius: 8px; /* Rounded corners for the scrollbar thumb */
   }
   

@@ -4,158 +4,122 @@ import { createContext, useState, useEffect } from "react";
 export const SetDataContext = createContext();
 
 const API_BASE_URL = "https://4004.vercel.app/api/backend";
-const PRODUCT_API = `${API_BASE_URL}/products`;
 const USERS_API = `${API_BASE_URL}/users`;
-const LOGIN_API = `${API_BASE_URL}/login`; // Endpoint for user login
+const REGISTER_USER_API = `${API_BASE_URL}/users/register`;
 
 function ApiCallComponent() {
-    const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(null);
-    const [token, setToken] = useState(null); // State to store JWT token
 
-    // Axios instance with default headers
+
+    const [products, setProducts] = useState([]);
+    const [ userIdToEdit, setUserIdToEdit] = useState([]);
+
+    const [isError, setIsError] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("token") || null);
+    const [userRole, setUserRole] = useState(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            return parsedUser.roles || null;
+        }
+        return null;
+    });
+
     const axiosInstance = axios.create({
         baseURL: API_BASE_URL,
         headers: {
             "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "", // Set Authorization header with token
+            Authorization: token ? `Bearer ${token}` : "",
         },
     });
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-            setToken(storedToken);
-        }
-    }, []);
-
-    const fetchApi = async (url, setData) => {
-        setIsLoading(true);
-        try {
-            const res = await axiosInstance.get(url);
-            setData(res.data);
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
+    const fetchUsersIfNeeded = async () => {
+        if (userRole === "admin") {
+            setIsLoading(true);
+            try {
+                const res = await axiosInstance.get(USERS_API);
+                setUsers(res.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Fetch Users Error:", error);
+                setIsError(error);
+                setIsLoading(false);
+            }
         }
     };
 
-    const loginUser = async (credentials) => {
+    const updateUserIfNeeded = async (userId, updatedUserData) => {
+        if (userRole === "admin") {
+            setIsLoading(true);
+            try {
+                const res = await axiosInstance.patch(`${USERS_API}/${userId}`, updatedUserData);
+                setUsers(users.map((user) => (user._id === userId ? res.data : user)));
+                setIsLoading(false);
+                
+            } catch (error) {
+                console.error("Update User Error:", error);
+                setIsError(error);
+                setIsLoading(false);
+            }
+        } else {
+            console.error("Permission denied: User cannot update other users.");
+        }
+    };
+
+    const deleteUserIfNeeded = async (userId) => {
+        if (userRole === "admin") {
+            setIsLoading(true);
+            try {
+                await axiosInstance.delete(`${USERS_API}/${userId}`);
+                setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+            } catch (error) {
+                console.error("Delete User Error:", error);
+                setIsError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        } else {
+            console.error("Permission denied: Only admins can delete users.");
+        }
+    };
+
+    const registerUser = async (userData) => {
         try {
             setIsLoading(true);
-            const res = await axiosInstance.post(LOGIN_API, credentials);
-            setToken(res.data.token);
-            localStorage.setItem("token", res.data.token); // Store token in localStorage
+            const res = await axiosInstance.post(REGISTER_USER_API, userData);
             setIsLoading(false);
-            return res.data; // Return user and token data
+            console.log("User registration successful:", res.data);
+            // Optionally, you can update state or perform additional actions upon successful registration
         } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
-            throw error; // Propagate error to handle in UI
-        }
-    };
-
-    const logoutUser = () => {
-        setToken(null);
-        localStorage.removeItem("token"); // Remove token from localStorage
-    };
-
-    const addProduct = async (newProduct) => {
-        try {
-            setIsLoading(true);
-            const res = await axiosInstance.post(PRODUCT_API, newProduct);
-            setProducts([...products, res.data]);
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
-        }
-    };
-
-    const addUser = async (newUser) => {
-        try {
-            setIsLoading(true);
-            const res = await axiosInstance.post(USERS_API, newUser);
-            setUsers([...users, res.data]);
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
-        }
-    };
-
-    const deleteProduct = async (productId) => {
-        try {
-            setIsLoading(true);
-            await axiosInstance.delete(`${PRODUCT_API}/${productId}`);
-            setProducts(products.filter(product => product.id !== productId));
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
-        }
-    };
-
-    const updateUser = async (userId, updatedUserData) => {
-        try {
-            setIsLoading(true);
-            const res = await axiosInstance.patch(`${USERS_API}/${userId}`, updatedUserData);
-            setUsers(users.map(user => user.id === userId ? res.data : user));
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setIsError(error);
-            setIsLoading(false);
-        }
-    };
-
-    const deleteUser = async (userId) => {
-        try {
-            setIsLoading(true);
-            await axiosInstance.delete(`${USERS_API}/${userId}`);
-            setUsers(users.filter(user => user.id !== userId));
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
+            console.error("User registration error:", error);
             setIsError(error);
             setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchApi(PRODUCT_API, setProducts);
-        fetchApi(USERS_API, setUsers);
-    }, []); // Empty dependency array, runs only once on mount
+        fetchUsersIfNeeded();
+    }, [userRole]);
 
     return {
-        products,
         users,
+        setUsers, 
+        userIdToEdit, setUserIdToEdit,
+        products, setProducts,
+        token,
         isLoading,
         isError,
-        addProduct,
-        addUser,
-        deleteProduct,
-        updateUser,
-        deleteUser,
-    
-        token,
-        loginUser,
-        logoutUser,
+        updateUserIfNeeded,
+        deleteUserIfNeeded,
+        registerUser,
+        userRole,
     };
 }
 
 export const SetDataProvider = ({ children }) => {
     const data = ApiCallComponent();
 
-    // Context provider value includes all the state and functions from ApiCallComponent
     return (
         <SetDataContext.Provider value={{ ...data }}>
             {children}

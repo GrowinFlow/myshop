@@ -1,7 +1,6 @@
 // App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './lib/context/LoginContext';
 import PrivateRoutes from './Common/Routes/PrivateRoutes';
 import LoginPage from './Common/Auth/LoginPage';
 import Main from './Common/Layout/Main';
@@ -22,8 +21,7 @@ function App() {
     <>
     <div className="bg font-serif md:font-mono">
 
-    <Router>
-      <AuthProvider>
+
       <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
 
         <Main>
@@ -33,8 +31,7 @@ function App() {
           </Routes>
         </Main>
 
-      </AuthProvider>
-    </Router>
+    
     </div>
     </>
   );

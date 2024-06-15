@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../lib/context/LoginContext';
+import { AuthContext } from '../../lib/context/Auth';
 import NotFound from '../Pages/NotFound';
 
 // Lazy load components
@@ -9,25 +9,22 @@ const Shop = lazy(() => import('../../user/Pages/Shop'));
 const Product = lazy(() => import('../../user/Pages/Product'));
 const Cart = lazy(() => import('../../user/Pages/Cart'));
 const Contact = lazy(() => import('../../user/Pages/Contact'));
-const Dashbord = lazy(() => import('../../admin/Pages/Dashbord'));
+const Dashboard = lazy(() => import('../../admin/Pages/Dashbord'));
 const ManageOrders = lazy(() => import('../../admin/Pages/ManageOrders'));
 const ManageProducts = lazy(() => import('../../admin/Pages/ManageProducts'));
 const ManageUsers = lazy(() => import('../../admin/Pages/ManageUsers'));
 const AdminShop = lazy(() => import('../../admin/Pages/AdminShop'));
-
-function PrivateRoutes() {
-  const { user } = useContext(AuthContext);
+const PrivateRoutes = () => {
+  const { user, token, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
-      console.log('User not found, redirecting to login');
+      console.log('User not found or token expired, redirecting to login');
+      logout(); // clear any user data and token
       navigate('/login');
-    } else {
-      console.log('User found:');
-      // console.log('User found:'user);
     }
-  }, [user, navigate]);
+  }, [user, navigate, logout]);
 
   const clientRoutes = [
     { label: 'Home', path: '/', element: <Home /> },
@@ -38,7 +35,7 @@ function PrivateRoutes() {
   ];
 
   const adminRoutes = [
-    { label: 'Dashboard', path: '/', element: <Dashbord /> },
+    { label: 'Dashboard', path: '/', element: <Dashboard /> },
     { label: 'Users', path: '/users', element: <ManageUsers /> },
     { label: 'Shop', path: '/shop', element: <AdminShop /> },
     { label: 'Products', path: '/products', element: <ManageProducts /> },
@@ -46,10 +43,10 @@ function PrivateRoutes() {
   ];
 
   const managerRoutes = [
-      { label: 'Dashboard', path: '/', element: <Dashbord /> },
-      { label: 'Shop', path: '/shop', element: <AdminShop /> },
-      { label: 'Products', path: '/products', element: <ManageProducts /> },
-      { label: 'Orders', path: '/orders', element: <ManageOrders /> },
+    { label: 'Dashboard', path: '/', element: <Dashboard /> },
+    { label: 'Shop', path: '/shop', element: <AdminShop /> },
+    { label: 'Products', path: '/products', element: <ManageProducts /> },
+    { label: 'Orders', path: '/orders', element: <ManageOrders /> },
   ];
 
   let routes = [];
@@ -71,16 +68,16 @@ function PrivateRoutes() {
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <React.Suspense fallback={<div>Loading...</div>}>
       <Routes>
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />
         ))}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </Suspense>
+    </React.Suspense>
   );
-}
+};
 
 export function getNavItems(user) {
   const clientRoutes = [

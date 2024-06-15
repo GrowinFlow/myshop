@@ -3,12 +3,12 @@ import { FaUser, FaLock, FaPaperPlane } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
 import GlassCard from '../Components/GlassCard'; // Adjust path as needed
 import Button from '../Components/Button'; // Adjust path as needed
-import { AuthContext } from '../../lib/context/LoginContext'; // Adjust path as needed
+import { AuthContext } from '../../lib/context/Auth'; // Adjust path as needed
 import img from '../../assets/images/loginImg.png'; // Adjust path as needed
 import Footer from '../../Common/Layout/Footer'; // Adjust path as needed
 
 function LoginPage() {
-  const { user, login, isError, setIsError, isLoading , setIsLoading} = useContext(AuthContext);
+  const { user, login, isError, setIsError, isLoading , setIsLoading, } = useContext(AuthContext);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [redirect, setRedirect] = useState(false);
 
@@ -16,7 +16,7 @@ function LoginPage() {
     const { name, value } = e.target;
     setCredentials((prevState) => ({ ...prevState, [name]: value }));
   };
-
+console.log(user, "+++++++++++++++++", user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);

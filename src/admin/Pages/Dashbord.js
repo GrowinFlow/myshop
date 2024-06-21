@@ -15,8 +15,8 @@ function Dashbord() {
       <div className="container mx-auto min-h-[75vh] px-4 h-auto flex flex-col  gap-4">
 
 
-        <WelcomeCard text="Welcome &nbsp;" data={useName + "!"} />
-
+        <WelcomeCard text="Welcome &nbsp;" data={useName + "!"+ process.env.REACT_APP_BASE_URL} />
+<b>{process.env.API_BASE_URL}</b>
         <MainStats />
         <SecStats />
 

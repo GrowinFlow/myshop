@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 
 export const SetDataContext = createContext();
-
+console.log(process.env.REACT_APP_BASE_URL)
 const API_BASE_URL = "http://4004.vercel.app/api/backend";
 // const API_BASE_URL = "http://localhost:3001/api/backend";
 const USERS_API = `${API_BASE_URL}/users`;

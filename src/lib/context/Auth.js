@@ -6,6 +6,7 @@ const AuthContext = createContext();
 const API_BASE_URL = 'https://4004.vercel.app/api/backend';
 
 const AuthProvider = ({ children }) => {
+  const [basename, setBasename] = useState('default'); 
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -121,6 +122,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
+    
       value={{
         user,
         login,
@@ -131,6 +133,8 @@ const AuthProvider = ({ children }) => {
         setIsError,
         isError,
         registerUser,
+        basename,
+        setBasename
         // updateUser,
         // deleteUser,
       }}

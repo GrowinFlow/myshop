@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route from Lahore to User's Location</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 85vh;
+            width: 100%;
+        }
+
+        #route-info {
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div id="route-info"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        var map = L.map('map').setView([31.5497, 74.3436], 13);
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Marker for Lahore
+        var lahoreMarker = L.marker([31.5497, 74.3436]).addTo(map)
+            .bindPopup("Starting Point: Lahore")
+            .openPopup();
+
+        // Function to handle location found
+        function onLocationFound(e) {
+            var userLatLng = e.latlng;
+
+            // Clear existing markers and routing control
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker || layer instanceof L.Routing.Control) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // Add a marker at the user's location
+            var userMarker = L.marker(userLatLng).addTo(map)
+                .bindPopup("Destination: " + userLatLng.lat.toFixed(6) + ", " + userLatLng.lng.toFixed(6))
+                .openPopup();
+
+            // Set up routing control from Lahore to the user's location
+            var control = L.Routing.control({
+                waypoints: [
+                    L.latLng(31.5497, 74.3436), // Lahore
+                    userLatLng // User's location
+                ],
+                routeWhileDragging: true, // Update route while dragging waypoints
+                createMarker: function () {
+                    return null; // Disable default markers on waypoints
+                }
+            }).addTo(map);
+
+            // Event listener for route found
+            control.on('routesfound', function (e) {
+                var routes = e.routes;
+                var route = routes[0]; // Assuming only one route is found
+
+                // Get distance and time from route summary
+                var distance = route.summary.totalDistance / 1000; // in kilometers
+                var time = route.summary.totalTime / 60; // in minutes
+
+                // Update route information in the div
+                document.getElementById('route-info').innerHTML = `
+                    <p>Distance: ${distance.toFixed(2)} km</p>
+                    <p>Time: ${time.toFixed(0)} minutes</p>
+                `;
+            });
+        }
+
+        // Function to handle location error
+        function onLocationError(e) {
+            var errorMessage = "Geolocation failed: " + e.message;
+            console.error(errorMessage);
+            alert(errorMessage);
+
+            // Optionally, handle the error gracefully or show a fallback location
+        }
+
+        // Use the map's locate method to find the user's current location
+        map.locate({ setView: true, maxZoom: 16 });
+
+        // Event listener for successful location found
+        map.on('locationfound', onLocationFound);
+
+        // Event listener for location error
+        map.on('locationerror', onLocationError);
+    </script>
+</body>
+
+</html>
+

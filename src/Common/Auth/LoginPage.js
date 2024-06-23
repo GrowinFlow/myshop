@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FaUser, FaLock, FaPaperPlane } from 'react-icons/fa';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import GlassCard from '../Components/GlassCard'; // Adjust path as needed
 import Button from '../Components/Button'; // Adjust path as needed
 import { AuthContext } from '../../lib/context/Auth'; // Adjust path as needed
@@ -9,7 +9,7 @@ import Footer from '../../Common/Layout/Footer'; // Adjust path as needed
 
 function LoginPage() {
   const { user, login, isError, setIsError, isLoading , setIsLoading, } = useContext(AuthContext);
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({ identifier: '', password: '' });
   const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ console.log(user, "+++++++++++++++++", user)
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await login(credentials.username, credentials.password);
+      const response = await login(credentials.identifier, credentials.password);
       if (response) {
         setRedirect(true);
       } else {
@@ -40,8 +40,8 @@ console.log(user, "+++++++++++++++++", user)
   }
 
   return (
-    <div className="container mx-auto px-4 flex flex-col justify-center items-center">
-      <GlassCard styleClass="container mx-auto px-4 py-6 flex flex-col justify-center items-center">
+    <div className="container mx-auto px-4 flex flex-col justify-center items-center ">
+      <GlassCard styleClass="container mx-auto px-4 py-6 flex flex-col justify-center items-center gap-4">
         <div className="heading themeGlassBg w-full rounded-xl mb-4 p-4 text-2xl font-bold flex justify-center items-center">
           <h1>Login</h1>
         </div>
@@ -58,8 +58,8 @@ console.log(user, "+++++++++++++++++", user)
               </div>
               <input
                 type="text"
-                name="username"
-                value={credentials.username}
+                name="identifier"
+                value={credentials.identifier}
                 onChange={handleChange}
                 placeholder="Enter Your Username or Email . . ."
                 className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
@@ -94,6 +94,17 @@ console.log(user, "+++++++++++++++++", user)
 
             {isError && <p className="text-red-500">Login failed. Please try again.</p>}
           </form>
+        </div>
+
+        <div className="themeGlassBg w-full rounded-xl form p-4 text-2xl font-bold flex justify-center items-center">
+          <p className='text-sm flex items-center'> 
+            Don't have an account?{' '}
+            <Link to="/register" >
+              <span className="themeSpeText">
+            &nbsp;  Register here
+              </span>
+            </Link>
+          </p>
         </div>
       </GlassCard>
 

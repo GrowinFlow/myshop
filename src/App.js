@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './Common/Routes/PrivateRoutes';
 import LoginPage from './Common/Auth/LoginPage';
+import RegisterPage from './Common/Auth/RegisterPage';
+
 import Main from './Common/Layout/Main';
 import Header from './Common/Layout/Header';
 
@@ -27,6 +29,7 @@ function App() {
         <Main>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<PrivateRoutes />} /> {/* Catch all route */}
           </Routes>
         </Main>

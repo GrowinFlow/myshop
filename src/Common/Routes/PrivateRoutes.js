@@ -15,12 +15,12 @@ const ManageProducts = lazy(() => import('../../admin/Pages/ManageProducts'));
 const ManageUsers = lazy(() => import('../../admin/Pages/ManageUsers'));
 const AdminShop = lazy(() => import('../../admin/Pages/AdminShop'));
 const PrivateRoutes = () => {
-  const { user, token, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
-      console.log('User not found or token expired, redirecting to login');
+      console.log('User not found , redirecting to login');
       logout(); // clear any user data and token
       navigate('/login');
     }

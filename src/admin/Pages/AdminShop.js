@@ -14,12 +14,12 @@ function AdminShop() {
 
       <GlassCard>
         <div className="themeGlassBg rounded-2xl p-4">
-          <iframe
+          {/* <iframe
             srcDoc={`<!DOCTYPE html><html><head><title>React Component</title></head><body>${componentHTML}</body></html>`}
             frameborder="0"
             title='k'
             className='w-full min-h-96'
-          ></iframe>
+          ></iframe> */}
         </div>
       </GlassCard>
 

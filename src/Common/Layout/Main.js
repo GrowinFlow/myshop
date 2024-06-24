@@ -5,7 +5,7 @@ function Main({ children }) {
   return (
     <>
     <div className='h-auto '>
-      <main className=' relative top-20 lg:top-24 '>
+      <main className=' relative top-24 lg:top-32 '>
         {children}
       </main>
       {/* <Footer/> */}

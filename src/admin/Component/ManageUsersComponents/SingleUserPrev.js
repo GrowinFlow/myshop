@@ -3,21 +3,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import GlassCard from '../../../Common/Components/GlassCard';
 import { FaTimes } from 'react-icons/fa';
-import { SetDataContext } from '../../../lib/context/SetDataContext';
 import Avatar from '../../../Common/Components/Avatar';
+import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
+
 
 function SingleUserPrev({ userData, onClose }) {
-    const { users } = useContext(SetDataContext);
+    const { totalUsers } = useContext(TotalUsersContext);
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
         if (userData) {
-            const userObj = users.find(user => user._id === userData);
+            const userObj = totalUsers.find(user => user._id === userData);
             if (userObj) {
                 setUserDetails(userObj);
             }
         }
-    }, [userData, users]);
+    }, [userData, totalUsers]);
 
     // Helper function to format date to "15 May 1990"
     function formatDate(dateString) {

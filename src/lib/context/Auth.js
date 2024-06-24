@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -31,12 +32,11 @@ const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+
   const registerUser = async (newUserData) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/register`, newUserData);
       const { data } = response;
-      console.log('Register User Response:', data);
-  
       if (data && data.user) {
         setUser(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -50,7 +50,6 @@ const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-
 
   const logout = () => {
     setUser(null);
@@ -67,7 +66,6 @@ const AuthProvider = ({ children }) => {
         isLoading,
         setIsLoading,
         isError,
-        setIsError,
       }}
     >
       {!isLoading && children}

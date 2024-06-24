@@ -9,7 +9,7 @@ import CartIcon from '../../user/Component/PreComonents/CartIcon'
 import { getNavItems } from '../Routes/PrivateRoutes'; // Ensure this path is correct
 import NavBar from './PreComponents/NavBar';
 import { Link } from 'react-router-dom';
-import SearchBar from './PreComponents/SearchBar';
+import SearchBar from '../Components/SearchBar';
 
 
 

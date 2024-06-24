@@ -1,35 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react'
 import GlassCard from '../../../Common/Components/GlassCard'
-import { FaCartPlus, FaMoneyBill, FaUserAstronaut, FaUserCog, FaTags } from 'react-icons/fa'
+import { FaMoneyBill, FaUserAstronaut, FaUserCog, FaTags } from 'react-icons/fa'
 import { FaBoxesStacked, FaUsers } from 'react-icons/fa6'
 import StatsBox from './PreComponents/StatsBox'
-import { GetDataContext } from '../../../lib/context/GetDataContext'
-
+import { LengthContext } from '../../../lib/context/admin/LengthContext'
 
 
 
 function MainStats() {
-  const {products, users} = useContext(GetDataContext)
-  
-  const [totalProducts, setTotalProducts] = useState(0)
-  const [totalManagers, setTotalManagers] = useState()
-  const [totalUsers, setTotalUsers] = useState()
-  const [totalAdmins, setTotalAdmins] = useState()
-
-  useEffect(() => {
-    if (users && users.length > 0) {
-      const roleCounts = users.reduce((counts, user) => {
-        counts[user.roles] = (counts[user.roles] || 0) + 1;
-        return counts;
-      }, {});
-  
-      setTotalUsers(roleCounts["client"] || 0);
-      setTotalManagers(roleCounts["manager"] || 0);
-      setTotalAdmins(roleCounts["admin"] || 0);
-
-      setTotalProducts(products.length);
+  const {lengths, isLoading, error} = useContext(LengthContext)
+  // Inside LengthProvider useEffect
+useEffect(() => {
+  const fetchLengths = async () => {
+    try {
+      console.log('Fetched lengths:', lengths); // Check what's being fetched
+    } catch (error) {
+      console.error("Error fetching lengths:", error);
     }
-  }, [users]);
+  };
+
+  fetchLengths();
+}, []);
+
 
 
   // const [totalSelling, setTotalSelling] = useState(products.length)
@@ -38,16 +30,16 @@ function MainStats() {
   return (
 
     <GlassCard styleClass="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 justify-center gap-4">
-     
-<StatsBox heading="Admins" icon={<FaUserAstronaut/>} data={totalAdmins} />
-<StatsBox heading="Manager" icon={<FaUserCog/>} data={totalManagers} />
-<StatsBox heading="Users" icon={<FaUsers/>} data={totalUsers} />
-<StatsBox heading="Sells" icon={<FaMoneyBill/>} data={""} />
-<StatsBox heading="Products" icon={<FaBoxesStacked/>} data={totalProducts} />
-<StatsBox heading="Offers" icon={<FaTags/>} data={""} />
-
-
-    </GlassCard>
+      <>
+        <StatsBox heading="Admins" icon={<FaUserAstronaut />} data={lengths.admins || 0} error={error} loading={isLoading} />
+        <StatsBox heading="Manager" icon={<FaUserCog />} data={lengths.managers || 0} error={error} loading={isLoading} />
+        <StatsBox heading="Users" icon={<FaUsers />} data={lengths.users || 0} error={error} loading={isLoading} />
+        <StatsBox heading="Sells" icon={<FaMoneyBill />} data={0} error={error} loading={isLoading} />
+        <StatsBox heading="Products" icon={<FaBoxesStacked />} data={lengths.products || 0} error={error} loading={isLoading} />
+        <StatsBox heading="Offers" icon={<FaTags />} data={0} error={error} loading={isLoading} />
+      </>
+  
+  </GlassCard>
     
   )
 }

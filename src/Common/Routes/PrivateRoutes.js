@@ -2,6 +2,7 @@ import React, { useContext, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../lib/context/Auth';
 import NotFound from '../Pages/NotFound';
+import Loading from '../Components/Loading';
 
 // Lazy load components
 const Home = lazy(() => import('../../user/Pages/Home'));
@@ -68,7 +69,7 @@ const PrivateRoutes = () => {
   }
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+<React.Suspense fallback={<Loading />}>
       <Routes>
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />

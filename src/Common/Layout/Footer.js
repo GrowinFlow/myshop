@@ -22,7 +22,7 @@ function Footer() {
               </div>
               {user && (
                 <div className="logout">
-                  <Button text="Logout" function={handleLogout} styleClass="my-0 my-0"/>
+                  <Button text="Logout" onClick={handleLogout} styleClass="my-0 my-0"/>
                 </div>
               )}
             </div>

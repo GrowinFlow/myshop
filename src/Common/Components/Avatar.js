@@ -61,13 +61,13 @@ const Avatar = ({ avatar, username, avatarColor, styleClass }) => {
 
   return (
     <div
-      className={`img-box rounded-xl flex items-center justify-center overflow-hidden ${styleClass || "h-20 rounded-xl flex items-center justify-center overflow-hidden"}`}
+      className={`img-box rounded-xl flex items-center justify-center overflow-hidden ${styleClass || "h-20 rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear"}`}
       style={{ background: avatarColor }}
     >
       {avatar && avatar.includes('https://') ? (
-        <img src={avatar} alt={username} className='object-fit' />
+        <img src={avatar} alt={username} className='object-fit group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear' />
       ) : (
-        <span className="themeText font-bold text-[2rem]">{avatarIcon}</span>
+        <span className="themeText font-bold text-[2rem] group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear">{avatarIcon}</span>
       )}
     </div>
   );

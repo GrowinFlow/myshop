@@ -41,6 +41,7 @@ const PrivateRoutes = () => {
     { label: 'Users', path: '/users/:next', element: <ManageUsers /> },
     { label: 'Shop', path: '/shop', element: <AdminShop /> },
     { label: 'Products', path: '/products', element: <ManageProducts /> },
+    { label: 'Products', path: '/products/:next', element: <ManageProducts /> },
     { label: 'Orders', path: '/orders', element: <ManageOrders /> },
   ];
 
@@ -48,6 +49,7 @@ const PrivateRoutes = () => {
     { label: 'Dashboard', path: '/', element: <Dashboard /> },
     { label: 'Shop', path: '/shop', element: <AdminShop /> },
     { label: 'Products', path: '/products', element: <ManageProducts /> },
+    { label: 'Products', path: '/products/:next', element: <ManageProducts /> },
     { label: 'Orders', path: '/orders', element: <ManageOrders /> },
   ];
 

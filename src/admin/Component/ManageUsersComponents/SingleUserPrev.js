@@ -4,11 +4,13 @@ import { FaTimes } from 'react-icons/fa';
 import Avatar from '../../../Common/Components/Avatar';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import WelcomeCard from '../PreComonents/WelcomeCard';
+import { formatDate } from '../../../lib/helper';
 
 
 function SingleUserPrev({ userData, onClose }) {
     const { totalUsers } = useContext(TotalUsersContext);
     const [userDetails, setUserDetails] = useState(null);
+
 
     useEffect(() => {
         if (userData) {
@@ -19,12 +21,6 @@ function SingleUserPrev({ userData, onClose }) {
         }
     }, [userData, totalUsers]);
 
-    // Helper function to format date to "15 May 1990"
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-        return date.toLocaleDateString('en-GB', options);
-    }
 
     // Guard clause to handle undefined userDetails
     if (!userDetails) {
@@ -74,7 +70,7 @@ function SingleUserPrev({ userData, onClose }) {
                                     User Details
                                 </h2>
                                 <div className="hr mb-1 border-b border-gray-800 dark:border-gray-100"></div>
-                                <p>{`User ID: ${userDetails._id || "N/A"}`}</p>
+                                <p>{`DB_ID: ${userDetails._id || "N/A"}`}</p>
                                 <p>{`Username: ${userDetails.username || "N/A"}`}</p>
                                 <p>{`Email: ${userDetails.email || "N/A"}`}</p>
                                 <p>{`Roles: ${userDetails.roles || "N/A"}`}</p>

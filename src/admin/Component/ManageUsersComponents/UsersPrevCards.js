@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import Loading from '../../../Common/Components/Loading';
 
-function UsersPrevCards({ users }) {
+function UsersPrevCards({ users , searchTerm}) {
     const { isLoading, error,  userIdToEdit, setUserIdToEdit } = useContext(TotalUsersContext);
     const [currentFilter, setCurrentFilter] = useState('All');
     const navigate = useNavigate();
@@ -44,15 +44,15 @@ function UsersPrevCards({ users }) {
             {/* Filter buttons */}
             <div className="themeGlassBg rounded-xl p-4 themeText">
                 <div className="flex gap-2 flex-wrap justify-start items-center themeText">
-                    {['All', 'client', 'manager', 'admin'].map(role => (
+                    {['All', 'client', 'manager', 'admin'].map(roles => (
                         <button
-                            key={role}
+                            key={roles}
                             className={`flex focus:outline-none ${
-                                currentFilter === role ? 'bg-orange-700 dark:bg-orange-400' : 'themeText'
+                                currentFilter === roles ? 'bg-orange-700 dark:bg-orange-400' : 'themeText'
                             } focus:ring-2 focus:ring-orange-300 font-medium rounded-lg px-5 py-2.5 cursor-pointer dark:focus:ring-yellow-900`}
-                            onClick={() => filterUsersByroles(role)}
+                            onClick={() => filterUsersByroles(roles)}
                         >
-                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                            {roles.charAt(0).toUpperCase() + roles.slice(1)}
                         </button>
                     ))}
                 </div>
@@ -68,7 +68,7 @@ function UsersPrevCards({ users }) {
                     <p>No users found .</p>
                 ) : (
                     <div className="themeGlassBg rounded-xl p-4 themeText flex flex-wrap content-start gap-2 h-full overflow-y-auto md:grid grid-cols-2 xl:grid-cols-3">
-                        <UserCard users={filteredUsers} />
+                        <UserCard users={filteredUsers} query={searchTerm}/>
                     </div>
                 )}
             </div>

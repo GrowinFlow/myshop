@@ -5,6 +5,8 @@ import { FaHome, FaGlobeAfrica, FaTimes } from 'react-icons/fa';
 import Button from "../../../Common/Components/Button";
 import Toast from '../../../Common/Components/Toast';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
+import { formatDateToInput } from '../../../lib/helper';
+
 
 const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userIdToEdit }) => {
   const { registerUser, updateUser, totalUsers, setUserIdToEdit } = useContext(TotalUsersContext);
@@ -76,14 +78,7 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
     }
   }, [userIdToEdit, totalUsers]);
 
-  const formatDateToInput = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    const year = date.getUTCFullYear();
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-    const day = date.getUTCDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

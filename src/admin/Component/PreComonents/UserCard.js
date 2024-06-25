@@ -7,9 +7,10 @@ import ConfirmToast from '../../../Common/Components/ConfirmToast';
 import SingleUserPrev from '../ManageUsersComponents/SingleUserPrev';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import { FaDoorOpen } from 'react-icons/fa6';
+import { highlightText } from '../../../lib/helper';
 
 
-function UserCard({ users }) {
+function UserCard({ users, query }) {
 
   const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ function UserCard({ users }) {
           {users.map((user) => (
               <div
                   key={user._id}
-                  className="relative grid grid-cols-6 gap-2 bg rounded-xl items-center p-2 w-full h-[112px]"
+                  className="relative grid grid-cols-6 gap-2 bg rounded-xl items-center p-2 w-full h-[112px] group"
               >
                   {/* Avatar Section */}
                   <div className="Avatar themeGlassBg themeText rounded-xl p-2 col-span-2">
@@ -121,8 +122,12 @@ function UserCard({ users }) {
                           </div>
 
                           <div className="username-email flex items-center justify-between gap-2 w-full border-b border-gray-800 dark:border-gray-100">
-                              <span>{user.username}</span>
-                              <span className='text-ellipsis overflow-hidden'>{user.email}</span>
+                              <span dangerouslySetInnerHTML={{ __html: highlightText(user.username, query) }}>
+                                {/* {user.username} */}
+                                </span>
+                              <span className='text-ellipsis overflow-hidden' dangerouslySetInnerHTML={{ __html: highlightText(user.email, query) }}>
+                                {/* {user.email} */}
+                              </span>
                           </div>
 
                       </div>

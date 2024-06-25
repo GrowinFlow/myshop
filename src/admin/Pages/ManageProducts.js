@@ -1,6 +1,6 @@
 import React from 'react'
 import Footer from '../../Common/Layout/Footer'
-import ProductsControl from '../Component/ManageProductsComponents/ProductsControl'
+import ProductsControl from '../Component/ManageProductsComponents/ProductsControlCard'
 import { AdminSideProductProvider } from '../../lib/context/admin/AdminSideProductContext'
 
 function ManageProducts() {

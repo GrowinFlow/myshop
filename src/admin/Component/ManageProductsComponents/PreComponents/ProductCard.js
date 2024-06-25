@@ -1,24 +1,20 @@
-import React, { useContext } from 'react';
-import { FaBoxOpen, FaDoorOpen, FaEye, FaEyeSlash, FaPen, FaTrash } from 'react-icons/fa6';
+import React, { useContext, useState } from 'react';
+import { FaBoxOpen, FaDoorOpen, FaEye, FaEyeSlash, FaPen, FaTrash } from 'react-icons/fa';
 import img from '../../../../assets/images/product.jpg';
 import { AdminSideProductContext } from '../../../../lib/context/admin/AdminSideProductContext';
+import { formatPrice, highlightText } from '../../../../lib/helper';
+import SingleproductPrev from './SingleProductPrev'; // Assuming this component is used for product preview
+import { useNavigate } from 'react-router-dom';
+const ProductCard = ({ products = [], query }) => {
 
-
-
-//Utility function to format price
-const formatPrice = (price) => {
-  if (typeof price === 'object' && price["$numberDecimal"]) {
-    return parseFloat(price["$numberDecimal"]).toFixed(2);
-  }
-  return parseFloat(price).toFixed(2);
-};
-
-const ProductCard = ({ products = [] }) => {
+const navigate = useNavigate();
   const {
     updateProductVisibility,
     deleteProduct,
     fetchProductVisibility,
   } = useContext(AdminSideProductContext);
+  
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleToggleVisibility = async (productId) => {
     try {
@@ -37,6 +33,13 @@ const ProductCard = ({ products = [] }) => {
         console.error(`Error deleting product ${productId}:`, error);
       }
     }
+  }; 
+
+  const handleViewProduct = (productId) => {
+    const product = products.find(prod => prod._id === productId);
+    setSelectedProduct(product);
+    navigate(`/products/preview=${product.item_id}`)
+    
   };
 
   // Return early if no products are available
@@ -49,13 +52,13 @@ const ProductCard = ({ products = [] }) => {
       {products.map((product) => (
         <div
           key={product._id}
-          className="relative grid grid-cols-6 gap-2 bg rounded-xl items-center p-2 w-full h-40"
+          className="relative grid grid-cols-6 gap-2 bg rounded-xl items-center p-2 w-full h-40 group"
         >
           <div className="img themeGlassBg themeText rounded-xl p-2 col-span-2 h-full overflow-hidden flex">
             <img
               src={product.images[0] || img}
               alt={product.title || "productImg"}
-              className="object-fit h-full w-full rounded-lg"
+              className="object-fit h-full w-full rounded-lg group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear"
             />
           </div>
 
@@ -68,18 +71,18 @@ const ProductCard = ({ products = [] }) => {
                   <button
                     className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer hover:text-black dark:hover:text-black transform transition-transform duration-300 hover:scale-150'
                     title='Edit'
-                    onClick={null} // Implement edit functionality
+                    onClick={() => {/* Implement edit functionality */}}
                   >
                     <FaPen />
                   </button>
                   <button
                     className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transform transition-transform duration-300 hover:scale-150'
                     title='Preview'
-                    onClick={null} // Implement preview functionality
+                    onClick={() => handleViewProduct(product._id)}
                   >
                     <FaDoorOpen />
                   </button>
-                   <button
+                  <button
                     className={`flex items-center cursor-pointer ${product.visible ? 'text-gray-700' : 'text-red-600'} dark:${product.visible ? 'text-gray-300' : 'text-red-300'} transform transition-transform duration-300 hover:scale-150 hover:text-black dark:hover:text-black`}
                     title='Toggle Visibility'
                     onClick={() => handleToggleVisibility(product._id)}
@@ -87,8 +90,7 @@ const ProductCard = ({ products = [] }) => {
                     {product.visible ? <FaEye /> : <FaEyeSlash />}
                   </button>
                 </span>
-                <span className='themeSpeText'>{product.visible ? 'Visible' : 'Hidden'} | {product.category}</span>
-
+                <span className='themeSpeText flex flex-nowrap text-nowrap'><small className='lg:flex hidden'>{product.visible ? 'Visible' : 'Hidden'} | </small> {product.category}</span>
 
                 <button
                   className='flex items-center cursor-pointer text-red-700 dark:text-red-600 transform transition-transform duration-300 hover:scale-150'
@@ -101,8 +103,8 @@ const ProductCard = ({ products = [] }) => {
 
               {/* Product Details */}
               <div className="name-price flex items-center justify-between gap-2 w-full border-b border-gray-800 dark:border-gray-100">
-                <span className='flex items-center capitalize text-ellipsis overflow-hidden'>
-                  {product.title}
+                <span className='flex items-center capitalize text-ellipsis overflow-hidden text-nowrap' dangerouslySetInnerHTML={{ __html: highlightText(product.title, query) }}>
+                  {/* {product.title} */}
                 </span>
                 <span className='flex items-center'>
                   <b className='themeSpeText'>$</b> {formatPrice(product.price)}
@@ -127,8 +129,20 @@ const ProductCard = ({ products = [] }) => {
           </div>
         </div>
       ))}
+
+      {/* Render the preview modal if a product is selected */}
+      {selectedProduct && (
+        <SingleproductPrev 
+          productData={selectedProduct._id} 
+          onClose={() => {
+            setSelectedProduct(null)
+            navigate("/products")
+        }
+        } 
+        />
+      )}
     </>
   );
-}
+};
 
 export default ProductCard;

@@ -19,6 +19,7 @@ function UsersControlCard() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [actionType, setActionType] = useState('add');
   const [filteredUsers, setFilteredUsers] = useState(totalUsers);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Handle changes in the URL and update the overlay state
   useEffect(() => {
@@ -27,11 +28,11 @@ function UsersControlCard() {
 
     if (action === 'add' || action === 'update') {
       setShowOverlay(true);
-      setActionType(action);
+      setActionType(action); 
     } else {
       setShowOverlay(false);
     }
-  }, [location.search]);
+  }, [location]); 
 
   // Reset filtered users to totalUsers when totalUsers changes
   useEffect(() => {
@@ -42,7 +43,7 @@ function UsersControlCard() {
   useEffect(() => {
     if (userIdToEdit) {
       const newActionType = 'update';
-      navigate(`/users/action=${newActionType}`);
+      navigate(`/users?action=${newActionType}`);
       setShowOverlay(true);
       setActionType(newActionType);
     }
@@ -53,7 +54,7 @@ function UsersControlCard() {
     setShowOverlay(true);
     setActionType('add');
     setUserIdToEdit(null); // Reset any existing userId to clear the form
-    navigate(`/users/action=add`);
+    navigate('/users?action=add');
   };
 
   // Function to close the overlay
@@ -66,8 +67,10 @@ function UsersControlCard() {
 
   // Function to handle search
   const handleSearch = (query) => {
+    setSearchTerm(query); // Update search term state
+
     if (query) {
-      navigate(`/users?search=${query}`);
+      navigate(`/users?search=${encodeURIComponent(query)}`);
 
       const results = totalUsers.filter(user => {
         const usernameMatch = user.username?.toLowerCase().includes(query.toLowerCase());
@@ -106,7 +109,7 @@ function UsersControlCard() {
 
         {/* Preview Cards */}
         <div className="prev">
-          <UsersPrevCards users={filteredUsers} />
+          <UsersPrevCards users={filteredUsers} searchTerm={searchTerm} />
         </div>
 
       </div>

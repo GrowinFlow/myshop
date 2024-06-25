@@ -75,14 +75,14 @@ function SingleproductPrev({ productData, onClose }) {
                                     <img
                                         src={featureImg}
                                         alt={title || "Product Image"}
-                                        className="object-cover h-full w-full rounded-lg group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear"
+                                        className="object-fit h-full w-full rounded-lg group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear"
                                     />
                                 </div>
                             </GlassCard>
                         </div>
 
                         <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-6 items-center gap-4 w-full">
-                            <GlassCard styleClass="md:col-span-4 flex items-center justify-between">
+                            <GlassCard styleClass="md:col-span-4 flex items-center justify-between order-2 md:order-1">
                                 <div className="fRow">
                                     <p>{`Created At: ${creation_date ? formatDate(creation_date) : "N/A"}`}</p>
                                     <p>{`Updated At: ${updatedAt ? formatDate(updatedAt) : "N/A"}`}</p>
@@ -93,7 +93,7 @@ function SingleproductPrev({ productData, onClose }) {
                                 </div>
                             </GlassCard>
 
-                            <GlassCard styleClass="md:col-span-2 h-20 overflow-hidden flex items-center gap-2 justify-center">
+                            <GlassCard styleClass="md:col-span-2 h-20 overflow-hidden flex items-center gap-2 justify-center md:order-2 order-1">
                                 {images.map((image, index) => (
                                     <div
                                         key={index}

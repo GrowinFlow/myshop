@@ -1,19 +1,21 @@
+// components/ProductCard.js
 import React, { useContext, useState } from 'react';
 import { FaBoxOpen, FaDoorOpen, FaEye, FaEyeSlash, FaPen, FaTrash } from 'react-icons/fa';
 import img from '../../../../assets/images/product.jpg';
 import { AdminSideProductContext } from '../../../../lib/context/admin/AdminSideProductContext';
 import { formatPrice, highlightText } from '../../../../lib/helper';
-import SingleproductPrev from './SingleProductPrev'; // Assuming this component is used for product preview
+import SingleproductPrev from './SingleProductPrev';
 import { useNavigate } from 'react-router-dom';
-const ProductCard = ({ products = [], query }) => {
 
-const navigate = useNavigate();
+const ProductCard = ({ products = [], query }) => {
+  const navigate = useNavigate();
   const {
     updateProductVisibility,
     deleteProduct,
     fetchProductVisibility,
+    setProductIdToEdit,
   } = useContext(AdminSideProductContext);
-  
+
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleToggleVisibility = async (productId) => {
@@ -33,16 +35,20 @@ const navigate = useNavigate();
         console.error(`Error deleting product ${productId}:`, error);
       }
     }
-  }; 
+  };
 
   const handleViewProduct = (productId) => {
     const product = products.find(prod => prod._id === productId);
     setSelectedProduct(product);
-    navigate(`/products/preview=${product.item_id}`)
-    
+    navigate(`/products/preview=${product.item_id}`);
   };
 
-  // Return early if no products are available
+  const handleEditProduct = (productId) => {
+    setProductIdToEdit(productId);
+    console.log('Product ID to edit:', productId); // Log productId to check if it's being set
+
+  };
+
   if (!products || products.length === 0) {
     return <p>No products available</p>;
   }
@@ -71,7 +77,7 @@ const navigate = useNavigate();
                   <button
                     className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer hover:text-black dark:hover:text-black transform transition-transform duration-300 hover:scale-150'
                     title='Edit'
-                    onClick={() => {/* Implement edit functionality */}}
+                    onClick={() => handleEditProduct(product._id)}
                   >
                     <FaPen />
                   </button>
@@ -104,7 +110,6 @@ const navigate = useNavigate();
               {/* Product Details */}
               <div className="name-price flex items-center justify-between gap-2 w-full border-b border-gray-800 dark:border-gray-100">
                 <span className='flex items-center capitalize text-ellipsis overflow-hidden text-nowrap' dangerouslySetInnerHTML={{ __html: highlightText(product.title, query) }}>
-                  {/* {product.title} */}
                 </span>
                 <span className='flex items-center'>
                   <b className='themeSpeText'>$</b> {formatPrice(product.price)}
@@ -135,10 +140,9 @@ const navigate = useNavigate();
         <SingleproductPrev 
           productData={selectedProduct._id} 
           onClose={() => {
-            setSelectedProduct(null)
-            navigate("/products")
-        }
-        } 
+            setSelectedProduct(null);
+            navigate(`/products`);
+          }} 
         />
       )}
     </>

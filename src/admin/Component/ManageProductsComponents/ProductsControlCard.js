@@ -6,11 +6,15 @@ import SearchBar from '../../../Common/Components/SearchBar';
 import Button from '../../../Common/Components/Button';
 import { FaPlus } from 'react-icons/fa';
 import { AdminSideProductContext } from '../../../lib/context/admin/AdminSideProductContext';
+import ProductsDetailsForm from './ProductsDetailsForm';
 
 function ProductsControl() {
-  const { products, isLoading, error } = useContext(AdminSideProductContext);
+  const { products, isLoading, error,productIdToEdit } = useContext(AdminSideProductContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log(productIdToEdit)
+
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [actionType, setActionType] = useState('add');
@@ -39,6 +43,17 @@ function ProductsControl() {
       navigate('/products');
     }
   };
+  useEffect(() => {
+    if(productIdToEdit){
+
+      console.log(productIdToEdit)
+      setShowOverlay(true);
+      setActionType('update');
+    }
+
+  navigate('/products?action=update'); 
+  }, [productIdToEdit])
+  
 
   // Function to open the overlay for adding a new product
   const handleOpenOverlay = () => {
@@ -74,13 +89,12 @@ function ProductsControl() {
         {/* Overlay Form */}
         {showOverlay && (
           <div className="form z-10">
-            {/* Replace UsersDetailsForm with the appropriate form component for products */}
-            {/* <ProductsDetailsForm
+            <ProductsDetailsForm
               handleCloseOverlay={handleCloseOverlay}
               actionType={actionType}
               setActionType={setActionType}
               productIdToEdit={productIdToEdit}
-            /> */}
+            />
           </div>
         )}
 

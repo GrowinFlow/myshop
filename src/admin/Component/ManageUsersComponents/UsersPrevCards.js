@@ -5,7 +5,7 @@ import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext'
 import Loading from '../../../Common/Components/Loading';
 
 function UsersPrevCards({ users , searchTerm}) {
-    const { isLoading, error,  userIdToEdit, setUserIdToEdit } = useContext(TotalUsersContext);
+    const { isLoading, error } = useContext(TotalUsersContext);
     const [currentFilter, setCurrentFilter] = useState('All');
     const navigate = useNavigate();
     const location = useLocation();

@@ -63,7 +63,7 @@ function ProductsPrevCard({ products, isLoading, error, searchTerm }) {
           <p>No products found.</p>
         ) : (
           <div className="themeGlassBg rounded-xl p-4 themeText flex flex-wrap content-start gap-2 h-full overflow-y-auto md:grid grid-cols-2 xl:grid-cols-3">
-            <ProductCard products={filteredProducts} query={searchTerm} />
+            <ProductCard products={filteredProducts} query={searchTerm} category={currentFilter}/>
           </div>
         )}
       </div>
@@ -71,4 +71,6 @@ function ProductsPrevCard({ products, isLoading, error, searchTerm }) {
   );
 }
 
+
 export default ProductsPrevCard;
+ 

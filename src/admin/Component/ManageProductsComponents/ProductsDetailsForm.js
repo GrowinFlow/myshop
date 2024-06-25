@@ -7,11 +7,15 @@ import {
 import Button from "../../../Common/Components/Button";
 import Toast from '../../../Common/Components/Toast';
 import { AdminSideProductContext } from '../../../lib/context/admin/AdminSideProductContext';
-import TagInput from './PreComponents/TapInput';
-
+import TagCloud from '../../../Common/Components/TagCloud';
+import { useNavigate } from 'react-router-dom';
 const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, productIdToEdit }) => {
+    const navigate = useNavigate()
+    const [imageTags, setImageTags] = useState([]);
+    const [keywordTags, setKeywordTags] = useState([]);
+
     const {
-        products, 
+        products,
         isLoading,
         error,
         addProduct,
@@ -20,7 +24,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
     } = useContext(AdminSideProductContext);
 
     const [productData, setProductData] = useState({
-        item_id: '', // New field for item_id
+        item_id: '',
         title: '',
         description: '',
         category: '',
@@ -29,7 +33,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
         discount_percentage: '',
         images: [],
         stock: '',
-        keywords: '',
+        keywords: [],
         featured: false,
         visible: true
     });
@@ -42,37 +46,41 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
             const productToEdit = products.find(product => product._id === productIdToEdit);
             if (productToEdit) {
                 setProductData({
-                    item_id: productToEdit.item_id || '', // Initialize item_id when editing
+                    item_id: productToEdit.item_id || '',
                     title: productToEdit.title || '',
                     description: productToEdit.description || '',
                     category: productToEdit.category || '',
                     brand: productToEdit.brand || '',
                     price: productToEdit.price["$numberDecimal"] || '',
                     discount_percentage: productToEdit.discount_percentage || '',
-                    images: productToEdit.images.join(', ') || '',
+                    images: productToEdit.images || [],
                     stock: productToEdit.stock || '',
-                    keywords: productToEdit.keywords.join(', ') || '',
+                    keywords: productToEdit.keywords || [],
                     featured: productToEdit.featured || false,
                     visible: productToEdit.visible || true
                 });
+                setImageTags(productToEdit.images || []); // Initialize image tags
+                setKeywordTags(productToEdit.keywords || []); // Initialize keyword tags
                 setActionType('Update');
             }
         } else {
             setActionType('Add');
             setProductData({
-                item_id: '', // Initialize item_id for new products
+                item_id: '',
                 title: '',
                 description: '',
                 category: '',
                 brand: '',
                 price: '',
                 discount_percentage: '',
-                images: '',
+                images: [],
                 stock: '',
-                keywords: '',
+                keywords: [],
                 featured: false,
                 visible: true
             });
+            setImageTags([]); // Reset image tags
+            setKeywordTags([]); // Reset keyword tags
         }
     }, [productIdToEdit, products]);
 
@@ -91,8 +99,14 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                 throw new Error('Item ID is required.');
             }
 
+            const updatedProductData = {
+                ...productData,
+                images: imageTags, // Add images from TagCloud
+                keywords: keywordTags // Add keywords from TagCloud
+            };
+
             if (productIdToEdit) {
-                await updateProduct(productIdToEdit, productData);
+                await updateProduct(productIdToEdit, updatedProductData);
                 setToast({ show: true, type: 'success', message: 'Product updated successfully!' });
             } else {
                 const isDuplicate = products.some(product => product.title === productData.title);
@@ -100,7 +114,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                     setToast({ show: true, type: 'error', message: 'Product with the same title already exists!' });
                     return;
                 }
-                await addProduct(productData);
+                await addProduct(updatedProductData);
                 setToast({ show: true, type: 'success', message: 'Product added successfully!' });
             }
             setTimeout(() => {
@@ -123,8 +137,10 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
         setProductIdToEdit(null)
         if (typeof handleCloseOverlay === 'function') {
             handleCloseOverlay();
+            navigate('/products')
         }
     };
+    console.log(keywordTags, imageTags)
 
     return (
         <>
@@ -138,7 +154,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                             <FaTimes />
                         </button>
                     </div>
-                    <div className="relative -top-20 w-full flex flex-col gap-4">
+                    <div className="relative top-2 w-full flex flex-col gap-4">
                         <div className="themeGlassBg rounded-xl p-6 themeText w-full">
                             <span className='text-xl font-bold'>{actionType} Product:</span>
                         </div>
@@ -174,19 +190,22 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                         required
                                     />
                                 </div>
-                                <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full overflow-hidden">
+
+                                <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
                                     <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
-                                        <FaAlignLeft />
+                                        <FaBox />
                                     </div>
-                                    <textarea
-                                        type="text"
-                                        name="description"
-                                        value={productData.description}
+                                    <input
+                                        type="number"
+                                        name="stock"
+                                        min="0"
+                                        max="999"
+                                        value={productData.stock}
                                         onChange={handleInputChange}
-                                        placeholder="Description ..."
-                                        className="block w-full p-4 ps-10 text-sm bg-glassl h-[54px] dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+                                        placeholder="Stock ..."
+                                        className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
                                         required
-                                    ></textarea>
+                                    />
                                 </div>
                             </div>
                             <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
@@ -254,51 +273,36 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                 </div>
                             </div>
                             <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
-                                <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
+                                <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full overflow-hidden">
                                     <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
-                                        <FaBox />
+                                        <FaAlignLeft />
                                     </div>
-                                    <input
-                                        type="number"
-                                        name="stock"
-                                        min="0"
-                                        max="999"
-                                        value={productData.stock}
-                                        onChange={handleInputChange}
-                                        placeholder="Stock ..."
-                                        className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
-                                        required
-                                    />
-                                </div>
-                                <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
-                                    <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
-                                        <FaImage />
-                                    </div>
-                                    <input
+                                    <textarea
                                         type="text"
-                                        name="images"
-                                        value={productData.images}
+                                        name="description"
+                                        value={productData.description}
                                         onChange={handleInputChange}
-                                        placeholder="Images (comma separated URLs) ..."
-                                        className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
-                                    />
+                                        placeholder="Description ..."
+                                        className="block w-full p-4 ps-10 text-sm bg-glassl h-[54px] dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+                                        required
+                                    ></textarea>
                                 </div>
+                                <TagCloud
+                                    icon={FaImage}
+                                    placeholder="Add Image URLs, min 4..."
+                                    limit={6}
+                                    initialTags={imageTags}
+                                    onTagsChange={setImageTags}
+                                />
                             </div>
                             <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
-                                    <TagInput/>
-                                {/* <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
-                                    <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
-                                        <FaTag />
-                                    </div>
-                                    <input
-                                        type="text"
-                                        name="keywords"
-                                        value={productData.keywords}
-                                        onChange={handleInputChange}
-                                        placeholder="Keywords (comma separated) ..."
-                                        className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
-                                    />
-                                </div> */}
+                                <TagCloud
+                                    icon={FaRegCalendar}
+                                    placeholder="Add Keywords..."
+                                    limit={5}
+                                    initialTags={keywordTags}
+                                    onTagsChange={setKeywordTags}
+                                />
                                 <div className='flex justify-evenly gap-2 w-full items-center'>
                                     <div className="flex items-center gap-2">
                                         <input

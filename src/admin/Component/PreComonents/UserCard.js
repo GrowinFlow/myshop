@@ -85,14 +85,14 @@ function UserCard({ users }) {
                              
                           <span className='flex gap-4 items-center'>
                               <button
-                                  className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer hover:text-lg hover:text-black dark:hover:text-black'
+                                  className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer transform transition-transform duration-300 hover:scale-150 hover:text-black dark:hover:text-black'
                                   title='Edit'
                                   onClick={() => handleEditClick(user._id)}
                               >
                                   <FaPen className='hover:text-black' />
                               </button>
                               <button
-                                      className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 hover:text-lg'
+                                      className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transform transition-transform duration-300 hover:scale-150'
                                       title='Preview'
                                       onClick={() => handleViewUser(user._id, user.username)}
                                   >
@@ -102,7 +102,7 @@ function UserCard({ users }) {
                               <span className='themeSpeText'>#{user.roles}</span>
 
                                   <button
-                                      className='flex items-center cursor-pointer text-red-700 dark:text-red-600 hover:text-lg'
+                                      className='flex items-center cursor-pointer text-red-700 dark:text-red-600 transform transition-transform duration-300 hover:scale-150'
                                       title='Delete'
                                       onClick={() => handleDeleteClick(user._id)}
                                   >

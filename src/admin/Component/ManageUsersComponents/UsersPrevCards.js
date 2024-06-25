@@ -11,15 +11,15 @@ function UsersPrevCards({ users }) {
     const location = useLocation();
 
     useEffect(() => {
-        // Check if there is a category query parameter in the URL
+        // Check if there is a roles query parameter in the URL
         const params = new URLSearchParams(location.search);
-        const category = params.get('category');
-        setCurrentFilter(category || 'All'); // Set currentFilter from URL or default to 'All'
+        const roles = params.get('roles');
+        setCurrentFilter(roles || 'All'); // Set currentFilter from URL or default to 'All'
     }, [location.search]);
 
-    const filterUsersByCategory = (category) => {
-        setCurrentFilter(category); // Update state with new category
-        navigate(`/users${category !== 'All' ? `?roles=${category}` : ''}`); // Navigate with query parameter if category is not 'All'
+    const filterUsersByroles = (roles) => {
+        setCurrentFilter(roles); // Update state with new roles
+        navigate(`/users${roles !== 'All' ? `?roles=${roles}` : ''}`); // Navigate with query parameter if roles is not 'All'
     };
 
     useEffect(() => {
@@ -50,7 +50,7 @@ function UsersPrevCards({ users }) {
                             className={`flex focus:outline-none ${
                                 currentFilter === role ? 'bg-orange-700 dark:bg-orange-400' : 'themeText'
                             } focus:ring-2 focus:ring-orange-300 font-medium rounded-lg px-5 py-2.5 cursor-pointer dark:focus:ring-yellow-900`}
-                            onClick={() => filterUsersByCategory(role)}
+                            onClick={() => filterUsersByroles(role)}
                         >
                             {role.charAt(0).toUpperCase() + role.slice(1)}
                         </button>

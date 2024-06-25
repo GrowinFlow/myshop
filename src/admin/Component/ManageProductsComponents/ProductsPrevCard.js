@@ -18,13 +18,8 @@ function ProductsPrevCard({products, isLoading, error}) {
                 </div>
 
 
-            <div className="themeGlassBg rounded-xl p-4 themeText flex flex-col gap-2 overflow-y-auto">
-            <div className="themeGlassBg rounded-xl p-4 themeText flex flex-wrap content-start gap-2 h-full overflow-y-auto md:grid grid-cols-2 xl:grid-cols-3">
-     
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-                   </div>
+            <div className="themeGlassBg h-[65vh] rounded-xl p-4 themeText flex flex-col gap-2 overflow-y-auto">
+          
                 {isLoading ? (
             <Loading />
         ) : error ? (

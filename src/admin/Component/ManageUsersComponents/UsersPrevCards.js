@@ -19,7 +19,7 @@ function UsersPrevCards({ users }) {
 
     const filterUsersByCategory = (category) => {
         setCurrentFilter(category); // Update state with new category
-        navigate(`/users${category !== 'All' ? `?category=${category}` : ''}`); // Navigate with query parameter if category is not 'All'
+        navigate(`/users${category !== 'All' ? `?roles=${category}` : ''}`); // Navigate with query parameter if category is not 'All'
     };
 
     useEffect(() => {

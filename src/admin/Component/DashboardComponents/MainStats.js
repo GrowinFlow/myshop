@@ -33,7 +33,7 @@ useEffect(() => {
       <>
         <StatsBox heading="Admins" icon={<FaUserAstronaut />} data={lengths.admins || 0} error={error} loading={isLoading} />
         <StatsBox heading="Manager" icon={<FaUserCog />} data={lengths.managers || 0} error={error} loading={isLoading} />
-        <StatsBox heading="Users" icon={<FaUsers />} data={lengths.users || 0} error={error} loading={isLoading} />
+        <StatsBox heading="Clients" icon={<FaUsers />} data={lengths.clients || 0} error={error} loading={isLoading} />
         <StatsBox heading="Sells" icon={<FaMoneyBill />} data={0} error={error} loading={isLoading} />
         <StatsBox heading="Products" icon={<FaBoxesStacked />} data={lengths.products || 0} error={error} loading={isLoading} />
         <StatsBox heading="Offers" icon={<FaTags />} data={0} error={error} loading={isLoading} />

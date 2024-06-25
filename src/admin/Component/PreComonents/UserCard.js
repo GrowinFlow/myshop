@@ -1,13 +1,18 @@
 import React, { useContext, useState } from 'react';
 import Avatar from '../../../Common/Components/Avatar';
-import { FaPen, FaLock, FaEye, FaTrash } from 'react-icons/fa';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FaPen, FaLock, FaTrash } from 'react-icons/fa';
 
 import ConfirmToast from '../../../Common/Components/ConfirmToast';
 import SingleUserPrev from '../ManageUsersComponents/SingleUserPrev';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
+import { FaDoorOpen } from 'react-icons/fa6';
 
 
 function UserCard({ users }) {
+
+  const navigate = useNavigate();
+
   const { deleteUser, setUserIdToEdit  } = useContext(TotalUsersContext);
   const [showConfirmToast, setShowConfirmToast] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -17,14 +22,17 @@ function UserCard({ users }) {
       return <div>No data</div>;
   }
 
-  const handleViewUser = (userId) => {
+  const handleViewUser = (userId, username) => {
       setSelectedUserId(userId);
       setShowUserPreview(true);
+      navigate(`/users/preview=@${username}`)
   };
 
   const handleCloseUserPreview = () => {
       setShowUserPreview(false);
       setSelectedUserId(null);
+
+      navigate(`/users`)
   };
 
   const handleDeleteClick = (userId) => {
@@ -74,30 +82,32 @@ function UserCard({ users }) {
 
                           {/* Action Buttons */}
                           <div className="action-D-E flex items-center justify-between gap-2 w-full py-1">
+                             
+                          <span className='flex gap-4 items-center'>
                               <button
-                                  className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer'
+                                  className='flex items-center text-blue-700 dark:text-blue-500 cursor-pointer hover:text-lg hover:text-black dark:hover:text-black'
                                   title='Edit'
                                   onClick={() => handleEditClick(user._id)}
                               >
                                   <FaPen className='hover:text-black' />
                               </button>
+                              <button
+                                      className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 hover:text-lg'
+                                      title='Preview'
+                                      onClick={() => handleViewUser(user._id, user.username)}
+                                  >
+                                      <FaDoorOpen />
+                                  </button>
+                              </span>
                               <span className='themeSpeText'>#{user.roles}</span>
 
-                              <span className='flex gap-2 items-center'>
                                   <button
-                                      className='flex items-center cursor-pointer text-red-700 dark:text-red-600'
+                                      className='flex items-center cursor-pointer text-red-700 dark:text-red-600 hover:text-lg'
                                       title='Delete'
                                       onClick={() => handleDeleteClick(user._id)}
                                   >
                                       <FaTrash />
                                   </button>
-                                  <button
-                                      className='flex items-center cursor-pointer text-gray-700 dark:text-gray-300'
-                                      onClick={() => handleViewUser(user._id)}
-                                  >
-                                      <FaEye />
-                                  </button>
-                              </span>
                           </div>
 
                           {/* User Details */}

@@ -1,10 +1,9 @@
-// SingleUserPrev.js
-
 import React, { useContext, useEffect, useState } from 'react';
 import GlassCard from '../../../Common/Components/GlassCard';
 import { FaTimes } from 'react-icons/fa';
 import Avatar from '../../../Common/Components/Avatar';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
+import WelcomeCard from '../PreComonents/WelcomeCard';
 
 
 function SingleUserPrev({ userData, onClose }) {
@@ -35,19 +34,41 @@ function SingleUserPrev({ userData, onClose }) {
     // Destructure profile and bankDetails for easier access
     const { profile = {}, bankDetails = {}, cart_items = [], order_items = [] } = userDetails;
 
+    // Safely construct the welcome message
+    const getWelcomeMessage = (userDetails) => {
+        const firstName = userDetails?.profile?.firstName || '';
+        const lastName = userDetails?.profile?.lastName || '';
+        const roles = userDetails?.roles || '';
+
+        // If both first name and last name exist, show both
+        if (firstName && lastName) {
+            return `${firstName.toUpperCase()} ${lastName.toUpperCase()}`;
+        } 
+
+        // If only one exists, or none, fallback to roles
+        return `${firstName.toUpperCase() || lastName.toUpperCase() || roles.toUpperCase()}`;
+    };
+
     return (
-        <div className='fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[100] rounded-2xl'>
-            <GlassCard styleClass="relative p-4 pt-8 shadow-lg top-44 md:-top-24">
+        <div className='fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-[100] rounded-2xl w-full h-full flex-col gap-4'>
+            <GlassCard styleClass="relative p-4 pt-8 shadow-lg  h-auto">
                 <button
                     className='absolute top-2 right-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-xl'
                     onClick={onClose}
-                >
+                > 
                     <FaTimes />
                 </button>
 
                 <div className='bg-gray-100 dark:bg-gray-800 rounded-2xl p-4'>
                     <div className="bg rounded-2xl p-4 flex flex-col gap-4 items-center">
+                        {/* Safely pass the welcome message to WelcomeCard */}
+                        <WelcomeCard 
+                            text="Hy! I'm " 
+                            data={`'${getWelcomeMessage(userDetails)}'`} 
+                            styleClass="w-full" 
+                        />
                         <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-6 items-center gap-4 w-full">
+                            
                             <GlassCard styleClass="md:col-span-4">
                                 <h2 className='text-xl font-semibold text-gray-900 dark:text-white'>
                                     User Details

@@ -17,7 +17,7 @@ function Dashbord() {
     <>
     <LengthProvider>
 
-      <div className="container mx-auto min-h-[75vh] px-4 h-auto flex flex-col  gap-4">
+      <div className="container mx-auto min-h-[81vh] px-4 h-auto flex flex-col  gap-4">
 
 
         <WelcomeCard text="Welcome &nbsp;" data={useName + "! -- "+ process.env.REACT_APP_BASE_URL} />
@@ -25,8 +25,8 @@ function Dashbord() {
         <MainStats />
         <SecStats />
 
-        <Footer/>
       </div>
+        <Footer/>
     </LengthProvider>
     </>
   )

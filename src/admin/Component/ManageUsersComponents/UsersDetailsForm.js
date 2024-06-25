@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaImage, FaMap, FaCity, FaRegCalendar, FaZhihu, FaCode, FaUsersRays, FaUserTie } from 'react-icons/fa6';
 
 import { FaHome, FaGlobeAfrica, FaTimes } from 'react-icons/fa';
-import Button from "./../../../Common/Components/Button";
+import Button from "../../../Common/Components/Button";
 import Toast from '../../../Common/Components/Toast';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 

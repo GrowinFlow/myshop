@@ -33,11 +33,11 @@ function Header() {
       <div className='container px-4 mx-auto mt-0 pt-0'>
         <div className="themeHeader backdrop-blur-sm color-ani px-4 pb-4 flex flex-col gap-1">
 
-        {/* first */}
-        <div className="grid grid-cols-6 md:flex flex-nowrap items-center justify-between px-2 color-ani themeGlassBg rounded-b-xl overflow-hidden">
-           
+          {/* first */}
+          <div className="grid grid-cols-6 md:flex flex-nowrap items-center justify-between px-2 color-ani themeGlassBg rounded-b-xl overflow-hidden">
+
             <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse col-span-2 justify-end">
-      
+
               <ThemeToggle />
               {user && (user.roles === 'client' || user.roles === 'manager' || user.roles === 'admin') ? (
                 <button
@@ -62,22 +62,24 @@ function Header() {
             </div>
           </div>
 
-        {/* second  */}
-          <div className="grid grid-cols-8 grid-rows-[_,_1fr] md:grid-rows-1 items-center justify-between p-2 color-ani themeGlassBg rounded-xl gap-2 md:gap-4">
 
-            <span className="flex items-center space-x-3 rtl:space-x-reverse col-span-2 md:col-span-1 lg:">
-              <Logo color="gray-700" darkColor="white" size="xxl" />
+          {/* second  */}
+          <div className="grid grid-cols-12  md:grid-cols-8 grid-rows-[_,_1fr] md:grid-rows-1 items-center justify-between p-2 color-ani themeGlassBg rounded-xl gap-2 md:gap-4">
+
+            <span className="flex items-center col-span-2 md:col-span-1 lg:">
+              <Logo color="gray-700" darkColor="white" size="xl" />
             </span>
 
-            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto md:order-1 col-span-4 md:col-span-5`} id="navbar-sticky">
-              <SearchBar/>
+            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto col-span-6 md:col-span-5`} id="navbar-sticky">
+              <SearchBar />
+              
             </div>
 
-<div className="col-span-1 "></div>
+            <div className="col-span-1 ">w</div>
 
+       
+            <div className="md:hidden flex col-span-1 justify-end order-1">
 
-            <div className="md:hidden flex col-span-1 justify-end">
-      
               <ThemeToggle />
               {user && (user.roles === 'client' || user.roles === 'manager' || user.roles === 'admin') ? (
                 <button
@@ -97,10 +99,12 @@ function Header() {
 
 
             </div>
-            <div className={`items-center justify-between ${menuOpen ? 'block' : 'hidden'} w-full md:hidden col-span-8`} id="navbar-sticky">
+            <div className={` items-center justify-between ${menuOpen ? 'block' : 'hidden'} w-full md:hidden col-span-8`} id="navbar-sticky">
               <NavBar routes={navItems} closeMenu={closeMenu} />
             </div>
 
+
+            <div className="col-span-1 ">wew</div>
 
 
 

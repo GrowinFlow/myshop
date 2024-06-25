@@ -38,6 +38,7 @@ const PrivateRoutes = () => {
   const adminRoutes = [
     { label: 'Dashboard', path: '/', element: <Dashboard /> },
     { label: 'Users', path: '/users', element: <ManageUsers /> },
+    { label: 'Users', path: '/users/:next', element: <ManageUsers /> },
     { label: 'Shop', path: '/shop', element: <AdminShop /> },
     { label: 'Products', path: '/products', element: <ManageProducts /> },
     { label: 'Orders', path: '/orders', element: <ManageOrders /> },

@@ -7,7 +7,7 @@ function ManageUsers() {
   return (
     <>
 <TotalUsersProvider>
-      <div className="container mx-auto h-[100vh] px-4 flex flex-col  gap-4 ">
+      <div className="container mx-auto px-4 flex flex-col  gap-4 ">
     
    
         <UsersControlCard />

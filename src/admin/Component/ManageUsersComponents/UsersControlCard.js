@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GlassCard from '../../../Common/Components/GlassCard';
-import UsersDetailsForm from '../PreComonents/UsersDetailsForm';
+import UsersDetailsForm from './UsersDetailsForm';
 import UsersPrevCards from './UsersPrevCards';
 import SearchBar from '../../../Common/Components/SearchBar';
 import Button from '../../../Common/Components/Button';
@@ -20,11 +20,12 @@ function UsersControlCard() {
   const [actionType, setActionType] = useState('add');
   const [filteredUsers, setFilteredUsers] = useState(totalUsers);
 
+  // Handle changes in the URL and update the overlay state
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const action = params.get('action');
 
-    if (action === 'add' || action === 'edit') {
+    if (action === 'add' || action === 'update') {
       setShowOverlay(true);
       setActionType(action);
     } else {
@@ -32,38 +33,46 @@ function UsersControlCard() {
     }
   }, [location.search]);
 
+  // Reset filtered users to totalUsers when totalUsers changes
   useEffect(() => {
-    // Reset filtered users to totalUsers when totalUsers changes
     setFilteredUsers(totalUsers);
   }, [totalUsers]);
 
+  // Handle userIdToEdit changes
   useEffect(() => {
     if (userIdToEdit) {
-      setActionType("update");
+      const newActionType = 'update';
+      navigate(`/users/action=${newActionType}`);
       setShowOverlay(true);
+      setActionType(newActionType);
     }
-  }, [userIdToEdit]);
+  }, [userIdToEdit, navigate]);
 
+  // Function to open the overlay for adding a new user
   const handleOpenOverlay = () => {
     setShowOverlay(true);
-    navigate(`/users?action=${actionType}`);
+    setActionType('add');
+    setUserIdToEdit(null); // Reset any existing userId to clear the form
+    navigate(`/users/action=add`);
   };
 
+  // Function to close the overlay
   const handleCloseOverlay = () => {
     setShowOverlay(false);
     setActionType('add');
     navigate('/users');
-    setUserIdToEdit(null);
+    setUserIdToEdit(null); // Reset the userId to ensure the form clears
   };
 
+  // Function to handle search
   const handleSearch = (query) => {
     if (query) {
-      navigate(`/users?userSearch=${query}`);
+      navigate(`/users?search=${query}`);
 
       const results = totalUsers.filter(user => {
         const usernameMatch = user.username?.toLowerCase().includes(query.toLowerCase());
-        const email = user.email?.toLowerCase().includes(query.toLowerCase());
-        return usernameMatch || email;
+        const emailMatch = user.email?.toLowerCase().includes(query.toLowerCase());
+        return usernameMatch || emailMatch;
       });
 
       setFilteredUsers(results);
@@ -89,7 +98,7 @@ function UsersControlCard() {
             <UsersDetailsForm
               handleCloseOverlay={handleCloseOverlay}
               actionType={actionType}
-              setActionType={setActionType} // Ensure this prop is passed
+              setActionType={setActionType}
               userIdToEdit={userIdToEdit}
             />
           </div>

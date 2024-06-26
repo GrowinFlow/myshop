@@ -16,7 +16,6 @@ function LoginPage() {
     const { name, value } = e.target;
     setCredentials((prevState) => ({ ...prevState, [name]: value }));
   };
-console.log(user, "+++++++++++++++++", user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -41,8 +40,8 @@ console.log(user, "+++++++++++++++++", user)
 
   return (
     <div className="container mx-auto px-4 flex flex-col justify-center items-center ">
-      <GlassCard styleClass="container mx-auto px-4 py-6 flex flex-col justify-center items-center gap-4">
-        <div className="heading themeGlassBg w-full rounded-xl mb-4 p-4 text-2xl font-bold flex justify-center items-center">
+      <GlassCard styleClass="container mx-auto px-4 py-6 flex flex-col gap-4 justify-center items-center gap-4">
+        <div className="heading themeGlassBg w-full rounded-xl  p-4 text-2xl font-bold flex justify-center items-center">
           <h1>Login</h1>
         </div>
 
@@ -96,11 +95,11 @@ console.log(user, "+++++++++++++++++", user)
           </form>
         </div>
 
-        <div className="themeGlassBg w-full rounded-xl form p-4 text-2xl font-bold flex justify-center items-center">
-          <p className='text-sm flex items-center'> 
+        <div className="themeGlassBg w-full rounded-xl form p-4 text-2xl font-medium flex justify-center items-center">
+          <p className='text-sm flex items-center '> 
             Don't have an account?{' '}
             <Link to="/register" >
-              <span className="themeSpeText">
+              <span className="themeSpeText font-bold">
             &nbsp;  Register here
               </span>
             </Link>

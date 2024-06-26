@@ -36,3 +36,9 @@ export const highlightText = (text, query) => {
 };
 
 //   dangerouslySetInnerHTML={{ __html: highlightText(product.title, query) }}
+
+
+
+export const isImageUrl = (url) => {
+  return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
+};

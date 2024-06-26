@@ -6,6 +6,7 @@ import Button from "../../../Common/Components/Button";
 import Toast from '../../../Common/Components/Toast';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import { formatDateToInput } from '../../../lib/helper';
+import GlassCard from '../../../Common/Components/GlassCard';
 
 
 const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userIdToEdit }) => {
@@ -151,7 +152,9 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
                     <FaTimes />
                 </button>
      </div>
-     <div className="relative -top-20 w-full flex flex-col gap-4">
+
+     <div className="relative w-full flex flex-col gap-4">
+     <GlassCard styleClass="w-full flex flex-col gap-2">
 
         <div className="themeGlassBg rounded-xl p-6 themeText w-full">
           <span className='text-xl font-bold'>{actionType} user:</span>
@@ -346,11 +349,13 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
         </form>
 
         {/* Toast Component for Showing Success/Error Messages */}
+     </GlassCard>
       </div>
      </div>
      )}
      {toast.show && (
        <Toast
+       show={toString.show}
          type={toast.type}
          message={toast.message}
          onClose={handleCloseToast}

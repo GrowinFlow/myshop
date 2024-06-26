@@ -49,9 +49,12 @@ function ProductsControl() {
       console.log(productIdToEdit)
       setShowOverlay(true);
       setActionType('update');
+      navigate('/products?action=update'); 
+    }else{
+      navigate('/products'); 
+
     }
 
-  navigate('/products?action=update'); 
   }, [productIdToEdit])
   
 

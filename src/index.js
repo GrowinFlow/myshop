@@ -6,8 +6,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './lib/context/Auth';
-import { GetDataProvider } from './lib/context/GetDataContext';
-import { SetDataProvider } from './lib/context/SetDataContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -19,13 +17,11 @@ root.render(
     <Router>
 
     <AuthProvider>
-    <GetDataProvider>
-      <SetDataProvider>
+      
 
     <App />
 
-      </SetDataProvider>
-    </GetDataProvider>
+
     </AuthProvider>
     </Router>
     

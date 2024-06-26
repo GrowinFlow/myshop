@@ -36,20 +36,19 @@ const AuthProvider = ({ children }) => {
   const registerUser = async (newUserData) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/register`, newUserData);
-      const { data } = response;
-      if (data && data.user) {
-        setUser(data.user);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        return data;
-      } else {
-        throw new Error('User registration failed. No valid user data returned.');
-      }
+      // const { data } = response;
+      //   setUser(data.user);
+        setUser(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        // return data; 
+      
     } catch (error) {
       console.error('Register User Error:', error);
       setIsError(true);
       throw error;
     }
-  };
+  }; 
+  
 
   const logout = () => {
     setUser(null);
@@ -66,6 +65,7 @@ const AuthProvider = ({ children }) => {
         isLoading,
         setIsLoading,
         isError,
+        setIsError
       }}
     >
       {!isLoading && children}

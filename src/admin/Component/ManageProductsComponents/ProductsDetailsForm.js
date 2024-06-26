@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-    FaTag, FaDollarSign, FaAlignLeft, FaPercent, FaRegCalendar, FaBox, FaListUl, FaImage, FaTimes,
-    FaQrcode
+    FaTag, FaDollarSign, FaAlignLeft, FaPercent, FaBox, FaListUl, FaImage, FaTimes,
+    FaQrcode, FaRegCalendar
 } from 'react-icons/fa';
 
 import Button from "../../../Common/Components/Button";
@@ -9,10 +9,15 @@ import Toast from '../../../Common/Components/Toast';
 import { AdminSideProductContext } from '../../../lib/context/admin/AdminSideProductContext';
 import TagCloud from '../../../Common/Components/TagCloud';
 import { useNavigate } from 'react-router-dom';
+import GlassCard from '../../../Common/Components/GlassCard';
+
 const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, productIdToEdit }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [filteredCategories, setFilteredCategories] = useState([]); // Filtered categories to show in dropdown
+    const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
     const [imageTags, setImageTags] = useState([]);
     const [keywordTags, setKeywordTags] = useState([]);
+    const [uniqueCategories, setUniqueCategories] = useState([]);
 
     const {
         products,
@@ -82,6 +87,13 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
             setImageTags([]); // Reset image tags
             setKeywordTags([]); // Reset keyword tags
         }
+
+        // Fetch unique categories
+        if (products && products.length > 0) {
+            const categories = products.map(product => product.category);
+            const uniqueCategories = [...new Set(categories)];
+            setUniqueCategories(uniqueCategories);
+        }
     }, [productIdToEdit, products]);
 
     const handleInputChange = (e) => {
@@ -90,6 +102,27 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
             ...prevProductData,
             [name]: type === 'checkbox' ? checked : value
         }));
+    };
+
+    const handleCategoryFocus = () => {
+        setShowCategoryDropdown(true);
+        setFilteredCategories(uniqueCategories); // Show all categories initially
+    };
+
+    const handleCategoryChange = (e) => {
+        const { value } = e.target;
+        setProductData(prevProductData => ({
+            ...prevProductData,
+            category: value
+        }));
+    };
+
+    const handleCategorySelect = (category) => {
+        setProductData(prevProductData => ({
+            ...prevProductData,
+            category: category
+        }));
+        setShowCategoryDropdown(false);
     };
 
     const handleAddOrUpdateProduct = async (e) => {
@@ -134,13 +167,12 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
     const handleClose = () => {
         setShowOverlay(false);
-        setProductIdToEdit(null)
+        setProductIdToEdit(null);
         if (typeof handleCloseOverlay === 'function') {
             handleCloseOverlay();
-            navigate('/products')
+            navigate('/products');
         }
     };
-    console.log(keywordTags, imageTags)
 
     return (
         <>
@@ -154,6 +186,8 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                             <FaTimes />
                         </button>
                     </div>
+                    <GlassCard styleClass="w-full">
+                        
                     <div className="relative top-2 w-full flex flex-col gap-4">
                         <div className="themeGlassBg rounded-xl p-6 themeText w-full">
                             <span className='text-xl font-bold'>{actionType} Product:</span>
@@ -190,7 +224,6 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                         required
                                     />
                                 </div>
-
                                 <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
                                     <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
                                         <FaBox />
@@ -217,11 +250,30 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                         type="text"
                                         name="category"
                                         value={productData.category}
-                                        onChange={handleInputChange}
+                                        onChange={handleCategoryChange}
+                                        onFocus={handleCategoryFocus}
                                         placeholder="Category ..."
                                         className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
                                         required
                                     />
+                                    {showCategoryDropdown && (
+                                        <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-700 shadow-lg max-h-40 overflow-y-auto rounded-md z-20 mt-2">
+                                            {filteredCategories.map((category, index) => (
+                                                <li
+                                                    key={index}
+                                                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                    onClick={() => handleCategorySelect(category)}
+                                                >
+                                                    {category}
+                                                </li>
+                                            ))}
+                                            {filteredCategories.length === 0 && (
+                                                <li className="px-4 py-2 text-gray-500">
+                                                    No matching categories found. Press Enter to add "{productData.category}"
+                                                </li> 
+                                            )}
+                                        </ul>
+                                    )}
                                 </div>
                                 <div className="relative flex gap-2 bg rounded-xl items-center p-2 w-full">
                                     <div className="absolute z-10 inset-y-0 start-0 flex items-center ps-3 ml-2 pointer-events-none">
@@ -287,44 +339,48 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                         required
                                     ></textarea>
                                 </div>
-                                <TagCloud
+                             
+                                   <TagCloud
+                                    icon={FaRegCalendar}
+                                    placeholder="Add Keywords..."
+                                    limit={4}
+                                    initialTags={keywordTags}
+                                    onTagsChange={setKeywordTags}
+                                />
+                            </div>
+                            <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
+                            <TagCloud
                                     icon={FaImage}
                                     placeholder="Add Image URLs, min 4..."
                                     limit={6}
                                     initialTags={imageTags}
                                     onTagsChange={setImageTags}
                                 />
-                            </div>
-                            <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
-                                <TagCloud
-                                    icon={FaRegCalendar}
-                                    placeholder="Add Keywords..."
-                                    limit={5}
-                                    initialTags={keywordTags}
-                                    onTagsChange={setKeywordTags}
-                                />
                                 <div className='flex justify-evenly gap-2 w-full items-center'>
                                     <div className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
+                                            id="featured"
+
                                             name="featured"
                                             checked={productData.featured}
                                             onChange={handleInputChange}
                                             className="form-checkbox h-5 w-5 text-orange-600 dark:text-orange-400 transition duration-150 ease-in-out"
                                         />
-                                        <label htmlFor="featured" className="ml-2 block text-sm leading-5 text-gray-900 dark:text-white">
+                                        <label htmlFor="featured" className="ml-2 block text-sm leading-5 text-gray-900 dark:text-white font-bold" >
                                             Featured
                                         </label>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
+                                            id="visible"
                                             name="visible"
                                             checked={productData.visible}
                                             onChange={handleInputChange}
                                             className="form-checkbox h-5 w-5 text-orange-600 dark:text-orange-400 transition duration-150 ease-in-out"
                                         />
-                                        <label htmlFor="visible" className="ml-2 block text-sm leading-5 text-gray-900 dark:text-white">
+                                        <label htmlFor="visible" className="ml-2 block text-sm leading-5 text-gray-900 dark:text-white font-bold">
                                             Visible
                                         </label>
                                     </div>
@@ -338,15 +394,13 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
                                 </Button>
                             </div>
+
                         </form>
-                        {toast.show && (
-                            <Toast
-                                type={toast.type}
-                                message={toast.message}
-                                onClose={handleCloseToast}
-                            />
-                        )}
+                     
+
                     </div>
+                            </GlassCard>
+{toast.show && <Toast type={toast.type} message={toast.message} onClose={handleCloseToast} />}
                 </div>
 
 

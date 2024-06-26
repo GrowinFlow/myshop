@@ -8,12 +8,13 @@ import { FaPlus } from 'react-icons/fa';
 import { AdminSideProductContext } from '../../../lib/context/admin/AdminSideProductContext';
 import ProductsDetailsForm from './ProductsDetailsForm';
 
+
+
+
 function ProductsControl() {
   const { products, isLoading, error,productIdToEdit } = useContext(AdminSideProductContext);
   const navigate = useNavigate();
   const location = useLocation();
-
-  console.log(productIdToEdit)
 
 
   const [showOverlay, setShowOverlay] = useState(false);
@@ -107,7 +108,7 @@ function ProductsControl() {
         </div>
       </div>
     </GlassCard>
-  );
+  ); 
 }
 
 export default ProductsControl;

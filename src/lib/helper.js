@@ -1,3 +1,23 @@
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const showToast = (message, type) => {
+  toast[type](message, {
+    position: 'top-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    draggable: true,
+    pauseOnHover: true,
+    newestOnTop: true,
+    rtl: false,
+    pauseOnFocusLoss: true,
+    theme: 'dark',
+  });
+};
+
+
 export const formatPrice = (price) => {
     if (typeof price === 'object' && price["$numberDecimal"]) {
       return parseFloat(price["$numberDecimal"]).toFixed(2);
@@ -42,3 +62,18 @@ export const highlightText = (text, query) => {
 export const isImageUrl = (url) => {
   return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
 };
+
+export function closeOnKey(func){
+
+  const handleEsc = (event) => {
+    if (event.key === 'Escape') {
+      func();
+    }
+  };
+
+  window.addEventListener('keydown', handleEsc);
+
+  return () => {
+    window.removeEventListener('keydown', handleEsc);
+  };
+}

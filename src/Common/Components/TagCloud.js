@@ -3,22 +3,33 @@ import PropTypes from 'prop-types';
 import { FaAlignLeft } from 'react-icons/fa';
 import { isImageUrl } from '../../lib/helper';
 
-
 const TagCloud = ({
   icon: Icon = FaAlignLeft,
   placeholder = "Type tags separated by commas and press Enter",
   limit = 10,
   initialTags = [],
   onTagsChange,
+  minTags = 0, // New prop for minimum number of tags required
+  errorMessage = "Minimum number of tags required not met." // Default error message
 }) => {
   const [tags, setTags] = useState(initialTags);
   const [inputValue, setInputValue] = useState('');
   const [editingTagIndex, setEditingTagIndex] = useState(null);
+  const [error, setError] = useState(''); // State to manage the error message
   const inputRef = useRef(null);
 
   useEffect(() => {
     setTags(initialTags);
   }, [initialTags]);
+
+  useEffect(() => {
+    // Check the number of tags and set error if below the required minimum
+    if (tags.length < minTags) {
+      setError(errorMessage);
+    } else {
+      setError('');
+    }
+  }, [tags, minTags, errorMessage]);
 
   const handleTagInputChange = (e) => {
     setInputValue(e.target.value);
@@ -126,12 +137,13 @@ const TagCloud = ({
               onChange={handleTagInputChange}
               onKeyDown={handleTagInputKeyDown}
               placeholder={placeholder}
-              className="flex-1 p-1 bg-transparent themeText border-none focus:outline-none placeholder-gray-400 dark:placeholder-gray-200 overflow-y-auto dark:focus:ring-transparent dark:focus:border-transparent min-h-8  min-w-24 resize-y"
+              className="flex-1 p-1 bg-transparent themeText border-none focus:outline-none placeholder-gray-400 dark:placeholder-gray-200 overflow-y-auto dark:focus:ring-transparent dark:focus:border-transparent min-h-8 min-w-24 resize-y"
               rows={1}
             />
           )}
         </div>
-      </div> 
+      </div>
+      {error && <p className="text-red-500 mt-2">{error}</p>} {/* Display error message */}
     </div>
   );
 };
@@ -142,6 +154,8 @@ TagCloud.propTypes = {
   limit: PropTypes.number,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   onTagsChange: PropTypes.func.isRequired,
+  minTags: PropTypes.number, // Prop type for minimum number of tags
+  errorMessage: PropTypes.string, // Prop type for custom error message
 };
 
 export default TagCloud;

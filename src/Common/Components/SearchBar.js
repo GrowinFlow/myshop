@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 
-function SearchBar({ onSearch, placeholder = "Search anything . . ." }) {
+function SearchBar({ onSearch, placeholder = "Search anything . . ." , styleClass}) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchChange = (e) => {
@@ -18,10 +18,10 @@ function SearchBar({ onSearch, placeholder = "Search anything . . ." }) {
       <input
         type="text"
         value={searchQuery}
-        onChange={null || handleSearchChange} // Update the state and trigger search on input change
+        onChange={undefined || handleSearchChange} // Update the state and trigger search on input change
         name="search"
         placeholder={placeholder || "Search anything . . ."} // Use provided placeholder or default to the specified one
-        className="block w-full p-3 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
+        className={`block w-full p-3 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent ${styleClass}`}
         required
       />
     </div>

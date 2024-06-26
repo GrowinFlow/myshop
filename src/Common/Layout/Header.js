@@ -10,7 +10,9 @@ import { getNavItems } from '../Routes/PrivateRoutes'; // Ensure this path is co
 import NavBar from './PreComponents/NavBar';
 import { Link } from 'react-router-dom';
 import SearchBar from '../Components/SearchBar';
-
+import UserProfileDropdown from './PreComponents/UserProfileDropdown';
+import Button from '../Components/Button';
+import { FaSignInAlt } from 'react-icons/fa';
 
 
 function Header() {
@@ -24,7 +26,10 @@ function Header() {
   const closeMenu = () => {
     setMenuOpen(false);
   };
-
+  const handleSearch = (query) => {
+    // Perform search functionality here
+    console.log('Search query:', query);
+  };
   // Get the navigation items based on user role
   const navItems = getNavItems(user);
 
@@ -70,16 +75,18 @@ function Header() {
               <Logo color="gray-700" darkColor="white" size="xl" />
             </span>
 
-            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto col-span-6 md:col-span-5`} id="navbar-sticky">
-              <SearchBar />
+            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto col-span-6 md:col-span-5 ml-4`} id="navbar-sticky">
+              <SearchBar styleClass="md:h-auto h-10" onSearch={handleSearch} placeholer="Its Not Work"/>
               
             </div>
-
-            <div className="col-span-1 ">w</div>
-
+<div className='md:hidden flex'> </div> 
+            <div className="col-span-1 items-center justify-center themeText hidden md:flex">
+            {user && (user.roles === 'client') ? ( <FaCartShopping /> ): " "}
+            </div>
+   
        
-            <div className="md:hidden flex col-span-1 justify-end order-1">
-
+            <div className="md:hidden flex col-span-2 justify-evenly">
+  
               <ThemeToggle />
               {user && (user.roles === 'client' || user.roles === 'manager' || user.roles === 'admin') ? (
                 <button
@@ -104,7 +111,17 @@ function Header() {
             </div>
 
 
-            <div className="col-span-1 ">wew</div>
+            <div className="col-span-1 flex items-center justify-center overflow-hidden">
+              {user?
+              <UserProfileDropdown />
+              :
+              <>
+              <span className='themeText p-2 bg rounded-xl'>
+<Button link="register" icon={<FaSignInAlt/>} styleClass="w-auto"/>
+              </span>
+              </>
+              }
+            </div>
 
 
 

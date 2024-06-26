@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import GlassCard from '../../../../Common/Components/GlassCard';
 import { FaTimes } from 'react-icons/fa';
 import WelcomeCard from '../../PreComonents/WelcomeCard';
-import { formatDate } from '../../../../lib/helper';
+import { closeOnKey, formatDate } from '../../../../lib/helper';
 import imgPlaceholder from '../../../../assets/images/product.jpg'; // Fallback image
 import { AdminSideProductContext } from '../../../../lib/context/admin/AdminSideProductContext';
 

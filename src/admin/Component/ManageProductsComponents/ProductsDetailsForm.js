@@ -1,25 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-    FaTag, FaDollarSign, FaAlignLeft, FaPercent, FaBox, FaListUl, FaImage, FaTimes,
-    FaQrcode, FaRegCalendar
-} from 'react-icons/fa';
-
-import Button from "../../../Common/Components/Button";
-import Toast from '../../../Common/Components/Toast';
+import { FaTag, FaDollarSign, FaAlignLeft, FaPercent, FaBox, FaListUl, FaImage, FaTimes, FaQrcode, FaRegCalendar, FaChevronLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { AdminSideProductContext } from '../../../lib/context/admin/AdminSideProductContext';
 import TagCloud from '../../../Common/Components/TagCloud';
-import { useNavigate } from 'react-router-dom';
 import GlassCard from '../../../Common/Components/GlassCard';
+import Button from "../../../Common/Components/Button";
+import { closeOnKey, showToast } from '../../../lib/helper';
 
 const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, productIdToEdit }) => {
     const navigate = useNavigate();
-    const [filteredCategories, setFilteredCategories] = useState([]); // Filtered categories to show in dropdown
+    const [filteredCategories, setFilteredCategories] = useState([]);
     const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
     const [imageTags, setImageTags] = useState([]);
     const [keywordTags, setKeywordTags] = useState([]);
     const [uniqueCategories, setUniqueCategories] = useState([]);
+    const [showOverlay, setShowOverlay] = useState(true);
 
-    const {
+    const { 
         products,
         isLoading,
         error,
@@ -43,9 +40,6 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
         visible: true
     });
 
-    const [toast, setToast] = useState({ show: false, type: '', message: '' });
-    const [showOverlay, setShowOverlay] = useState(true);
-
     useEffect(() => {
         if (productIdToEdit && products && products.length > 0) {
             const productToEdit = products.find(product => product._id === productIdToEdit);
@@ -64,8 +58,8 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                     featured: productToEdit.featured || false,
                     visible: productToEdit.visible || true
                 });
-                setImageTags(productToEdit.images || []); // Initialize image tags
-                setKeywordTags(productToEdit.keywords || []); // Initialize keyword tags
+                setImageTags(productToEdit.images || []);
+                setKeywordTags(productToEdit.keywords || []);
                 setActionType('Update');
             }
         } else {
@@ -84,11 +78,10 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                 featured: false,
                 visible: true
             });
-            setImageTags([]); // Reset image tags
-            setKeywordTags([]); // Reset keyword tags
+            setImageTags([]);
+            setKeywordTags([]);
         }
 
-        // Fetch unique categories
         if (products && products.length > 0) {
             const categories = products.map(product => product.category);
             const uniqueCategories = [...new Set(categories)];
@@ -106,7 +99,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
     const handleCategoryFocus = () => {
         setShowCategoryDropdown(true);
-        setFilteredCategories(uniqueCategories); // Show all categories initially
+        setFilteredCategories(uniqueCategories);
     };
 
     const handleCategoryChange = (e) => {
@@ -134,39 +127,32 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
             const updatedProductData = {
                 ...productData,
-                images: imageTags, // Add images from TagCloud
-                keywords: keywordTags // Add keywords from TagCloud
+                images: imageTags,
+                keywords: keywordTags
             };
 
             if (productIdToEdit) {
                 await updateProduct(productIdToEdit, updatedProductData);
-                setToast({ show: true, type: 'success', message: 'Product updated successfully!' });
+                showToast('Product updated successfully!', 'success');
             } else {
                 const isDuplicate = products.some(product => product.title === productData.title);
                 if (isDuplicate) {
-                    setToast({ show: true, type: 'error', message: 'Product with the same title already exists!' });
+                    showToast('Product with the same title already exists!', 'error');
                     return;
                 }
                 await addProduct(updatedProductData);
-                setToast({ show: true, type: 'success', message: 'Product added successfully!' });
+                showToast('Product added successfully!', 'success');
             }
-            setTimeout(() => {
-                setToast({ ...toast, show: false });
-            }, 5000);
             setProductIdToEdit(null);
-            handleClose(); // Close the overlay after action
+            handleClose();
         } catch (error) {
             console.error("Error in handleAddOrUpdateProduct:", error);
-            setToast({ show: true, type: 'error', message: 'Error processing product. Please try again.' });
+            showToast('Error processing product. Please try again.', 'error');
         }
     };
 
-    const handleCloseToast = () => {
-        setToast({ ...toast, show: false });
-    };
 
     const handleClose = () => {
-        setShowOverlay(false);
         setProductIdToEdit(null);
         if (typeof handleCloseOverlay === 'function') {
             handleCloseOverlay();
@@ -174,23 +160,37 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
         }
     };
 
+    useEffect(() => {
+        const unbindEsc = closeOnKey(handleClose);
+        return () => {
+          unbindEsc(); 
+        }; 
+      }, [handleClose]);
     return (
         <>
             {showOverlay && (
                 <div className='fixed inset-0 flex flex-col items-center justify-center bg-gray-900 bg-opacity-75 z-[100] rounded-2xl'>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 z-[9999]">
                         <button
-                            className='absolute top-2 right-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-xl'
+                            className='absolute top-2 right-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-xl '
                             onClick={handleClose}
                         >
                             <FaTimes />
                         </button>
                     </div>
-                    <GlassCard styleClass="w-full">
+                    <GlassCard styleClass="w-full relative top-12">
                         
-                    <div className="relative top-2 w-full flex flex-col gap-4">
-                        <div className="themeGlassBg rounded-xl p-6 themeText w-full">
-                            <span className='text-xl font-bold'>{actionType} Product:</span>
+                    <div className=" w-full flex flex-col gap-4">
+                    <div className="themeGlassBg rounded-xl p-6 themeText w-full grid grid-cols-10 items-center">
+                <div className="flex flex-col gap-2 justify-start col-span-2">
+                  <button
+                    className=' top-2 right-2  text-xl'
+                    onClick={handleClose}
+                  >
+                    <FaChevronLeft className='hover:scale-150'/>
+                  </button>
+                </div>
+                <span className='text-2xl font-bold col-span-6 flex justify-center'>{actionType} Product:</span>
                         </div>
                         <form onSubmit={handleAddOrUpdateProduct} className='flex flex-col items-center gap-4 themeGlassBg rounded-xl p-4 themeText overflow-y-auto w-full'>
                             <div className='flex w-full items-center flex-wrap md:flex-nowrap gap-2'>
@@ -201,6 +201,8 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                     <input
                                         type="text"
                                         name="item_id"
+                                        pattern="[a-zA-Z0-9]+"
+  title="Item ID can only contain letters and numbers."
                                         value={productData.item_id}
                                         onChange={handleInputChange}
                                         placeholder="Item ID ..."
@@ -249,6 +251,8 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                                     <input
                                         type="text"
                                         name="category"
+                                        pattern="[a-zA-Z0-9]+"
+                                        title="Category can only contain letters and numbers."
                                         value={productData.category}
                                         onChange={handleCategoryChange}
                                         onFocus={handleCategoryFocus}
@@ -400,14 +404,13 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
                     </div>
                             </GlassCard>
-{toast.show && <Toast type={toast.type} message={toast.message} onClose={handleCloseToast} />}
-                </div>
+               </div>
 
 
 
             )}
         </>
-    );
+    ); 
 };
 
 export default ProductsDetailsForm;

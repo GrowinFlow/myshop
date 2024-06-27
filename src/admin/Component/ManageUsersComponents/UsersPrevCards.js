@@ -40,7 +40,7 @@ function UsersPrevCards({ users , searchTerm}) {
     });
 
     return (
-        <div className="flex flex-col gap-2 overflow-y-auto h-[723px]">
+        <div className="flex flex-col gap-2 overflow-y-auto  h-[60vh] ">
             {/* Filter buttons */}
             <div className="themeGlassBg rounded-xl p-4 themeText">
                 <div className="flex gap-2 flex-wrap justify-start items-center themeText">

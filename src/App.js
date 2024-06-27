@@ -7,6 +7,7 @@ import RegisterPage from './Common/Auth/RegisterPage';
 
 import Main from './Common/Layout/Main';
 import Header from './Common/Layout/Header';
+import Footer from './Common/Layout/Footer';
 
 function App() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +34,7 @@ function App() {
             <Route path="*" element={<PrivateRoutes />} /> {/* Catch all route */}
           </Routes>
         </Main>
-
+<Footer />
     
     </div>
     </>

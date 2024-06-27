@@ -77,7 +77,7 @@ function SingleUserPrev({ userData, onClose }) {
                             </GlassCard>
                             <GlassCard styleClass="md:col-span-2 h-full">
                                 <Avatar
-                                    styleClass="md:h-full w-full min-h-32"
+                                    styleClass="md:h-full w-full min-h-32 text-5xl"
                                     avatar={profile.avatar}
                                     username={profile.username}
                                     avatarColor={profile.avatarColor}

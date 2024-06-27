@@ -3,7 +3,7 @@ import MainStats from '../Component/DashboardComponents/MainStats'
 import SecStats from '../Component/DashboardComponents/SecStats'
 import { AuthContext } from '../../lib/context/Auth'
 import WelcomeCard from '../Component/PreComonents/WelcomeCard'
-import Footer from '../../Common/Layout/Footer'
+
 import { LengthProvider } from '../../lib/context/admin/LengthContext'
 
 
@@ -26,7 +26,6 @@ function Dashbord() {
         <SecStats />
 
       </div>
-        <Footer/>
     </LengthProvider>
     </>
   )

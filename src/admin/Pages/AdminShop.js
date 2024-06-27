@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../../Common/Layout/Footer';
 import GlassCard from '../../Common/Components/GlassCard';
 import WelcomeCard from './../Component/PreComonents/WelcomeCard';
 import Shop from '../../user/Pages/Shop'; // Assuming Shop is a React component
@@ -15,7 +14,7 @@ function AdminShop() {
         </div>
       </GlassCard>
 
-      <Footer />
+      
     </div>
   ); 
 } 

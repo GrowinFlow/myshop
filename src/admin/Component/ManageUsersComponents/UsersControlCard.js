@@ -87,7 +87,7 @@ function UsersControlCard() {
 
   return (
     <GlassCard>
-      <div className="flex flex-col gap-4 min-h-[735px] overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col gap-4 overflow-x-hidden overflow-y-auto">
 
         {/* SearchBar and Add Button */}
         <GlassCard styleClass="flex gap-2">

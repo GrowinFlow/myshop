@@ -67,7 +67,7 @@ const Avatar = ({ avatar, username, avatarColor, styleClass }) => {
       {avatar && avatar.includes('https://') ? (
         <img src={avatar} alt={username} className='object-fit group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear' />
       ) : (
-        <span className="themeText font-bold text-[2rem] group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear">{avatarIcon}</span>
+        <span className="themeText font-bold text-[rem] group-hover:scale-125 cursor-pointer transition-all duration-400 ease-linear">{avatarIcon}</span>
       )}
     </div>
   );

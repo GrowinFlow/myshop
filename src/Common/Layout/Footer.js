@@ -12,7 +12,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="">
+      <footer className="absolute bottom-0 w-full">
         <div className='container mx-auto mt-2'>
           <div className="themeFooter backdrop-blur-sm flex flex-wrap items-center justify-center px-4 pt-4 color-ani themeText">
             <div className="w-full flex flex-wrap items-center justify-evenly p-2 color-ani themeGlassBg rounded-t-xl">

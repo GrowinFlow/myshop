@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../lib/context/Auth';
-import NotFound from '../Pages/NotFound';
 import Loading from '../Components/Loading';
 
 // Lazy load components
+const NotFound = lazy(() => import('../Pages/NotFound'));
+const Profile = lazy(() => import('../Pages/Profile')); 
 const Home = lazy(() => import('../../user/Pages/Home'));
 const Shop = lazy(() => import('../../user/Pages/Shop'));
 const Product = lazy(() => import('../../user/Pages/Product'));
@@ -15,6 +16,7 @@ const ManageOrders = lazy(() => import('../../admin/Pages/ManageOrders'));
 const ManageProducts = lazy(() => import('../../admin/Pages/ManageProducts'));
 const ManageUsers = lazy(() => import('../../admin/Pages/ManageUsers'));
 const AdminShop = lazy(() => import('../../admin/Pages/AdminShop'));
+
 const PrivateRoutes = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -26,6 +28,10 @@ const PrivateRoutes = () => {
       navigate('/login');
     }
   }, [user, navigate, logout]);
+
+  const commonRoutes = [
+    { label: 'Profile', path: '/profile', element: <Profile /> }
+  ]; 
 
   const clientRoutes = [
     { label: 'Home', path: '/', element: <Home /> },
@@ -71,9 +77,13 @@ const PrivateRoutes = () => {
     }
   }
 
+
   return (
-<React.Suspense fallback={<Loading />}>
+    <React.Suspense fallback={<Loading />}>
       <Routes>
+        {commonRoutes.map((route, index) => (
+          <Route key={index} path={route.path} element={route.element} />
+        ))}
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />
         ))}
@@ -89,7 +99,8 @@ export function getNavItems(user) {
     { label: 'Shop', path: '/shop' },
     { label: 'Product', path: '/shop/product/:id' },
     { label: 'Cart', path: '/cart' },
-    { label: 'Contact', path: '/contact' }
+    { label: 'Contact', path: '/contact' },
+    // { label: 'Profile', path: '/profile' }
   ];
 
   const adminRoutes = [
@@ -98,6 +109,7 @@ export function getNavItems(user) {
     { label: 'Shop', path: '/shop' },
     { label: 'Products', path: '/products' },
     { label: 'Orders', path: '/orders' },
+    // { label: 'Profile', path: '/profile' }
   ];
 
   const managerRoutes = [
@@ -105,9 +117,10 @@ export function getNavItems(user) {
     { label: 'Shop', path: '/shop' },
     { label: 'Products', path: '/products' },
     { label: 'Orders', path: '/orders' },
+    // { label: 'Profile', path: '/profile' }
   ];
 
   return user && user.roles === 'client' ? clientRoutes : user && user.roles === 'admin' ? adminRoutes : user && user.roles === 'manager' ? managerRoutes : [];
 }
 
-export default PrivateRoutes;
+export default PrivateRoutes; 

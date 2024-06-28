@@ -69,17 +69,16 @@ function Header() {
 
 
           {/* second  */}
-          <div className="grid grid-cols-12  md:grid-cols-8 grid-rows-[_,_1fr] md:grid-rows-1 items-center justify-between p-2 color-ani themeGlassBg rounded-xl gap-2 md:gap-4">
+          <div className="grid grid-cols-9  md:grid-cols-8 grid-rows-[_,_1fr] md:grid-rows-1 items-center justify-between p-2 color-ani themeGlassBg rounded-xl gap-2 md:gap-4">
 
             <span className="flex items-center col-span-2 md:col-span-1 lg:">
               <Logo color="gray-700" darkColor="white" size="xl" />
             </span>
 
-            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto col-span-6 md:col-span-5 ml-4`} id="navbar-sticky">
+            <div className={`items-center justify-between ${menuOpen ? 'block' : 'block'} w-full md:flex md:w-auto col-span-4 md:col-span-5 ml-4`} id="navbar-sticky">
               <SearchBar styleClass="md:h-auto h-10" onSearch={handleSearch} placeholer="Its Not Work"/>
               
             </div>
-<div className='md:hidden flex'> </div> 
             <div className="col-span-1 items-center justify-center themeText hidden md:flex">
             {user && (user.roles === 'client') ? ( <FaCartShopping /> ): " "}
             </div>
@@ -106,12 +105,12 @@ function Header() {
 
 
             </div>
+
             <div className={` items-center justify-between ${menuOpen ? 'block' : 'hidden'} w-full md:hidden col-span-8`} id="navbar-sticky">
               <NavBar routes={navItems} closeMenu={closeMenu} />
             </div>
 
-
-            <div className="col-span-1 flex items-center justify-center overflow-hidden">
+            <div className="col-span-1 flex items-center justify-end overflow-hidden order-1">
               {user?
               <UserProfileDropdown />
               :

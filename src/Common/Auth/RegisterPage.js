@@ -3,7 +3,6 @@ import { AuthContext } from '../../lib/context/Auth';
 import { Link, useNavigate } from 'react-router-dom';
 import GlassCard from '../Components/GlassCard';
 import Button from '../Components/Button';
-import Footer from '../../Common/Layout/Footer';
 import { FaUser, FaEnvelope, FaLock, FaImage, FaMap, FaCity, FaRegCalendar, FaZhihu, FaCode, FaUsersRays, FaUserTie } from 'react-icons/fa6';
 import { FaHome, FaGlobeAfrica, FaTimes } from 'react-icons/fa'; 
 
@@ -284,9 +283,6 @@ function RegisterPage() {
         </div>
       </GlassCard>
 
-      <div className="w-full">
-        <Footer />
-      </div>
     </div>
   );
 }

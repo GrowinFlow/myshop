@@ -5,7 +5,6 @@ import GlassCard from '../Components/GlassCard'; // Adjust path as needed
 import Button from '../Components/Button'; // Adjust path as needed
 import { AuthContext } from '../../lib/context/Auth'; // Adjust path as needed
 import img from '../../assets/images/loginImg.png'; // Adjust path as needed
-import Footer from '../../Common/Layout/Footer'; // Adjust path as needed
 
 function LoginPage() {
   const { user, login, isError, setIsError, isLoading , setIsLoading, } = useContext(AuthContext);
@@ -107,9 +106,6 @@ function LoginPage() {
         </div>
       </GlassCard>
 
-      <div className="w-full">
-        <Footer />
-      </div>
     </div>
   );
 }

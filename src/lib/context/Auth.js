@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -11,6 +10,26 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  // Function to fetch the latest user data from backend and update context
+  // const fetchLatestUserData = async () => {
+  //   try {
+  //     if (!user) return; // Guard against fetching if user is null initially
+
+  //     const response = await axios.get(`${API_BASE_URL}/me/${user._id}`); // Assuming `/me` endpoint returns the current user's data
+  //     const backendUserData = response.data.user;
+
+  //     if (backendUserData) {
+  //       setUser(backendUserData); // Update user state with backend data
+  //       localStorage.setItem('user', JSON.stringify(backendUserData)); // Update local storage
+  //       console.log('Fetched and updated user data:', backendUserData); // Log the updated user data
+  //     }
+  //   } catch (error) {
+  //     console.error('Fetch Latest User Data Error:', error);
+  //     setIsError(true);
+  //   }
+  // };
+
+  // Load user from local storage on initial render
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -28,6 +47,22 @@ const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
+  // Use useEffect to fetch data initially and schedule subsequent fetches
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchLatestUserData();
+      const timeoutId = setTimeout(fetchLatestUserData, 300000); // Schedule next fetch after 10 seconds (10000 milliseconds)
+
+      return () => clearTimeout(timeoutId); // Cleanup the timeout
+    };
+
+    if (user) {
+      fetchData();
+    }
+
+    return () => {}; // No cleanup needed on component unmount
+  }, [user]); // Include `user` in the dependency array to trigger fetches when `user` changes
+
   // Login user
   const login = async (identifier, password) => {
     try {
@@ -43,23 +78,18 @@ const AuthProvider = ({ children }) => {
   };
 
   // Register new user
-
   const registerUser = async (newUserData) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/register`, newUserData);
-      // const { data } = response;
-      //   setUser(data.user);
-        setUser(response.data);
-        localStorage.setItem('user', JSON.stringify(response.data));
-        // return data; 
-      
+      setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
     } catch (error) {
       console.error('Register User Error:', error);
       setIsError(true);
       throw error;
     }
-  }; 
-  
+  };
+
   // Fetch user by ID
   const fetchUserById = async (userId) => {
     try {
@@ -103,9 +133,10 @@ const AuthProvider = ({ children }) => {
         updateUser,
         logout,
         isLoading,
-        isError,
         setIsLoading,
-        setIsError
+        setIsError,
+        isError,
+        fetchLatestUserData // Include fetchLatestUserData in the context value
       }}
     >
       {!isLoading && children}

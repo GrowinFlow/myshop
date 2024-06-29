@@ -36,7 +36,7 @@ function SingleproductPrev({ productData, onClose }) {
     };
 
     return (
-        <div className='fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-[100] rounded-2xl w-full h-full flex-col gap-4'>
+        <div className='fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75  rounded-2xl w-full h-full flex-col gap-4 z-[99999]'>
             <GlassCard styleClass="relative p-4 pt-8 shadow-lg h-auto">
                 <button
                     className='absolute top-2 right-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-xl'

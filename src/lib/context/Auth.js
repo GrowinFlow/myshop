@@ -48,20 +48,20 @@ const AuthProvider = ({ children }) => {
   }, [user]);
 
   // Use useEffect to fetch data initially and schedule subsequent fetches
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchLatestUserData();
-      const timeoutId = setTimeout(fetchLatestUserData, 300000); // Schedule next fetch after 10 seconds (10000 milliseconds)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetchLatestUserData();
+  //     const timeoutId = setTimeout(fetchLatestUserData, 300000); // Schedule next fetch after 10 seconds (10000 milliseconds)
 
-      return () => clearTimeout(timeoutId); // Cleanup the timeout
-    };
+  //     return () => clearTimeout(timeoutId); // Cleanup the timeout
+  //   };
 
-    if (user) {
-      fetchData();
-    }
+  //   if (user) {
+  //     fetchData();
+  //   }
 
-    return () => {}; // No cleanup needed on component unmount
-  }, [user]); // Include `user` in the dependency array to trigger fetches when `user` changes
+  //   return () => {}; // No cleanup needed on component unmount
+  // }, [user]); // Include `user` in the dependency array to trigger fetches when `user` changes
 
   // Login user
   const login = async (identifier, password) => {
@@ -136,7 +136,7 @@ const AuthProvider = ({ children }) => {
         setIsLoading,
         setIsError,
         isError,
-        fetchLatestUserData // Include fetchLatestUserData in the context value
+        // fetchLatestUserData // Include fetchLatestUserData in the context value
       }}
     >
       {!isLoading && children}

@@ -255,8 +255,6 @@ function RegisterPage() {
                 className="block w-full p-4 ps-10 text-sm bg-glassl dark:bg-glassd backdrop-blur-md rounded-lg focus:ring-transparent border-transparent focus:border-transparent dark:placeholder-gray-200 dark:text-white dark:focus:ring-transparent dark:focus:border-transparent"
               >
                 <option value="client">Client</option>
-                <option value="manager">Manager</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
           </div>

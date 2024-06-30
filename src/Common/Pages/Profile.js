@@ -73,13 +73,6 @@ function Profile() {
                     </div>
                 </div>
 
-
-
-
-
-
-
-
                 </div>
             </GlassCard>
 

@@ -8,6 +8,7 @@ import SingleUserPrev from '../ManageUsersComponents/SingleUserPrev';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import { FaDoorOpen } from 'react-icons/fa6';
 import { highlightText } from '../../../lib/helper';
+import CustomToast,{showToast} from '../../../Common/Components/Toast';
 
 
 function UserCard({ users, query }) {
@@ -44,15 +45,19 @@ function UserCard({ users, query }) {
   const handleConfirmDelete = async () => {
       try {
           await deleteUser(selectedUserId);
+           showToast('User delete successfully!', 'success');
           setShowConfirmToast(false); // Close the confirmation toast after successful deletion
       } catch (error) {
           console.error("Delete User Error:", error);
-          alert("Failed to delete user. Please try again.");
+           showToast('Failed to delete user. Please try again!', 'error');
+        //   alert("Failed to delete user. Please try again.");
       }
   };
 
   const handleCancelDelete = () => {
       setShowConfirmToast(false); // Close the confirmation toast if cancelled
+
+      showToast('User delete Cancel!', 'warning');
       setSelectedUserId(null);
   };
   const handleEditClick = (userId) => {
@@ -135,9 +140,17 @@ function UserCard({ users, query }) {
               </div>
           ))}
 
-          {/* Confirmation Toast */}
-          {showConfirmToast && (
-              <div className="fixed bottom-4 right-4">
+
+          {/* User Preview */}
+          {showUserPreview && selectedUserId && (
+              <SingleUserPrev
+                  userData={selectedUserId}
+                  onClose={handleCloseUserPreview}
+              />
+          )}
+            {/* Confirmation Toast */}
+            {showConfirmToast && (
+              <div className="fixed top-4 right-4">
                   <ConfirmToast
                       title="Delete User"
                       message="Are you sure you want to delete this user?"
@@ -147,14 +160,7 @@ function UserCard({ users, query }) {
                   />
               </div>
           )}
-
-          {/* User Preview */}
-          {showUserPreview && selectedUserId && (
-              <SingleUserPrev
-                  userData={selectedUserId}
-                  onClose={handleCloseUserPreview}
-              />
-          )}
+          <CustomToast/>
       </>
   );
 }

@@ -3,7 +3,7 @@ import { FaUser, FaEnvelope, FaLock, FaImage, FaMap, FaCity, FaRegCalendar, FaZh
 
 import { FaGlobeAfrica, FaChevronLeft, FaTimes } from 'react-icons/fa';
 import Button from "../../../Common/Components/Button";
-import Toast from '../../../Common/Components/Toast';
+import CustomToast, {showToast} from '../../../Common/Components/Toast';
 import { TotalUsersContext } from '../../../lib/context/admin/TotalUsersContext';
 import { closeOnKey, formatDateToInput } from '../../../lib/helper';
 import GlassCard from '../../../Common/Components/GlassCard';
@@ -30,7 +30,6 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
     roles: 'client'
   });
 
-  const [toast, setToast] = useState({ show: false, type: '', message: '' });
   const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
@@ -102,35 +101,33 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
   };
 
   const handleAddOrUpdateUser = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form submission
+  
     try {
       if (userIdToEdit) {
         await updateUser(userIdToEdit, userData);
-        setToast({ show: true, type: 'success', message: 'User updated successfully!' });
+        showToast('User updated successfully!', 'success');
       } else {
         const isDuplicate = totalUsers.some(user => user.username === userData.username || user.email === userData.email);
         if (isDuplicate) {
-          setToast({ show: true, type: 'error', message: 'Username or email already exists!' });
+          showToast('Username or email already exists!', 'error');
           return;
         }
         await registerUser(userData);
-        setToast({ show: true, type: 'success', message: 'User added successfully!' });
+        showToast('User added successfully!', 'success');
       }
-      setTimeout(() => {
-        setToast({ ...toast, show: false });
-      }, 5000);
       setUserIdToEdit(null);
-      handleClose(); // Close the overlay after action
+  
+      // Optionally delay closing the overlay or any other action
+      setTimeout(() => {
+        handleClose(); // Close the overlay after action
+      }, 3000); // Delay for 5000 milliseconds (5 seconds)
     } catch (error) {
-      console.error("Error in handleAddOrUpdateUser:", error);
-      setToast({ show: true, type: 'error', message: 'Error updating user. Please try again.' });
+      console.error("Error in handleSubmit:", error);
+      showToast('Error updating user. Please try again.', 'error');
     }
   };
-
-  const handleCloseToast = () => {
-    setToast({ ...toast, show: false });
-  };
-
+  
 
 
   const handleClose = () => {
@@ -369,19 +366,13 @@ const UsersDetailsForm = ({ handleCloseOverlay, actionType, setActionType, userI
                 <Button type="submit" styleClass="px-6 py-2 rounded-lg font-bold w-full flex justify-center items-center h-12" text={actionType} >Submit</Button>
               </form>
 
-              {/* Toast Component for Showing Success/Error Messages */}
             </GlassCard>
           </div>
+          <CustomToast/>
         </div>
       )}
-      {toast.show && (
-        <Toast
-          show={toString.show}
-          type={toast.type}
-          message={toast.message}
-          onClose={handleCloseToast}
-        />
-      )}
+      
+       
     </>
   );
 };

@@ -33,8 +33,8 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<PrivateRoutes />} /> {/* Catch all route */}
           </Routes>
-        </Main>
 <Footer />
+        </Main>
     
     </div>
     </>

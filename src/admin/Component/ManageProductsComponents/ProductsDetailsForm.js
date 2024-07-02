@@ -5,7 +5,8 @@ import { AdminSideProductContext } from '../../../lib/context/admin/AdminSidePro
 import TagCloud from '../../../Common/Components/TagCloud';
 import GlassCard from '../../../Common/Components/GlassCard';
 import Button from "../../../Common/Components/Button";
-import { closeOnKey, showToast } from '../../../lib/helper';
+import { closeOnKey } from '../../../lib/helper';
+import CustomToast,{showToast} from '../../../Common/Components/Toast';
 
 const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, productIdToEdit }) => {
     const navigate = useNavigate();
@@ -144,7 +145,11 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
                 showToast('Product added successfully!', 'success');
             }
             setProductIdToEdit(null);
-            handleClose();
+              
+      // Optionally delay closing the overlay or any other action
+      setTimeout(() => {
+        handleClose(); // Close the overlay after action
+      }, 3000);  
         } catch (error) {
             console.error("Error in handleAddOrUpdateProduct:", error);
             showToast('Error processing product. Please try again.', 'error');
@@ -404,6 +409,7 @@ const ProductsDetailsForm = ({ handleCloseOverlay, actionType, setActionType, pr
 
                     </div>
                             </GlassCard>
+                            <CustomToast/>
                </div>
 
 

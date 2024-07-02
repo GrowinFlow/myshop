@@ -6,6 +6,10 @@ import { AdminSideProductContext } from '../../../../lib/context/admin/AdminSide
 import { formatPrice, highlightText } from '../../../../lib/helper';
 import SingleproductPrev from './SingleProductPrev';
 import { useNavigate } from 'react-router-dom';
+import CustomToast,{showToast} from '../../../../Common/Components/Toast';
+import ConfirmToast from '../../../../Common/Components/ConfirmToast';
+
+
 
 const ProductCard = ({ products = [], query }) => {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ const ProductCard = ({ products = [], query }) => {
   } = useContext(AdminSideProductContext);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showConfirmToast, setShowConfirmToast] = useState(false);
 
   const handleToggleVisibility = async (productId) => {
     try {
@@ -27,15 +32,30 @@ const ProductCard = ({ products = [], query }) => {
     }
   };
 
-  const handleDeleteProduct = async (productId) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      try {
-        await deleteProduct(productId);
-      } catch (error) {
-        console.error(`Error deleting product ${productId}:`, error);
-      }
+
+  const handleDeleteClick = (userId) => {
+    setSelectedProduct(userId);
+    setShowConfirmToast(true); // Show confirmation toast
+};
+
+const handleConfirmDelete = async () => {
+    try {
+        await deleteProduct(selectedProduct);
+         showToast('Product delete successfully!', 'success');
+        setShowConfirmToast(false); // Close the confirmation toast after successful deletion
+    } catch (error) {
+        console.error("Delete Product Error:", error);
+         showToast('Failed to delete product. Please try again!', 'error');
     }
-  };
+};
+
+const handleCancelDelete = () => {
+    setShowConfirmToast(false); // Close the confirmation toast if cancelled
+
+    showToast('Product delete Cancel!', 'warning');
+    setSelectedProduct(null);
+};
+
 
   const handleViewProduct = (productId) => {
     const product = products.find(prod => prod._id === productId);
@@ -96,12 +116,12 @@ const ProductCard = ({ products = [], query }) => {
                     {product.visible ? <FaEye /> : <FaEyeSlash />}
                   </button>
                 </span>
-                <span className='themeSpeText flex flex-nowrap text-nowrap'><small className='lg:flex hidden'>{product.visible ? 'Visible' : 'Hidden'} | </small> {product.category}</span>
+                <span className='themeSpeText flex flex-nowrap text-nowrap'> {product.category}</span>
 
                 <button
                   className='flex items-center cursor-pointer text-red-700 dark:text-red-600 transform transition-transform duration-300 hover:scale-150'
                   title='Delete'
-                  onClick={() => handleDeleteProduct(product._id)}
+                  onClick={() => handleDeleteClick(product._id)}
                 >
                   <FaTrash />
                 </button>
@@ -145,6 +165,19 @@ const ProductCard = ({ products = [], query }) => {
           }} 
         />
       )}
+        {showConfirmToast && (
+              <div className="fixed bottom-4 right-4">
+                  <ConfirmToast
+                      title="Delete User"
+                      message="Are you sure you want to delete this user?"
+                      onConfirm={handleConfirmDelete}
+                      onCancel={handleCancelDelete}
+                      onClose={() => setShowConfirmToast(false)} // Close the toast on close button click
+                  />
+              </div>
+          )}
+
+          <CustomToast/>
     </>
   );
 };

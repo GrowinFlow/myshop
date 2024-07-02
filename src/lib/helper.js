@@ -1,22 +1,3 @@
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export const showToast = (message, type) => {
-  toast[type](message, {
-    position: 'top-right',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: false,
-    draggable: true,
-    pauseOnHover: true,
-    newestOnTop: true,
-    rtl: false,
-    pauseOnFocusLoss: true,
-    theme: 'dark',
-  });
-};
-
 
 export const formatPrice = (price) => {
     if (typeof price === 'object' && price["$numberDecimal"]) {

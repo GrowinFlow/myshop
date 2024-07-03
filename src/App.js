@@ -31,13 +31,14 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="*" element={<PrivateRoutes />} /> {/* Catch all route */}
+            <Route path="*" element={<PrivateRoutes />} /> 
           </Routes>
 <Footer />
         </Main>
     
     </div>
-    </>
+    </>   
+
   );
 }
 

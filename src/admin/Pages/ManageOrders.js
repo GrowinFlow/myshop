@@ -1,22 +1,109 @@
-import React from 'react'
-import { FaLock } from 'react-icons/fa'
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import CustomInput from '../../Components/Common/CustomFormField/CustomInput';
+import CustomPopover from '../../Components/Common/CustomPopover';
+import CustomCheckbox from '../../Components/Common/CustomFormField/CustomCheckbox';
+
+import CheckboxGroup from '../../Components/Common/test/CheckboxGroup';
+
+const validationSchema = Yup.object({
+  password: Yup.string()
+    .min(4, "Password must be at least 4 characters")
+    .required('Password is required'),
+  msg: Yup.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(540, "Message cannot exceed 540 characters")
+    .required('Message is required'),
+ groups: Yup.array().of(
+    Yup.object({
+      checkboxes: Yup.array().of(
+        Yup.object({
+          label: Yup.string().required(),
+          isSelected: Yup.boolean().required()
+        })
+      ).required()
+    })
+  ).required()
+});
+
+const initialValues = {
+  groups: [
+    { checkboxes: [{ label: 'Item 1', isSelected: false }, { label: 'Item 2', isSelected: false }, { label: 'Item 3', isSelected: false }], selectAll: false },
+    { checkboxes: [{ label: 'Item 4', isSelected: false }, { label: 'Item 5', isSelected: false }, { label: 'Item 6', isSelected: false }], selectAll: false },
+    { checkboxes: [{ label: 'Item 7', isSelected: false }, { label: 'Item 8', isSelected: false }, { label: 'Item 9', isSelected: false }], selectAll: false },
+  ]
+};
 
 function ManageOrders() {
-  return ( 
-    <>
-<div class="relative w-full min-w-[200px] h-10">
-    <div class="absolute grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
-      <FaLock/>
-    </div>
-    <input
-      class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900"
-      placeholder=" " /><label
-      class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">Input
-      With Icon
-    </label>
-  </div>
-    </>
-  )
-}
+  const initialValues = {
+    password: '',
+    msg: '',
+    items: [],
+  };
 
-export default ManageOrders
+  const handleSubmit = (values, { resetForm }) => {
+    console.log(values);
+    resetForm();
+  };
+
+  return (
+    <>
+    <div className="p-8 py-4 h-[800px] mx-auto container my-6 bg-glassl dark:bg-glassd backdrop-blur-sm px-4 rounded-xl">
+      <CustomPopover
+        popOverTrigger={<button className="btn">Log in</button>}
+        popOverContent={<div className='min-h-96 h-[300px] w-[500px]'>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <CustomInput
+                  label="password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  isRequired={true}
+                  minLength={4}
+                />
+                <CustomInput
+                  label="msg"
+                  name="msg"
+                  type="textarea"
+                  placeholder="Enter your message"
+                  isRequired={true}
+                  minLength={10}
+                  maxLength={540}
+                />
+     {initialValues.groups.map((group, index) => (
+            <CheckboxGroup
+              key={index}
+              groupIndex={index}
+              groupLabel={`Group ${index + 1}`}
+              checkboxes={group.checkboxes}
+            />
+          ))}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Submit
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>}
+        popoverTitle={<span> Title</span>}
+        closeArrow={true}
+        popOverContentPlacement="bottom"
+      />
+    </div>
+    
+    </>
+  );
+};
+
+export default ManageOrders;

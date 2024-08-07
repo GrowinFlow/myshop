@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        pop: ["Poppins", "sans-serif"],
+        satoshi: ["Satoshi"],
+        proggy: ["ProggyCrossed"],
+      },
       colors: {
         'glassl':"rgba(255,255,255,0.4)",
         'glassd':"rgba(0,0,8,0.5)"

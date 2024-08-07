@@ -8,6 +8,7 @@ import RegisterPage from './Common/Auth/RegisterPage';
 import Main from './Common/Layout/Main';
 import Header from './Common/Layout/Header';
 import Footer from './Common/Layout/Footer';
+import CustomToast from './Common/Components/Toast';
 
 function App() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -22,12 +23,15 @@ function App() {
 
   return (
     <>
-    <div className="bg font-serif md:font-mono">
+    <div className="bg font-pop md:font-satoshi 
+">
 
 
       <Header menuOpen={menuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
 
         <Main>
+
+        <CustomToast/>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />

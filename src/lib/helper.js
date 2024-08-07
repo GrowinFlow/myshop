@@ -58,3 +58,15 @@ export function closeOnKey(func){
     window.removeEventListener('keydown', handleEsc);
   };
 }
+
+
+export function replaceSpacesAndHyphens(inputString) {
+  // Check if inputString is a valid string
+  if (typeof inputString !== 'string') {
+      console.error('Invalid input: inputString must be a string');
+      return '';
+  }
+  // Replace spaces and hyphens with underscores
+  let result = inputString.replace(/[\s-]/g, '_');
+  return result;
+}

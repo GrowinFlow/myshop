@@ -29,8 +29,7 @@ function CustomCheckbox({ label, labelStyle, isRequired, classNames, isDisabled,
           type="checkbox"
           required={isRequired}
           disabled={isDisabled}
-          // className={`mr-2 rounded accent-orange-700 dark:accent-orange-400 ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : ""} ${classNames} focus:ring-0`}
-          className={`mr-2 rounded ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-red-300"} ${classNames} focus:ring-0`}
+          className={`mr-2 rounded ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-glassl dark:bg-glassd"} ${classNames} focus:ring-0 accent-inherit`}
         />
         <label
           htmlFor={replaceSpacesAndHyphens(label)}
@@ -56,6 +55,7 @@ CustomCheckbox.propTypes = {
   isRequired: PropTypes.bool,
   isDisabled: PropTypes.bool,
   classNames: PropTypes.string,
+  labelStyle: PropTypes.string,
 };
 
 export default CustomCheckbox;

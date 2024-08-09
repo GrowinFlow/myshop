@@ -1,7 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url(./assets//styles/scrollbar.css);
+@import url(./assets/styles/scrollbar.css);
+@import url(./assets/styles/fonts.css);
 
 body {
   margin: 0;
@@ -47,7 +48,11 @@ body {
   .trans-ani{
      @apply transition-transform duration-150 ease-linear delay-75;
    }
-
+   
+   input[type=checkbox],
+   input[type=radio]{
+      @apply accent-orange-700 dark:accent-orange-400;
+    }
 
 }
 .hr{
@@ -56,8 +61,6 @@ body {
   padding-bottom: 4px;
 }
 
-
-/* In your global CSS file or Tailwind CSS file */
 
 @keyframes slideIn {
   from {
@@ -87,134 +90,4 @@ body {
 
 .error-slide-out {
   animation: slideOut 0.3s forwards;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins-Bold.eot");
-  src: url("./assets/fonts/Poppins-Bold.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Poppins-Bold.woff2") format("woff2"),
-  url("./assets/fonts/Poppins-Bold.woff") format("woff"),
-  url("./assets/fonts/Poppins-Bold.ttf") format("truetype"),
-  url("./assets/fonts/Poppins-Bold.svg#Poppins-Bold") format("svg");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins-Medium.eot");
-  src: url("./assets/fonts/Poppins-Medium.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Poppins-Medium.woff2") format("woff2"),
-  url("./assets/fonts/Poppins-Medium.woff") format("woff"),
-  url("./assets/fonts/Poppins-Medium.ttf") format("truetype"),
-  url("./assets/fonts/Poppins-Medium.svg#Poppins-Medium") format("svg");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins-Light.eot");
-  src: url("./assets/fonts/Poppins-Light.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Poppins-Light.woff2") format("woff2"),
-  url("./assets/fonts/Poppins-Light.woff") format("woff"),
-  url("./assets/fonts/Poppins-Light.ttf") format("truetype"),
-  url("./assets/fonts/Poppins-Light.svg#Poppins-Light") format("svg");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins-Regular.eot");
-  src: url("./assets/fonts/Poppins-Regular.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Poppins-Regular.woff2") format("woff2"),
-  url("./assets/fonts/Poppins-Regular.woff") format("woff"),
-  url("./assets/fonts/Poppins-Regular.ttf") format("truetype"),
-  url("./assets/fonts/Poppins-Regular.svg#Poppins-Regular") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins-SemiBold.eot");
-  src: url("./assets/fonts/Poppins-SemiBold.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Poppins-SemiBold.woff2") format("woff2"),
-  url("./assets/fonts/Poppins-SemiBold.woff") format("woff"),
-  url("./assets/fonts/Poppins-SemiBold.ttf") format("truetype"),
-  url("./assets/fonts/Poppins-SemiBold.svg#Poppins-SemiBold") format("svg");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "ProggyCrossed";
-  src: url("./assets/fonts/ProggyCrossed.eot");
-  src: url("./assets/fonts/ProggyCrossed.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/ProggyCrossed.woff2") format("woff2"),
-  url("./assets/fonts/ProggyCrossed.woff") format("woff"),
-  url("./assets/fonts/ProggyCrossed.ttf") format("truetype"),
-  url("./assets/fonts/ProggyCrossed.svg#ProggyCrossed") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("./assets/fonts/Satoshi-Light.eot");
-  src: url("./assets/fonts/Satoshi-Light.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Satoshi-Light.woff2") format("woff2"),
-  url("./assets/fonts/Satoshi-Light.woff") format("woff"),
-  url("./assets/fonts/Satoshi-Light.ttf") format("truetype"),
-  url("./assets/fonts/Satoshi-Light.svg#Satoshi-Light") format("svg");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("./assets/fonts/Satoshi-Regular.eot");
-  src: url("./assets/fonts/Satoshi-Regular.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Satoshi-Regular.woff2") format("woff2"),
-  url("./assets/fonts/Satoshi-Regular.woff") format("woff"),
-  url("./assets/fonts/Satoshi-Regular.ttf") format("truetype"),
-  url("./assets/fonts/Satoshi-Regular.svg#Satoshi-Regular") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("./assets/fonts/Satoshi-Medium.eot");
-  src: url("./assets/fonts/Satoshi-Medium.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Satoshi-Medium.woff2") format("woff2"),
-  url("./assets/fonts/Satoshi-Medium.woff") format("woff"),
-  url("./assets/fonts/Satoshi-Medium.ttf") format("truetype"),
-  url("./assets/fonts/Satoshi-Medium.svg#Satoshi-Medium") format("svg");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("./assets/fonts/Satoshi-Bold.eot");
-  src: url("./assets/fonts/Satoshi-Bold.eot?#iefix") format("embedded-opentype"),
-  url("./assets/fonts/Satoshi-Bold.woff2") format("woff2"),
-  url("./assets/fonts/Satoshi-Bold.woff") format("woff"),
-  url("./assets/fonts/Satoshi-Bold.ttf") format("truetype"),
-  url("./assets/fonts/Satoshi-Bold.svg#Satoshi-Bold") format("svg");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
 }

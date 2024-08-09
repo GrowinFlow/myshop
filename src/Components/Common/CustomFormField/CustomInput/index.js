@@ -13,11 +13,11 @@ function CustomInput({ label, labelStyle, isRequired, classNames, isDisabled, ic
   useEffect(() => {
     if (errorField.current) {
       if (meta.touched && meta.error) {
-        errorField.current.classList.remove("error-slide-out");
-        errorField.current.classList.add("error-slide-in");
+        errorField.current.classList.add('error-slide-in');
+        errorField.current.classList.remove('error-slide-out');
       } else {
-        errorField.current.classList.remove("error-slide-in");
-        errorField.current.classList.add("error-slide-out");
+        errorField.current.classList.add('error-slide-out');
+        errorField.current.classList.remove('error-slide-in');
       }
     }
   }, [meta.touched, meta.error]);
@@ -30,6 +30,37 @@ function CustomInput({ label, labelStyle, isRequired, classNames, isDisabled, ic
     setCharCount(e.target.value.length);
     helpers.setValue(e.target.value);
   };
+
+  if (type === "checkbox") {
+    return (
+      <div className="relative mb-4">
+        {label && (
+          <label
+            htmlFor={replaceSpacesAndHyphens(label)}
+            className={`flex items-center text-sm font-medium capitalize ${labelStyle || "text-gray-800 dark:text-white"}`}
+          >
+            <input
+              id={replaceSpacesAndHyphens(label)}
+              type="checkbox"
+              {...field}
+              {...props}
+              disabled={isDisabled}
+              className={`mr-2 rounded ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-white dark:bg-gray-800"} ${classNames}`}
+            />
+            {label}
+          </label>
+        )}
+        {meta.touched && meta.error && (
+          <div
+            ref={errorField}
+            className={`text-xs text-red-600 dark:text-red-600 mt-1 ${meta.touched && meta.error ? "error-slide-in" : "error-slide-out"}`}
+          >
+            {meta.error}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="relative mb-4">
@@ -52,7 +83,7 @@ function CustomInput({ label, labelStyle, isRequired, classNames, isDisabled, ic
               disabled={isDisabled}
               maxLength={maxLength}
               onChange={handleTextareaChange}
-              className={`w-full h-28 max-h-36 px-3 py-2 rounded-lg dark:placeholder-gray-400 text-gray-800 dark:text-white ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-glassl dark:bg-glassd "} ${classNames} focus:ring-0`}
+              className={`w-full min-h-8 h-28 max-h-36 px-3 py-2 rounded-lg dark:placeholder-gray-400 text-gray-800 dark:text-white ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-white dark:bg-gray-800"} ${classNames} focus:ring-0 focus:border focus:border-orange-700 dark:focus:border-orange-400`}
             ></textarea>
             <div className="flex items-center justify-between">
               {meta.touched && meta.error ? (
@@ -62,7 +93,9 @@ function CustomInput({ label, labelStyle, isRequired, classNames, isDisabled, ic
                 >
                   {meta.error}
                 </div>
-              ):(<div className="w-[80%]"></div>)}
+              ) : (
+                <div className="w-[80%]"></div>
+              )}
               <div className="text-right text-xs text-gray-600 dark:text-gray-400 mt-1">
                 {charCount}/{maxLength}
               </div>
@@ -76,7 +109,7 @@ function CustomInput({ label, labelStyle, isRequired, classNames, isDisabled, ic
             type={type === "password" && !isPasswordVisible ? "password" : "text"}
             required={isRequired}
             disabled={isDisabled}
-            className={`w-full px-3 py-2 rounded-lg dark:placeholder-gray-400 text-gray-800 dark:text-white ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-glassl dark:bg-glassd "} ${classNames} focus:ring-0`}
+            className={`w-full px-3 py-2 rounded-lg dark:placeholder-gray-400 text-gray-800 dark:text-white ${meta.touched && meta.error ? "border-red-600 dark:border-red-600" : "border-orange-700 dark:border-orange-400 border"} ${isDisabled ? "bg-gray-100 dark:bg-gray-900 cursor-not-allowed" : "bg-white dark:bg-gray-800"} ${classNames} focus:ring-0 focus:border focus:border-orange-700 dark:focus:border-orange-400`}
           />
         )}
         {type === "password" && (
@@ -112,6 +145,7 @@ export default CustomInput;
 
 
 
+
 // use 
 
 {/* <CustomInput
@@ -130,4 +164,13 @@ placeholder="Enter your message"
 isRequired={true}
 minLength={10}
 maxLength={540}
-/> */}
+/> 
+
+<CustomInput
+  label="Agree to terms"
+  name="agree"
+  type="checkbox"
+  isRequired={true}
+/>
+
+*/}

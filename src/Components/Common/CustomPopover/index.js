@@ -39,12 +39,12 @@ function CustomPopover ({
       </div>
       {isPopoverOpen && (
         <div
-          className="fixed rounded-2xl inset-0 z-[1000] flex items-center justify-center backdrop-blur-md h-[85vh] m-w-[80vw]"
+          className="fixed rounded-2xl inset-0 z-[1000] flex items-center justify-center backdrop-blur-md h-[85vh] w-[80vw]"
           onClick={handlePopoverToggle} // This allows closing the popover when clicking outside
         >
           <div
             ref={popoverRef}
-            className="shadow-xl h-96 min-w-96 rounded-2xl themeGlassBg backdrop-blur-xl text-gray-800 dark:text-white max-w-auto h-auto overflow-y-hidden border-orange-700 dark:border-orange-400 border "
+            className="shadow-xl h-[600px] min-w-96 rounded-2xl themeGlassBg backdrop-blur-xl text-gray-800 dark:text-white max-w-auto overflow-y-hidden border-orange-700 dark:border-orange-400 border "
             onClick={(e) => e.stopPropagation()} // Prevent clicks inside the popover from closing it
           >
             {(popoverTitle || closeArrow) && (
@@ -61,7 +61,7 @@ function CustomPopover ({
               </div>
               </>
             )}
-            <div className='p-4 overflow-x-hidden overflow-y-auto'>
+            <div className='p-4 overflow-x-hidden overflow-y-auto h-[88%]'>
             {popOverContent}
             </div>
           </div>

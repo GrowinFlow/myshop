@@ -3,10 +3,11 @@
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const localTheme = localStorage.getItem('color-theme')
 
 const CustomToast = ({
   position = 'top-right',
-  autoClose = 5000,
+  autoClose = 3000,
   hideProgressBar = false,
   newestOnTop = false,
   closeOnClick = true,
@@ -14,11 +15,10 @@ const CustomToast = ({
   pauseOnFocusLoss = true,
   draggable = true,
   pauseOnHover = true,
-  theme = 'light',
 }) => {
   return (
     <ToastContainer
-      position={position}
+      position={position} 
       autoClose={autoClose}
       hideProgressBar={hideProgressBar}
       newestOnTop={newestOnTop}
@@ -27,10 +27,10 @@ const CustomToast = ({
       pauseOnFocusLoss={pauseOnFocusLoss}
       draggable={draggable}
       pauseOnHover={pauseOnHover}
-      theme={theme}
+      theme={localTheme}
     />
   );
-};
+}; 
 
 export const showToast = (message, type = 'success', onCloseCallback = null) => {
     const options = {
@@ -47,6 +47,9 @@ export const showToast = (message, type = 'success', onCloseCallback = null) => 
         break;
       case 'warning':
         toast.warning(message, options);
+        break;
+      case 'info':
+        toast.info(message, options);
         break;
       default:
         toast(message, options);

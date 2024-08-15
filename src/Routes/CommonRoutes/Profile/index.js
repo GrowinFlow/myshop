@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import GlassCard from '../CustomMIniComponents/GlassCard'
 import Avatar from '../CustomMIniComponents/Avatar'
-import { AuthContext } from '../../lib/context/Auth'
+import { AuthContext } from '../../lib/context/common/Auth'
 import { formatDate } from '../../lib/helper'
 
  

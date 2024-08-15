@@ -1,3 +1,60 @@
+import axios from 'axios';
+const baseUrl = process.env.REACT_APP_BASE_URL
+export const SUPER_ADMIN_KEY = process.env.REACT_APP_SUPER_ADMIN_KEY;
+export const ADMIN_KEY = process.env.REACT_APP_ADMIN_KEY;
+export const MANAGER_KEY = process.env.REACT_APP_MANAGER_KEY;
+export const VENDOR_KEY = process.env.REACT_APP_VENDOR_KEY;
+export const CUSTOMER_KEY = process.env.REACT_APP_CUSTOMER_KEY;
+export const MARKETING_KEY = process.env.REACT_APP_MARKETING_KEY;
+export const LOGISTICS_KEY = process.env.REACT_APP_LOGISTICS_KEY;
+export const GUEST_KEY = process.env.REACT_APP_GUEST_KEY;
+
+
+
+export async function callApi({ endpoint, method, data = {}, params = {}}) {
+  return axios({
+      method: method,
+      url: `${baseUrl}/${endpoint}`,
+      data: data,
+      params: params,
+      headers: {
+        'Accept': 'application/json'
+    }
+  }) 
+  .then(response => {
+    console.log(data, response.data)
+    return response.data
+  })
+  .catch(error => {
+      console.error('API call failed:', error);
+      throw error;
+  });
+}
+
+
+
+ 
+export function activeUser(){
+
+  const getlocalUser = localStorage.getItem("user")
+  const userObj = JSON.parse(getlocalUser); 
+  const userRole = (userObj.user_role.type);
+// showToast('Product updated successfully!', 'success');
+
+  return userRole
+ 
+}
+// Example usage:
+// console.log(`The user's role is: ${userRoleName}`); // Output: The user's role is: Manager
+
+        
+
+
+
+
+
+
+
 
 export const formatPrice = (price) => {
     if (typeof price === 'object' && price["$numberDecimal"]) {
@@ -68,5 +125,16 @@ export function replaceSpacesAndHyphens(inputString) {
   }
   // Replace spaces and hyphens with underscores
   let result = inputString.replace(/[\s-]/g, '_');
+  return result;
+}
+
+export function replaceUnderscoresWithSpaces(inputString) {
+  // Check if inputString is a valid string
+  if (typeof inputString !== 'string') {
+    console.error('Invalid input: inputString must be a string');
+    return '';
+  }
+  // Replace underscores with spaces
+  let result = inputString.replace(/_/g, ' ');
   return result;
 }

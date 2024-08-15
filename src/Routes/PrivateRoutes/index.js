@@ -1,126 +1,133 @@
-import React, { useContext, useEffect, Suspense, lazy } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../lib/context/Auth';
-import Loading from '../CustomMIniComponents/Loading';
+import { Routes, Route } from 'react-router-dom';
+import Loading from '../../Components/Common/CustomMIniComponents/Loading';
+import { lazy, Suspense, useEffect, useMemo } from 'react';
+import { activeUser } from '../../lib/helper';
+import { data } from '../../lib/mockData';
 
 // Lazy load components
-const NotFound = lazy(() => import('../Common/CommonPages/NotFound'));
-const Profile = lazy(() => import('../Common/CommonPages/Profile')); 
-const Home = lazy(() => import('../user/Pages/Home'));
-const Shop = lazy(() => import('../user/Pages/Shop'));
-const Product = lazy(() => import('../user/Pages/Product'));
-const Cart = lazy(() => import('../user/Pages/Cart'));
-const Contact = lazy(() => import('../user/Pages/Contact'));
-const Dashboard = lazy(() => import('../admin/Pages/Dashbord'));
-const ManageOrders = lazy(() => import('../admin/Pages/ManageOrders'));
-const ManageProducts = lazy(() => import('../admin/Pages/ManageProducts'));
-const ManageUsers = lazy(() => import('../admin/Pages/ManageUsers'));
-const AdminShop = lazy(() => import('../admin/Pages/AdminShop'));
+const ChatsView = lazy(() => import('../../Components/View/ChatsView'));
+const ContactView = lazy(() => import('../../Components/View/ContactView'));
+const DashboardView = lazy(() => import('../../Components/View/DashboardView'));
+const HomeView = lazy(() => import('../../Components/View/HomeView'));
+const NotificationsView = lazy(() => import('../../Components/View/NotificationsView'));
+const OffersView = lazy(() => import('../../Components/View/OffersView'));
+const OrdersView = lazy(() => import('../../Components/View/OrdersView'));
+const OrderTrackingView = lazy(() => import('../../Components/View/OrderTrackingView'));
+const PaymentsView = lazy(() => import('../../Components/View/PaymentsView'));
+const ProductsView = lazy(() => import('../../Components/View/ProductsView'));
+const ShopView = lazy(() => import('../../Components/View/ShopView'));
+const UsersView = lazy(() => import('../../Components/View/UsersView'));
+const SettingsView = lazy(() => import('../../Components/View/SettingsView'));
+
+const NotFound = lazy(() => import('./../CommonRoutes/NotFound'));
+const ProfileView = lazy(() => import('../../Components/View/ProfileView'));
 
 const PrivateRoutes = () => {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  useMemo(() => {
+    localStorage.setItem('user', JSON.stringify(data[0]));     
+  }, [])
+  // useEffect(()=>{
+  //   localStorage.setItem('user', JSON.stringify(data[0]));     
+  // },[])
+useEffect(()=>{
+  let a = activeUser() 
+  if(1 === a){
+    console.log(a, "aaaaaaaaaaaa")
+  }else{
 
-  useEffect(() => {
-    if (!user) {
-      console.log('User not found , redirecting to login');
-      logout(); // clear any user data and token
-      navigate('/login');
-    }
-  }, [user, navigate, logout]);
-
-  const commonRoutes = [
-    { label: 'Profile', path: '/profile', element: <Profile /> }
-  ]; 
-
-  const clientRoutes = [
-    { label: 'Home', path: '/', element: <Home /> },
-    { label: 'Shop', path: '/shop', element: <Shop /> },
-    { label: 'Product', path: '/shop/product/:id', element: <Product /> },
-    { label: 'Cart', path: '/cart', element: <Cart /> },
-    { label: 'Contact', path: '/contact', element: <Contact /> }
-  ];
-
-  const adminRoutes = [
-    { label: 'Dashboard', path: '/', element: <Dashboard /> },
-    { label: 'Users', path: '/users', element: <ManageUsers /> },
-    { label: 'Users', path: '/users/:next', element: <ManageUsers /> },
-    { label: 'Shop', path: '/shop', element: <AdminShop /> },
-    { label: 'Products', path: '/products', element: <ManageProducts /> },
-    { label: 'Products', path: '/products/:next', element: <ManageProducts /> },
-    { label: 'Orders', path: '/orders', element: <ManageOrders /> },
-  ];
-
-  const managerRoutes = [
-    { label: 'Dashboard', path: '/', element: <Dashboard /> },
-    { label: 'Shop', path: '/shop', element: <AdminShop /> },
-    { label: 'Products', path: '/products', element: <ManageProducts /> },
-    { label: 'Products', path: '/products/:next', element: <ManageProducts /> },
-    { label: 'Orders', path: '/orders', element: <ManageOrders /> },
-  ];
-
-  let routes = [];
-  if (user) {
-    switch (user.roles) {
-      case 'client':
-        routes = clientRoutes;
-        break;
-      case 'admin':
-        routes = adminRoutes;
-        break;
-      case 'manager':
-        routes = managerRoutes;
-        break;
-      default:
-        routes = [];
-        break;
-    }
+    console.log(a, "bbbbbbb") 
   }
-
+},[]) 
+  const routes = [
+    { label: 'Home', path: '/', element: <HomeView /> }, 
+    { label: 'Chats', path: '/chats', element: <ChatsView /> },
+    { label: 'Contact', path: '/contact', element: <ContactView /> },
+    { label: 'Dashboard', path: '/dashboard', element: <DashboardView /> },
+    { label: 'Shop', path: '/shop', element: <ShopView /> },
+    { label: 'Product Details', path: '/shop/product/:id', element: <ProductsView /> },
+    { label: 'Notifications', path: '/admin/notifications', element: <NotificationsView /> },
+    { label: 'Offers', path: '/offers', element: <OffersView /> },
+    { label: 'Orders', path: '/orders', element: <OrdersView /> },
+    { label: 'Order Tracking', path: '/order-tracking', element: <OrderTrackingView /> },
+    { label: 'Payments', path: '/payments', element: <PaymentsView /> },
+    { label: 'Users', path: '/users', element: <UsersView /> },
+    { label: 'Profile', path: '/profile', element: <ProfileView /> },
+    { label: 'Settings', path: '/settings', element: <SettingsView /> },
+    { label: 'Not Found', path: '/*', element: <NotFound /> },
+  ];
 
   return (
-    <React.Suspense fallback={<Loading />}>
-      <Routes>
-        {commonRoutes.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
-        ))}
-        {routes.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
-        ))}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </React.Suspense>
+    <Routes>
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          element={
+            <Suspense fallback={<><div className="flex justify-center items-center min-h-[90vh]"><Loading /></div></>}>
+              {getComponentForRoute(route.path)}
+            </Suspense>
+          }
+        />
+      ))}
+    </Routes>
   );
 };
+const getComponentForRoute = (path) => {
+  switch (path) {
+    case '/':
+      return <HomeView />;
+    case '/chats':
+      return <ChatsView />;
+    case '/contact':
+      return <ContactView />;
+    case '/dashboard':
+      return <DashboardView />;
+    case '/shop':
+      return <ShopView />;
+    case '/shop/product/:id':
+      return <ProductsView />;
+    case '/admin/notifications':
+      return <NotificationsView />;
+    case '/offers':
+      return <OffersView />;
+    case '/orders':
+      return <OrdersView />;
+    case '/order-tracking':
+      return <OrderTrackingView />;
+    case '/payments':
+      return <PaymentsView />;
+    case '/users':
+      return <UsersView />;
+    case '/profile':
+      return <ProfileView />;
+    case '/settings':
+      return <SettingsView />;
+    default:
+      return <NotFound />;
+  }
+};
 
-export function getNavItems(user) {
-  const clientRoutes = [
+
+export function getNavItems() {
+
+  const routes = [
     { label: 'Home', path: '/' },
-    { label: 'Shop', path: '/shop' },
-    { label: 'Product', path: '/shop/product/:id' },
-    { label: 'Cart', path: '/cart' },
-    { label: 'Contact', path: '/contact' },
-    // { label: 'Profile', path: '/profile' }
-  ];
-
-  const adminRoutes = [
-    { label: 'Dashboard', path: '/' },
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Chats', path: '/chats' },
     { label: 'Users', path: '/users' },
     { label: 'Shop', path: '/shop' },
-    { label: 'Products', path: '/products' },
+    { label: 'Product Details', path: '/shop/product/:id' },
+    { label: 'Notifications', path: '/admin/notifications' },
+    { label: 'Offers', path: '/offers' },
     { label: 'Orders', path: '/orders' },
-    // { label: 'Profile', path: '/profile' }
+    { label: 'Order Tracking', path: '/order-tracking' },
+    { label: 'Payments', path: '/payments' },
+    { label: 'Profile', path: '/profile' },
+    { label: 'Contact', path: '/contact' },
+    { label: 'Settings', path: '/settings' },
   ];
 
-  const managerRoutes = [
-    { label: 'Dashboard', path: '/' },
-    { label: 'Shop', path: '/shop' },
-    { label: 'Products', path: '/products' },
-    { label: 'Orders', path: '/orders' },
-    // { label: 'Profile', path: '/profile' }
-  ];
-
-  return user && user.roles === 'client' ? clientRoutes : user && user.roles === 'admin' ? adminRoutes : user && user.roles === 'manager' ? managerRoutes : [];
+  return routes;
 }
 
-export default PrivateRoutes; 
+export default PrivateRoutes;

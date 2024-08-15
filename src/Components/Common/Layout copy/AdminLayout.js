@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState } from 'react';
 import Header from './Header'
-// import Footer from './Footer'
-import Main from './Main' 
+import Footer from './Footer'
+import Main from './Main'
 
 import PrivateRoutes from '../../../Routes/PrivateRoutes';
-import Login from '../../../Routes/CommonRoutes/Auth/Login';
-import SigIn from '../../../Routes/CommonRoutes/Auth/SignIn'; 
-
+import LoginPage from '../../../Routes/CommonRoutes/Auth/LoginPage';
+import RegisterPage from '../../../Routes/CommonRoutes/Auth/RegisterPage'; 
+RegisterPage
 function AdminLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
   
@@ -25,13 +25,13 @@ function AdminLayout() {
 <Main>
 
   <Routes>
-    <Route path="/login" element={<Login />} />
-    <Route path="/signin" element={<SigIn />} />
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
     <Route path="*" element={<PrivateRoutes />} /> 
   </Routes>
   
 </Main>
-{/* <Footer /> */}
+<Footer />
     </>
   )
 }

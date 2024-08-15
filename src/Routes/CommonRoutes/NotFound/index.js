@@ -1,6 +1,6 @@
 import React from 'react'
-import GlassCard from '../CustomMIniComponents/GlassCard'
-import Button from '../CustomMIniComponents/Button'
+import GlassCard from '../../../Components/Common/CustomMIniComponents/GlassCard'
+import Button from '../../../Components/Common/CustomMIniComponents/Button'
 import { FaArrowLeft } from 'react-icons/fa'
 
 function NotFound() {

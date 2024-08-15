@@ -55,12 +55,12 @@ body {
     }
 
 }
+
 .hr{
   border-bottom: 2px solid;
   padding-top: 4px;
   padding-bottom: 4px;
 }
-
 
 @keyframes slideIn {
   from {

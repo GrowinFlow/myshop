@@ -107,7 +107,7 @@ const CustomTooltip = ({
       {children}
       {isVisible && (
         <div
-          className={`absolute trans-ani w-auto h-auto text-xs rounded-md border border-orange-700 dark:border-orange-400 bg-gray-200 dark:bg-gray-800 ${zIndex} ${tooltipClasses[position]} ${tooltipClassName}`}
+          className={`absolute trans-ani w-auto h-auto rounded-md bg-gray-200 dark:bg-gray-800 ${zIndex} ${tooltipClasses[position]} ${tooltipClassName}`}
           style={customStyles}
         >
           {content}

@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Loading() {
+function Loading({styleClass}) {
   return (
-    <div className="w-40 h-40 relative">
+    <div className={`relative ${styleClass}`}>
       <style>{`
         @keyframes l1 {
           12.5% { border-radius: 37% 63% 70% 30% / 30% 62% 38% 70%; }

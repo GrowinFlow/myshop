@@ -5,7 +5,6 @@ import ReactDOMServer from 'react-dom/server';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AuthProvider } from './lib/context/Auth';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -16,16 +15,14 @@ root.render(
     
     <Router>
 
-    <AuthProvider>
       
 
     <App />
 
 
-    </AuthProvider>
     </Router>
     
-  </React.StrictMode>
+  </React.StrictMode> 
 );
 
 // If you want to start measuring performance in your app, pass a function
